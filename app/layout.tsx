@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./styles/globals.css";
 
 export const metadata: Metadata = {
-	title: "Trust Wallet Copy",
+	title: "Trust Wallet",
 };
 
 export default function RootLayout({
@@ -12,8 +12,12 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
-			<body className={`antialiased`}>{children}</body>
+		<html lang="en" data-theme="dark">
+			<body className={`antialiased`}>
+				<div id="root" data-id="root">
+					{children}
+				</div>
+			</body>
 		</html>
 	);
 }
