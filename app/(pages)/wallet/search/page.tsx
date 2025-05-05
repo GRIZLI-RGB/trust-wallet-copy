@@ -208,7 +208,7 @@ export default function WalletSearchPage() {
 														<div className="w-9 h-9 flex items-center">
 															<img
 																alt="BNB Smart Chain"
-																className="w-full h-full rounded-full border-1"
+																className="w-full h-full rounded-full"
 																width="100%"
 																height="100%"
 																src="https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/smartchain/info/logo.png"

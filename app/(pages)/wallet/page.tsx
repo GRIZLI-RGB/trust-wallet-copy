@@ -609,7 +609,7 @@ export default function WalletPage() {
 														<div className="w-9 h-9 flex items-center">
 															<img
 																alt={asset.name}
-																className="w-full h-full rounded-full border-1"
+																className="w-full h-full rounded-full"
 																src={asset.logo}
 															/>
 														</div>
@@ -628,7 +628,7 @@ export default function WalletPage() {
 																		alt={
 																			asset.networkName
 																		}
-																		className="w-full h-full rounded-full border-1"
+																		className="w-full h-full rounded-full"
 																		src={
 																			asset.networkLogo
 																		}

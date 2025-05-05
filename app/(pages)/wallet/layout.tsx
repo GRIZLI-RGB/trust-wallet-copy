@@ -1,3 +1,5 @@
+import { Toaster } from "react-hot-toast";
+
 export default function WalletLayout({
 	children,
 }: {
@@ -5,8 +7,11 @@ export default function WalletLayout({
 }) {
 	return (
 		<>
+			<Toaster />
+
 			{children}
-			<div className="flex flex-col">
+
+			<div className="flex flex-col bg-[#1b1b1c] z-[10]">
 				<div className="flex items-center z-10 flex-shrink-0 self-center w-full justify-between h-[72px] px-6 border-t border-utility-1-opacity-5 md:max-w-[438px]">
 					<div
 						data-testid="navigation-item-home"

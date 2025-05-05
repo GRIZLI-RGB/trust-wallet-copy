@@ -231,7 +231,7 @@ export default function WalletEarnPage() {
 																		alt={
 																			option.symbol
 																		}
-																		className="w-full h-full rounded-full border-1"
+																		className="w-full h-full rounded-full"
 																		width="100%"
 																		height="100%"
 																		src={
