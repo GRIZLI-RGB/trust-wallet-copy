@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+	--color-primary: rgb(229, 231, 235);
+	--color-accent: #48ff91;
+}
+
 button,
 input,
 optgroup,
@@ -245,6 +250,10 @@ body {
 	overflow: hidden;
 }
 
+.flex-middle {
+	@apply flex items-center justify-center;
+}
+
 .border-line {
 	--tw-border-opacity: 1;
 	border-color: hsl(var(--twc-line) / 1);
@@ -451,6 +460,20 @@ body {
 	border-color: hsl(
 		var(--twc-utility-1-opacity-3) /
 			var(--twc-utility-1-opacity-3-opacity, var(--tw-border-opacity))
+	);
+}
+
+.checkbox:checked::before {
+	--tw-border-opacity: 1;
+	border-color: hsl(var(--twc-primary) / 1);
+	border-color: hsl(
+		var(--twc-primary) /
+			var(--twc-primary-opacity, var(--tw-border-opacity))
+	);
+	--tw-bg-opacity: 1;
+	background-color: hsl(var(--twc-primary) / 1);
+	background-color: hsl(
+		var(--twc-primary) / var(--twc-primary-opacity, var(--tw-bg-opacity))
 	);
 }
 
@@ -669,9 +692,9 @@ body {
 }
 
 .leading-headline6 {
-    line-height: 32px;
+	line-height: 32px;
 }
 
 .text-headline6 {
-    font-size: 24px;
+	font-size: 24px;
 }
