@@ -164,7 +164,7 @@ export default function WalletSwapPage() {
 																	xmlns="http://www.w3.org/2000/svg"
 																>
 																	<path
-																		fill-rule="evenodd"
+																		fillRule="evenodd"
 																		clip-rule="evenodd"
 																		d="M12.2886 11.9993L8.3996 8.11035L10.1674 6.34258L15.8242 11.9994L14.0565 13.7672L14.0563 13.7671L10.1672 17.6562L8.39941 15.8885L12.2886 11.9993Z"
 																		fill="currentColor"
@@ -231,7 +231,7 @@ export default function WalletSwapPage() {
 																	xmlns="http://www.w3.org/2000/svg"
 																>
 																	<path
-																		fill-rule="evenodd"
+																		fillRule="evenodd"
 																		clip-rule="evenodd"
 																		d="M12.2886 11.9993L8.3996 8.11035L10.1674 6.34258L15.8242 11.9994L14.0565 13.7672L14.0563 13.7671L10.1672 17.6562L8.39941 15.8885L12.2886 11.9993Z"
 																		fill="currentColor"
@@ -321,7 +321,7 @@ export default function WalletSwapPage() {
 										<div className="flex">
 											<div
 												className="flex w-full"
-												data-tooltip-id="button-tooltip-288"
+												data-tooltip-id="default-tooltip"
 												data-tooltip-place="top-end"
 												data-tooltip-role="tooltip"
 											>
@@ -487,7 +487,7 @@ export default function WalletSwapPage() {
 																		fill="currentColor"
 																	></rect>
 																	<path
-																		fill-rule="evenodd"
+																		fillRule="evenodd"
 																		clip-rule="evenodd"
 																		d="M16.9822 5.23223L8.49695 13.7175L10.2647 15.4853L18.75 7L17.8661 6.11612L16.9822 5.23223Z"
 																		fill="currentColor"
@@ -575,7 +575,7 @@ export default function WalletSwapPage() {
 																		fill="currentColor"
 																	></rect>
 																	<path
-																		fill-rule="evenodd"
+																		fillRule="evenodd"
 																		clip-rule="evenodd"
 																		d="M16.9822 5.23223L8.49695 13.7175L10.2647 15.4853L18.75 7L17.8661 6.11612L16.9822 5.23223Z"
 																		fill="currentColor"
@@ -664,7 +664,7 @@ export default function WalletSwapPage() {
 																		fill="currentColor"
 																	></rect>
 																	<path
-																		fill-rule="evenodd"
+																		fillRule="evenodd"
 																		clip-rule="evenodd"
 																		d="M16.9822 5.23223L8.49695 13.7175L10.2647 15.4853L18.75 7L17.8661 6.11612L16.9822 5.23223Z"
 																		fill="currentColor"
@@ -752,7 +752,7 @@ export default function WalletSwapPage() {
 																		fill="currentColor"
 																	></rect>
 																	<path
-																		fill-rule="evenodd"
+																		fillRule="evenodd"
 																		clip-rule="evenodd"
 																		d="M16.9822 5.23223L8.49695 13.7175L10.2647 15.4853L18.75 7L17.8661 6.11612L16.9822 5.23223Z"
 																		fill="currentColor"

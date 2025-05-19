@@ -5,7 +5,7 @@ export default function WalletItemPage() {
 				<div className="flex w-8 justify-start">
 					<div
 						className="flex "
-						data-tooltip-id="button-tooltip-51"
+						data-tooltip-id="default-tooltip"
 						data-tooltip-place="top-end"
 						data-tooltip-role="tooltip"
 					>
@@ -83,13 +83,13 @@ export default function WalletItemPage() {
 							<div className="w-full flex items-center justify-between px-5">
 								<div className="flex flex-col space-y-2 items-center">
 									<div
-										data-tooltip-id="circle-action-tooltip-52"
+										data-tooltip-id="default-tooltip"
 										data-tooltip-place="top"
 										data-tooltip-role="tooltip"
 									>
 										<div
 											className="flex "
-											data-tooltip-id="button-tooltip-53"
+											data-tooltip-id="default-tooltip"
 											data-tooltip-place="top-end"
 											data-tooltip-role="tooltip"
 										>
@@ -124,13 +124,13 @@ export default function WalletItemPage() {
 								</div>
 								<div className="flex flex-col space-y-2 items-center">
 									<div
-										data-tooltip-id="circle-action-tooltip-54"
+										data-tooltip-id="default-tooltip"
 										data-tooltip-place="top"
 										data-tooltip-role="tooltip"
 									>
 										<div
 											className="flex "
-											data-tooltip-id="button-tooltip-55"
+											data-tooltip-id="default-tooltip"
 											data-tooltip-place="top-end"
 											data-tooltip-role="tooltip"
 										>
@@ -165,13 +165,13 @@ export default function WalletItemPage() {
 								</div>
 								<div className="flex flex-col space-y-2 items-center">
 									<div
-										data-tooltip-id="circle-action-tooltip-56"
+										data-tooltip-id="default-tooltip"
 										data-tooltip-place="top"
 										data-tooltip-role="tooltip"
 									>
 										<div
 											className="flex "
-											data-tooltip-id="button-tooltip-57"
+											data-tooltip-id="default-tooltip"
 											data-tooltip-place="top-end"
 											data-tooltip-role="tooltip"
 										>
@@ -206,13 +206,13 @@ export default function WalletItemPage() {
 								</div>
 								<div className="flex flex-col space-y-2 items-center">
 									<div
-										data-tooltip-id="circle-action-tooltip-58"
+										data-tooltip-id="default-tooltip"
 										data-tooltip-place="top"
 										data-tooltip-role="tooltip"
 									>
 										<div
 											className="flex "
-											data-tooltip-id="button-tooltip-59"
+											data-tooltip-id="default-tooltip"
 											data-tooltip-place="top-end"
 											data-tooltip-role="tooltip"
 										>
@@ -247,13 +247,13 @@ export default function WalletItemPage() {
 								</div>
 								<div className="flex flex-col space-y-2 items-center">
 									<div
-										data-tooltip-id="circle-action-tooltip-60"
+										data-tooltip-id="default-tooltip"
 										data-tooltip-place="top"
 										data-tooltip-role="tooltip"
 									>
 										<div
 											className="flex "
-											data-tooltip-id="button-tooltip-61"
+											data-tooltip-id="default-tooltip"
 											data-tooltip-place="top-end"
 											data-tooltip-role="tooltip"
 										>
@@ -343,7 +343,7 @@ export default function WalletItemPage() {
 											<div>
 												<div
 													className="flex w-full"
-													data-tooltip-id="button-tooltip-62"
+													data-tooltip-id="default-tooltip"
 													data-tooltip-place="top-end"
 													data-tooltip-role="tooltip"
 												>
@@ -906,7 +906,7 @@ export default function WalletItemPage() {
 							</div>
 							<div
 								className="flex w-auto"
-								data-tooltip-id="button-tooltip-63"
+								data-tooltip-id="default-tooltip"
 								data-tooltip-place="top-end"
 								data-tooltip-role="tooltip"
 							>

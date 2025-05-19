@@ -35,4 +35,6 @@ export const authImportWallet = async (data: {
 	seed_words: string[];
 }) => await api.post("auth/import-wallet", data);
 
+export const authLogout = async () => await api.post("/auth/logout");
+
 export const walletSettings = async () => await api.get("wallet/settings");

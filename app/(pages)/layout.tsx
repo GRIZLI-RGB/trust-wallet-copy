@@ -3,10 +3,10 @@
 import { useAtom, useAtomValue } from "jotai";
 import clsx from "clsx";
 import { ClipLoader } from "react-spinners";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 import { _globalLoading_, _userLoading_ } from "../utils/store";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { walletSettings } from "../utils/api";
 
 export default function PagesLayout({
@@ -15,7 +15,6 @@ export default function PagesLayout({
 	children: React.ReactNode;
 }) {
 	const pathname = usePathname();
-	const router = useRouter();
 
 	const globalLoading = useAtomValue(_globalLoading_);
 	const [userLoading, setUserLoading] = useAtom(_userLoading_);
@@ -24,22 +23,20 @@ export default function PagesLayout({
 		const token = localStorage.getItem("token");
 
 		if (!token) {
-			if (pathname !== "/auth") router.push("/auth");
-
-			setUserLoading(false);
+			if (pathname !== "/auth") window.location.href = "/auth";
 		}
 
 		if (token) {
 			walletSettings()
 				.then(() => {
-					if (pathname === "/auth") router.push("/wallet");
+					if (pathname === "/auth") window.location.href = "/wallet";
 
-					setUserLoading(false);
+					if (pathname !== "/auth") setUserLoading(false);
 				})
 				.catch(() => {
-					// localStorage.removeItem("token");
+					localStorage.removeItem("token");
 
-					if (pathname !== "/auth") router.push("/auth");
+					if (pathname !== "/auth") window.location.href = "/auth";
 
 					setUserLoading(false);
 				});

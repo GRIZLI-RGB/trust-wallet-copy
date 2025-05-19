@@ -53,7 +53,7 @@ export default function WalletHistoryPage() {
 															xmlns="http://www.w3.org/2000/svg"
 														>
 															<path
-																fill-rule="evenodd"
+																fillRule="evenodd"
 																clip-rule="evenodd"
 																d="M10.002 2.49903L15.8945 8.39158L14.4214 9.86472L11.0426 6.48597L11.0426 17.4998L8.95931 17.4998L8.95931 6.48697L5.58156 9.86472L4.10842 8.39158L10.001 2.49903L10.0015 2.49953L10.002 2.49903Z"
 																fill="currentColor"
@@ -107,7 +107,7 @@ export default function WalletHistoryPage() {
 															xmlns="http://www.w3.org/2000/svg"
 														>
 															<path
-																fill-rule="evenodd"
+																fillRule="evenodd"
 																clip-rule="evenodd"
 																d="M9.99803 17.4993L4.10547 11.6067L5.57861 10.1336L8.95736 13.5123L8.95736 2.49845L11.0407 2.49845L11.0407 13.5113L14.4184 10.1336L15.8916 11.6067L9.99902 17.4993L9.99852 17.4988L9.99803 17.4993Z"
 																fill="currentColor"
@@ -161,7 +161,7 @@ export default function WalletHistoryPage() {
 															xmlns="http://www.w3.org/2000/svg"
 														>
 															<path
-																fill-rule="evenodd"
+																fillRule="evenodd"
 																clip-rule="evenodd"
 																d="M9.99803 17.4993L4.10547 11.6067L5.57861 10.1336L8.95736 13.5123L8.95736 2.49845L11.0407 2.49845L11.0407 13.5113L14.4184 10.1336L15.8916 11.6067L9.99902 17.4993L9.99852 17.4988L9.99803 17.4993Z"
 																fill="currentColor"
@@ -201,7 +201,7 @@ export default function WalletHistoryPage() {
 									<div className="flex items-center justify-center w-full h-full flex-1 flex-row">
 										<div
 											className="flex w-auto"
-											data-tooltip-id="button-tooltip-23"
+											data-tooltip-id="default-tooltip"
 											data-tooltip-place="top-end"
 											data-tooltip-role="tooltip"
 										>

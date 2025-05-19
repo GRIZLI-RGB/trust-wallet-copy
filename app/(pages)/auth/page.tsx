@@ -206,7 +206,7 @@ export default function AuthPage() {
 															xmlns="http://www.w3.org/2000/svg"
 														>
 															<path
-																fill-rule="evenodd"
+																fillRule="evenodd"
 																clip-rule="evenodd"
 																d="M9.99976 10.2397L6.75895 6.99885L5.28581 8.47199L9.99986 13.186L11.473 11.7129L11.4729 11.7128L14.7139 8.47183L13.2407 6.99869L9.99976 10.2397Z"
 																fill="currentColor"
@@ -288,7 +288,7 @@ export default function AuthPage() {
 																					xmlns="http://www.w3.org/2000/svg"
 																				>
 																					<path
-																						fill-rule="evenodd"
+																						fillRule="evenodd"
 																						clip-rule="evenodd"
 																						d="M5.86414 14.0099L5.8629 14.0111L7.63067 15.7789L7.6319 15.7776L7.63201 15.7777L9.39978 14.01L9.39967 14.0099L17.0588 6.35077L15.291 4.58301L7.6319 12.2421L4.68574 9.29593L2.91797 11.0637L5.86414 14.0099Z"
 																						fill="currentColor"
@@ -343,7 +343,7 @@ export default function AuthPage() {
 
 									<div
 										className="flex w-full"
-										data-tooltip-id="button-tooltip-23"
+										data-tooltip-id="default-tooltip"
 										data-tooltip-place="top-end"
 										data-tooltip-role="tooltip"
 									>
@@ -370,7 +370,7 @@ export default function AuthPage() {
 								<div className="flex w-full items-center justify-between mt-6 space-x-4">
 									<div
 										className="flex w-full"
-										data-tooltip-id="button-tooltip-24"
+										data-tooltip-id="default-tooltip"
 										data-tooltip-place="top-end"
 										data-tooltip-role="tooltip"
 									>
@@ -388,7 +388,7 @@ export default function AuthPage() {
 									</div>
 									<div
 										className="flex w-full"
-										data-tooltip-id="button-tooltip-25"
+										data-tooltip-id="default-tooltip"
 										data-tooltip-place="top-end"
 										data-tooltip-role="tooltip"
 									>
@@ -493,7 +493,7 @@ export default function AuthPage() {
 												<div className="flex items-center">
 													<div
 														className="flex w-full"
-														data-tooltip-id="button-tooltip-4"
+														data-tooltip-id="default-tooltip"
 														data-tooltip-place="top-end"
 														data-tooltip-role="tooltip"
 													>
@@ -538,7 +538,7 @@ export default function AuthPage() {
 								<div className="pt-6 pb-4 w-full flex flex-col gap-4">
 									<div
 										className="flex w-full"
-										data-tooltip-id="button-tooltip-5"
+										data-tooltip-id="default-tooltip"
 										data-tooltip-place="top-end"
 										data-tooltip-role="tooltip"
 									>
@@ -562,7 +562,7 @@ export default function AuthPage() {
 						</div>
 						<div
 							className="flex w-full"
-							data-tooltip-id="button-tooltip-6"
+							data-tooltip-id="default-tooltip"
 							data-tooltip-place="top-end"
 							data-tooltip-role="tooltip"
 						>
@@ -883,7 +883,7 @@ export default function AuthPage() {
 							<div className="flex w-full items-center justify-between mt-6 space-x-4">
 								<div
 									className="flex w-full"
-									data-tooltip-id="button-tooltip-24"
+									data-tooltip-id="default-tooltip"
 									data-tooltip-place="top-end"
 									data-tooltip-role="tooltip"
 								>
@@ -898,7 +898,7 @@ export default function AuthPage() {
 								</div>
 								<div
 									className="flex w-full"
-									data-tooltip-id="button-tooltip-25"
+									data-tooltip-id="default-tooltip"
 									data-tooltip-place="top-end"
 									data-tooltip-role="tooltip"
 								>
@@ -1377,7 +1377,7 @@ export default function AuthPage() {
 																xmlns="http://www.w3.org/2000/svg"
 															>
 																<path
-																	fill-rule="evenodd"
+																	fillRule="evenodd"
 																	clip-rule="evenodd"
 																	d="M5.86414 14.0099L5.8629 14.0111L7.63067 15.7789L7.6319 15.7776L7.63201 15.7777L9.39978 14.01L9.39967 14.0099L17.0588 6.35077L15.291 4.58301L7.6319 12.2421L4.68574 9.29593L2.91797 11.0637L5.86414 14.0099Z"
 																	fill="currentColor"
@@ -1401,7 +1401,7 @@ export default function AuthPage() {
 									<div className=" flex w-full items-center justify-between mt-6 space-x-4">
 										<div
 											className="h-[52px] flex w-full"
-											data-tooltip-id="button-tooltip-5"
+											data-tooltip-id="default-tooltip"
 											data-tooltip-place="top-end"
 											data-tooltip-role="tooltip"
 										>
@@ -1419,7 +1419,7 @@ export default function AuthPage() {
 										</div>
 										<div
 											className="h-[52px] flex w-full"
-											data-tooltip-id="button-tooltip-6"
+											data-tooltip-id="default-tooltip"
 											data-tooltip-place="top-end"
 											data-tooltip-role="tooltip"
 										>
@@ -1611,7 +1611,7 @@ export default function AuthPage() {
 														xmlns="http://www.w3.org/2000/svg"
 													>
 														<path
-															fill-rule="evenodd"
+															fillRule="evenodd"
 															clip-rule="evenodd"
 															d="M5.86414 14.0099L5.8629 14.0111L7.63067 15.7789L7.6319 15.7776L7.63201 15.7777L9.39978 14.01L9.39967 14.0099L17.0588 6.35077L15.291 4.58301L7.6319 12.2421L4.68574 9.29593L2.91797 11.0637L5.86414 14.0099Z"
 															fill="currentColor"
@@ -1642,7 +1642,7 @@ export default function AuthPage() {
 								<div className="flex w-full items-center justify-between mt-6 space-x-4">
 									<div
 										className="flex w-full"
-										data-tooltip-id="button-tooltip-46"
+										data-tooltip-id="default-tooltip"
 										data-tooltip-place="top-end"
 										data-tooltip-role="tooltip"
 									>
@@ -1658,7 +1658,7 @@ export default function AuthPage() {
 									</div>
 									<div
 										className="flex w-full"
-										data-tooltip-id="button-tooltip-47"
+										data-tooltip-id="default-tooltip"
 										data-tooltip-place="top-end"
 										data-tooltip-role="tooltip"
 									>

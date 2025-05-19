@@ -404,6 +404,10 @@ body {
 	line-height: 20px;
 }
 
+.rounded-3 {
+	border-radius: 12px;
+}
+
 .text-primary-default {
 	--tw-text-opacity: 1;
 	color: hsl(var(--twc-primary-default) / 1);
