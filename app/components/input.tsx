@@ -8,9 +8,10 @@ type InputProps = {
 	placeholder?: string;
 	value: string;
 	onChange: (value: string) => void;
-	type?: "text" | "password";
+	type?: "text" | "password" | "number";
 	className?: string;
 	tip?: string;
+	maxValue?: number;
 };
 
 export default function Input({
@@ -21,25 +22,20 @@ export default function Input({
 	type = "text",
 	className,
 	tip,
+	maxValue,
 }: InputProps) {
 	const [focused, setFocused] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 
 	const isPassword = type === "password";
-	const inputType = isPassword && !showPassword ? "password" : "text";
+	const inputType = isPassword && !showPassword ? "password" : type;
 
 	return (
-		<div
-			data-testid="password-field-input-group"
-			className={clsx("text-start", className)}
-		>
+		<div className={clsx("text-start", className)}>
 			{label && (
 				<div className="mb-3">
 					<div>
-						<p
-							data-testid="input-label"
-							className="typography-subheader-14 text-utility-1-opacity-1 font-medium text-unset"
-						>
+						<p className="typography-subheader-14 text-utility-1-opacity-1 font-medium text-unset">
 							{label}
 						</p>
 					</div>
@@ -48,7 +44,7 @@ export default function Input({
 
 			<div
 				className={clsx(
-					"input-field space-x-1 h-14",
+					"input-field space-x-1 h-14 relative",
 					focused && "!border-accent"
 				)}
 			>
@@ -63,6 +59,15 @@ export default function Input({
 					value={value}
 					onChange={(e) => onChange(e.target.value)}
 				/>
+
+				{type === "number" && typeof maxValue === "number" && (
+					<button
+						onClick={() => onChange(maxValue.toString())}
+						className="!text-accent !font-semibold absolute right-5 top-1/2 !-translate-y-1/2 cursor-pointer"
+					>
+						MAX
+					</button>
+				)}
 
 				{type === "password" && (
 					<div className="flex space-x-2">

@@ -11,7 +11,7 @@ import {
 	walletSetDefaultProfile,
 } from "@/app/utils/api";
 import { _globalLoading_ } from "@/app/utils/store";
-import { WalletProfileType } from "@/app/utils/types";
+import { CryptoType, WalletProfileType } from "@/app/utils/types";
 import clsx from "clsx";
 
 export default function WalletPage() {
@@ -31,21 +31,7 @@ export default function WalletPage() {
 			wallet_id: number;
 			balance: string;
 			address: string;
-			crypto: {
-				id: number;
-				symbol: string;
-				name: string;
-				full_name: string;
-				network_name: string;
-				icon: string;
-				network_icon: string | null;
-				is_active: boolean;
-				price: string;
-				address: string | null;
-				qr_code: string | null;
-				created_at: Date;
-				updated_at: Date;
-			};
+			crypto: CryptoType;
 			created_at: Date;
 			updated_at: Date;
 		}[]
@@ -597,7 +583,7 @@ export default function WalletPage() {
 			</div>
 
 			{cryptos && (
-				<div className="flex flex-1 pt-4">
+				<div className="flex flex-1 pt-4 overflow-y-auto scrollbar-hidden">
 					<div
 						className="flex w-full outline-none"
 						role="tabpanel"
@@ -729,7 +715,7 @@ export default function WalletPage() {
 																			.name
 																	}
 																	className="w-full h-full rounded-full"
-																	src={`https://trustwallet.qissseee.tech/${crypto.crypto.icon}`}
+																	src={`${process.env.NEXT_PUBLIC_SITE_URL}/${crypto.crypto.icon}`}
 																/>
 															</div>
 														</div>
