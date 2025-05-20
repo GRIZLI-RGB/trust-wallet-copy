@@ -419,6 +419,29 @@ input::-webkit-inner-spin-button {
 	border-radius: 12px;
 }
 
+.rounded-curvy {
+	border-radius: 50px;
+}
+
+.circle-button {
+	display: flex;
+	cursor: pointer;
+	align-items: center;
+	justify-content: center;
+	font-weight: 500;
+	line-height: 20px;
+	font-size: 16px;
+}
+
+.text-iconNormal {
+	--tw-text-opacity: 1;
+	color: hsl(var(--twc-iconNormal) / 1);
+	color: hsl(
+		var(--twc-iconNormal) /
+			var(--twc-iconNormal-opacity, var(--tw-text-opacity))
+	);
+}
+
 .text-primary-default {
 	--tw-text-opacity: 1;
 	color: hsl(var(--twc-primary-default) / 1);
