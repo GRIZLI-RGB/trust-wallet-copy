@@ -377,6 +377,10 @@ body {
 	line-height: 20px;
 }
 
+.scrollbar-hidden::-webkit-scrollbar {
+	display: none;
+}
+
 .text-background-1 {
 	--tw-text-opacity: 1;
 	color: hsl(var(--twc-background-1) / 1);

@@ -1,4 +1,30 @@
+"use client";
+
+import { authLogout } from "@/app/utils/api";
+import { _globalLoading_, _theme_ } from "@/app/utils/store";
+import { useAtomValue, useSetAtom } from "jotai";
+import { useRouter } from "next/navigation";
+
 export default function WalletSettingsPage() {
+	const router = useRouter();
+
+	const setGlobalLoading = useSetAtom(_globalLoading_);
+	const theme = useAtomValue(_theme_);
+
+	const handleLogout = () => {
+		setGlobalLoading(true);
+
+		authLogout()
+			.then(() => {
+				localStorage.removeItem("token");
+				window.location.href = "/auth";
+			})
+			.catch(() => {
+				setGlobalLoading(false);
+				alert("Unknown error");
+			});
+	};
+
 	return (
 		<div className="relative flex flex-col flex-1 w-full h-full self-center md:max-w-[438px] px-4 pt-4">
 			<div className="flex items-center w-full h-full self-center pb-4 md:max-w-[438px]">
@@ -13,8 +39,8 @@ export default function WalletSettingsPage() {
 
 			<div className="relative flex flex-col flex-grow w-full h-full self-center pt-2 undefined md:max-w-[438px]">
 				<div className="relative flex flex-1 w-full">
-					<div className="absolute flex flex-1 flex-col w-full h-full top-0 left-0 tw-scrollbar">
-						<div className="bg-background-2 rounded-4 [&amp; > *]:h-[52px] ">
+					<div className="absolute flex flex-1 flex-col w-full h-full top-0 left-0 overflow-y-auto scrollbar-hidden">
+						{/* <div className="bg-background-2 rounded-4 [&amp; > *]:h-[52px] ">
 							<div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
 								<div className="flex items-center flex-row space-x-4">
 									<div>
@@ -151,7 +177,7 @@ export default function WalletSettingsPage() {
 									>
 										<path
 											fillRule="evenodd"
-											clip-rule="evenodd"
+											clipRule="evenodd"
 											d="M12.2886 11.9993L8.3996 8.11035L10.1674 6.34258L15.8242 11.9994L14.0565 13.7672L14.0563 13.7671L10.1672 17.6562L8.39941 15.8885L12.2886 11.9993Z"
 											fill="currentColor"
 										></path>
@@ -161,9 +187,9 @@ export default function WalletSettingsPage() {
 						</div>
 						<div className=" mt-5"></div>
 						<div className="border-t border-utility-1-opacity-3 my-2"></div>
-						<div className=" mt-5"></div>
+						<div className=" mt-5"></div> */}
 						<div className="bg-background-2 rounded-4 [&amp; > *]:h-[52px] ">
-							<div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
+							{/* <div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
 								<div className="flex items-center flex-row space-x-4">
 									<div className="bg-utility-1-opacity-5 rounded-full p-2">
 										<svg
@@ -176,7 +202,7 @@ export default function WalletSettingsPage() {
 										>
 											<path
 												fillRule="evenodd"
-												clip-rule="evenodd"
+												clipRule="evenodd"
 												d="M11 4H4V11H11V9H13V9.40723L9.40723 13H4V20H11V18H13V20H20V13H13V16H11V14.2357L14.2357 11H20V4H13V7H11V4ZM8.5 6.5H6.5V8.5H8.5V6.5ZM8.5 15.5H6.5V17.5H8.5V15.5ZM15.5 6.5H17.5V8.5H15.5V6.5ZM17.5 15.5H15.5V17.5H17.5V15.5Z"
 												fill="currentColor"
 											></path>
@@ -202,14 +228,14 @@ export default function WalletSettingsPage() {
 									>
 										<path
 											fillRule="evenodd"
-											clip-rule="evenodd"
+											clipRule="evenodd"
 											d="M12.2886 11.9993L8.3996 8.11035L10.1674 6.34258L15.8242 11.9994L14.0565 13.7672L14.0563 13.7671L10.1672 17.6562L8.39941 15.8885L12.2886 11.9993Z"
 											fill="currentColor"
 										></path>
 									</svg>
 								</div>
-							</div>
-							<div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
+							</div> */}
+							{/* <div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
 								<div className="flex items-center flex-row space-x-4">
 									<div className="bg-utility-1-opacity-5 rounded-full p-2">
 										<svg
@@ -224,7 +250,7 @@ export default function WalletSettingsPage() {
 												<path
 													id="Union"
 													fillRule="evenodd"
-													clip-rule="evenodd"
+													clipRule="evenodd"
 													d="M10 7.08329C10 8.69412 8.69416 9.99996 7.08333 9.99996C5.4725 9.99996 4.16667 8.69412 4.16667 7.08329C4.16667 5.47246 5.4725 4.16663 7.08333 4.16663C8.69416 4.16663 10 5.47246 10 7.08329ZM2.5 14.6666C2.5 13.0098 3.84315 11.6666 5.5 11.6666H8.66667C10.3235 11.6666 11.6667 13.0098 11.6667 14.6666V16.6666H2.5V14.6666ZM17.5 4.16663H13.3333V6.66663H17.5V4.16663ZM17.5 8.33492H13.3333V10.8349H17.5V8.33492ZM13.3333 12.5032H17.5V15.0032H13.3333V12.5032Z"
 													fill="currentColor"
 												></path>
@@ -249,14 +275,14 @@ export default function WalletSettingsPage() {
 									>
 										<path
 											fillRule="evenodd"
-											clip-rule="evenodd"
+											clipRule="evenodd"
 											d="M12.2886 11.9993L8.3996 8.11035L10.1674 6.34258L15.8242 11.9994L14.0565 13.7672L14.0563 13.7671L10.1672 17.6562L8.39941 15.8885L12.2886 11.9993Z"
 											fill="currentColor"
 										></path>
 									</svg>
 								</div>
-							</div>
-							<div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
+							</div> */}
+							{/* <div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
 								<div className="flex items-center flex-row space-x-4">
 									<div className="bg-utility-1-opacity-5 rounded-full p-2">
 										<svg
@@ -269,7 +295,7 @@ export default function WalletSettingsPage() {
 										>
 											<path
 												fillRule="evenodd"
-												clip-rule="evenodd"
+												clipRule="evenodd"
 												d="M9 4H15V6H13.5V6.99985H20V11.4999H22V15.4999H20V20H4V15.4999H2V11.4999H4V6.99985H10.5V6H9V4ZM8.5 13.1315C9.32843 13.1315 10 12.46 10 11.6315C10 10.8031 9.32843 10.1315 8.5 10.1315C7.67157 10.1315 7 10.8031 7 11.6315C7 12.46 7.67157 13.1315 8.5 13.1315ZM15.5 13.1315C16.3284 13.1315 17 12.46 17 11.6315C17 10.8031 16.3284 10.1315 15.5 10.1315C14.6716 10.1315 14 10.8031 14 11.6315C14 12.46 14.6716 13.1315 15.5 13.1315ZM12 17.6324C13.3807 17.6324 14.5 16.5131 14.5 15.1324H9.5C9.5 16.5131 10.6193 17.6324 12 17.6324Z"
 												fill="currentColor"
 											></path>
@@ -293,14 +319,14 @@ export default function WalletSettingsPage() {
 									>
 										<path
 											fillRule="evenodd"
-											clip-rule="evenodd"
+											clipRule="evenodd"
 											d="M12.2886 11.9993L8.3996 8.11035L10.1674 6.34258L15.8242 11.9994L14.0565 13.7672L14.0563 13.7671L10.1672 17.6562L8.39941 15.8885L12.2886 11.9993Z"
 											fill="currentColor"
 										></path>
 									</svg>
 								</div>
-							</div>
-							<div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
+							</div> */}
+							{/* <div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
 								<div className="flex items-center flex-row space-x-4">
 									<div className="bg-utility-1-opacity-5 rounded-full p-2">
 										<svg
@@ -321,7 +347,7 @@ export default function WalletSettingsPage() {
 											></path>
 											<path
 												fillRule="evenodd"
-												clip-rule="evenodd"
+												clipRule="evenodd"
 												d="M9.81117 16.3112L7.68985 14.1898L14.1899 7.68984L16.3112 9.81116L9.81117 16.3112Z"
 												fill="currentColor"
 											></path>
@@ -347,14 +373,14 @@ export default function WalletSettingsPage() {
 									>
 										<path
 											fillRule="evenodd"
-											clip-rule="evenodd"
+											clipRule="evenodd"
 											d="M12.2886 11.9993L8.3996 8.11035L10.1674 6.34258L15.8242 11.9994L14.0565 13.7672L14.0563 13.7671L10.1672 17.6562L8.39941 15.8885L12.2886 11.9993Z"
 											fill="currentColor"
 										></path>
 									</svg>
 								</div>
-							</div>
-							<div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
+							</div> */}
+							{/* <div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
 								<div className="flex items-center flex-row space-x-4">
 									<div className="bg-utility-1-opacity-5 rounded-full p-2">
 										<svg
@@ -374,7 +400,7 @@ export default function WalletSettingsPage() {
 											></rect>
 											<path
 												fillRule="evenodd"
-												clip-rule="evenodd"
+												clipRule="evenodd"
 												d="M15 2H9V4H15V2ZM19 7H5V21H19V7ZM10.5 9H8V18H10.5V9ZM13.5 9H16V18H13.5V9Z"
 												fill="currentColor"
 											></path>
@@ -398,14 +424,14 @@ export default function WalletSettingsPage() {
 									>
 										<path
 											fillRule="evenodd"
-											clip-rule="evenodd"
+											clipRule="evenodd"
 											d="M12.2886 11.9993L8.3996 8.11035L10.1674 6.34258L15.8242 11.9994L14.0565 13.7672L14.0563 13.7671L10.1672 17.6562L8.39941 15.8885L12.2886 11.9993Z"
 											fill="currentColor"
 										></path>
 									</svg>
 								</div>
-							</div>
-							<div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
+							</div> */}
+							{/* <div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
 								<div className="flex items-center flex-row space-x-4">
 									<div className="bg-utility-1-opacity-5 rounded-full p-2">
 										<svg
@@ -418,7 +444,7 @@ export default function WalletSettingsPage() {
 										>
 											<path
 												fillRule="evenodd"
-												clip-rule="evenodd"
+												clipRule="evenodd"
 												d="M15.2307 20.4027C18.2316 19.2481 20.4577 16.5321 20.9137 13.25H16.9718C16.8248 16.1102 16.1791 18.638 15.2307 20.4027ZM14.473 13.25C14.2952 17.3518 13.2556 20.5 11.9998 20.5C10.744 20.5 9.70447 17.3518 9.52667 13.25H14.473ZM14.473 10.75H9.52667C9.70447 6.64821 10.744 3.5 11.9998 3.5C13.2556 3.5 14.2952 6.64821 14.473 10.75ZM16.9718 10.75H20.9137C20.4577 7.46786 18.2316 4.75191 15.2307 3.59731C16.1791 5.36198 16.8248 7.88979 16.9718 10.75ZM7.03566 10.75C7.18282 7.88774 7.82928 5.35836 8.77882 3.59353C5.77291 4.74598 3.54249 7.46427 3.08594 10.75H7.03566ZM7.03566 13.25H3.08594C3.54249 16.5357 5.77291 19.254 8.77882 20.4065C7.82928 18.6416 7.18282 16.1123 7.03566 13.25Z"
 												fill="currentColor"
 											></path>
@@ -444,7 +470,7 @@ export default function WalletSettingsPage() {
 									>
 										<path
 											fillRule="evenodd"
-											clip-rule="evenodd"
+											clipRule="evenodd"
 											d="M12.2886 11.9993L8.3996 8.11035L10.1674 6.34258L15.8242 11.9994L14.0565 13.7672L14.0563 13.7671L10.1672 17.6562L8.39941 15.8885L12.2886 11.9993Z"
 											fill="currentColor"
 										></path>
@@ -474,7 +500,7 @@ export default function WalletSettingsPage() {
 											></path>
 											<path
 												fillRule="evenodd"
-												clip-rule="evenodd"
+												clipRule="evenodd"
 												d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21ZM12.8595 17.0522V18.5H11.1402V17.1125C9.61705 16.9768 8.60661 16.3585 7.85255 15.529L9.20985 14.2923C9.78294 14.8956 10.4918 15.3028 11.3363 15.4234V12.7088C9.07412 12.2413 8.15417 11.2459 8.15417 9.78306C8.15417 8.19954 9.19477 7.14385 11.1402 6.91763V5.5H12.8595V6.91763C14.066 7.05336 14.9558 7.52088 15.6194 8.27494L14.247 9.5116C13.885 9.10441 13.4024 8.77262 12.6785 8.60673V11.1102C14.7899 11.5928 15.8003 12.4524 15.8003 13.9907C15.8003 15.4687 14.8653 16.7204 12.8595 17.0522Z"
 												fill="currentColor"
 												fill-opacity="0.72"
@@ -501,14 +527,19 @@ export default function WalletSettingsPage() {
 									>
 										<path
 											fillRule="evenodd"
-											clip-rule="evenodd"
+											clipRule="evenodd"
 											d="M12.2886 11.9993L8.3996 8.11035L10.1674 6.34258L15.8242 11.9994L14.0565 13.7672L14.0563 13.7671L10.1672 17.6562L8.39941 15.8885L12.2886 11.9993Z"
 											fill="currentColor"
 										></path>
 									</svg>
 								</div>
-							</div>
-							<div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
+							</div> */}
+							<div
+								onClick={() =>
+									router.push("/wallet/settings/color-mode")
+								}
+								className="flex items-center justify-between cursor-pointer my-2 py-4 px-4"
+							>
 								<div className="flex items-center flex-row space-x-4">
 									<div className="bg-utility-1-opacity-5 rounded-full p-2">
 										<svg
@@ -530,7 +561,8 @@ export default function WalletSettingsPage() {
 											Color Mode
 										</p>
 										<p className="typography-body-14 text-utility-1-opacity-1 font-normal   text-unset  ">
-											System
+											{theme.charAt(0).toUpperCase() +
+												theme.slice(1)}
 										</p>
 									</div>
 								</div>
@@ -545,14 +577,14 @@ export default function WalletSettingsPage() {
 									>
 										<path
 											fillRule="evenodd"
-											clip-rule="evenodd"
+											clipRule="evenodd"
 											d="M12.2886 11.9993L8.3996 8.11035L10.1674 6.34258L15.8242 11.9994L14.0565 13.7672L14.0563 13.7671L10.1672 17.6562L8.39941 15.8885L12.2886 11.9993Z"
 											fill="currentColor"
 										></path>
 									</svg>
 								</div>
 							</div>
-							<div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
+							{/* <div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
 								<div className="flex items-center flex-row space-x-4">
 									<div className="bg-utility-1-opacity-5 rounded-full p-2">
 										<svg
@@ -565,7 +597,7 @@ export default function WalletSettingsPage() {
 										>
 											<path
 												fillRule="evenodd"
-												clip-rule="evenodd"
+												clipRule="evenodd"
 												d="M10.0002 2.5C6.7785 2.5 4.16683 5.11167 4.16683 8.33333V10.8333L3.3335 11.6667V13.3333H4.16683H15.8335H16.6668V11.6667L15.8335 10.8333L15.8335 8.33333C15.8335 5.11167 13.2218 2.5 10.0002 2.5ZM10.0001 17.5C8.29154 17.5 6.82314 16.4716 6.18018 15H13.8201C13.1771 16.4716 11.7087 17.5 10.0001 17.5Z"
 												fill="currentColor"
 											></path>
@@ -589,15 +621,15 @@ export default function WalletSettingsPage() {
 									>
 										<path
 											fillRule="evenodd"
-											clip-rule="evenodd"
+											clipRule="evenodd"
 											d="M12.2886 11.9993L8.3996 8.11035L10.1674 6.34258L15.8242 11.9994L14.0565 13.7672L14.0563 13.7671L10.1672 17.6562L8.39941 15.8885L12.2886 11.9993Z"
 											fill="currentColor"
 										></path>
 									</svg>
 								</div>
-							</div>
+							</div> */}
 						</div>
-						<div className=" mt-2"></div>
+						{/* <div className=" mt-2"></div>
 						<div className="bg-background-2 rounded-4 [&amp; > *]:h-[52px] ">
 							<div className="flex flex-row justify-between my-2 py-4 px-4">
 								<div className="flex items-center flex-row space-x-4">
@@ -752,7 +784,7 @@ export default function WalletSettingsPage() {
 										>
 											<path
 												fillRule="evenodd"
-												clip-rule="evenodd"
+												clipRule="evenodd"
 												d="M16.0293 8.00716L9.89682 1.87471L8.57337 3.19817L7.16328 1.78809L5.04196 3.90941L6.45205 5.31949L5.09883 6.67271L6.94764 8.52151C4.62367 10.9383 4.28408 15.5617 6.62171 17.9688C6.65838 18.0065 6.69541 18.0437 6.73277 18.0802H4.01562V21.0628H19.9852L19.9852 18.0802H11.5903C10.5548 18.0546 9.52646 17.6309 8.72823 16.8089C7.02192 15.0519 7.07504 12.165 8.78026 10.4068L8.80621 10.3801L11.2313 12.8051L16.0293 8.00716ZM19.2782 13.9939C19.2782 12.3371 17.9351 10.9939 16.2782 10.9939C14.6214 10.9939 13.2782 12.3371 13.2782 13.9939C13.2782 15.6508 14.6214 16.9939 16.2782 16.9939C17.9351 16.9939 19.2782 15.6508 19.2782 13.9939Z"
 												fill="currentColor"
 											></path>
@@ -786,7 +818,7 @@ export default function WalletSettingsPage() {
 									</button>
 								</div>
 							</div>
-						</div>
+						</div> 
 						<div className=" mt-2"></div>
 						<div className="bg-background-2 rounded-4 [&amp; > *]:h-[52px] ">
 							<div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
@@ -802,7 +834,7 @@ export default function WalletSettingsPage() {
 										>
 											<path
 												fillRule="evenodd"
-												clip-rule="evenodd"
+												clipRule="evenodd"
 												d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21ZM11.9999 8.26683C11.4109 8.26683 10.9335 8.74428 10.9335 9.33325V9.75981H8.80065V9.33325C8.80065 7.56635 10.233 6.13399 11.9999 6.13399C13.7668 6.13399 15.1992 7.56635 15.1992 9.33325C15.1992 10.2164 14.8399 11.0177 14.2621 11.5955L13.0663 12.7913V14.0255H10.9335V11.9078L12.754 10.0873C12.9481 9.89317 13.0663 9.62802 13.0663 9.33325C13.0663 8.74428 12.5889 8.26683 11.9999 8.26683ZM10.9335 17.8646V15.7318H13.0663V17.8646H10.9335Z"
 												fill="currentColor"
 											></path>
@@ -826,17 +858,20 @@ export default function WalletSettingsPage() {
 									>
 										<path
 											fillRule="evenodd"
-											clip-rule="evenodd"
+											clipRule="evenodd"
 											d="M12.2886 11.9993L8.3996 8.11035L10.1674 6.34258L15.8242 11.9994L14.0565 13.7672L14.0563 13.7671L10.1672 17.6562L8.39941 15.8885L12.2886 11.9993Z"
 											fill="currentColor"
 										></path>
 									</svg>
 								</div>
 							</div>
-						</div>
-						<div className=" mt-2"></div>
+						</div> */}
+						<div className="mt-2"></div>
 						<div className="bg-background-2 rounded-4 [&amp; > *]:h-[52px] ">
-							<div className="flex items-center justify-between cursor-pointer my-2 py-4 px-4">
+							<div
+								onClick={handleLogout}
+								className="flex items-center justify-between cursor-pointer my-2 py-4 px-4"
+							>
 								<div className="flex items-center flex-row space-x-4">
 									<div className="bg-utility-1-opacity-5 rounded-full p-2">
 										<svg
@@ -849,7 +884,7 @@ export default function WalletSettingsPage() {
 										>
 											<path
 												fillRule="evenodd"
-												clip-rule="evenodd"
+												clipRule="evenodd"
 												d="M7 8V10L5 10V21H19V10L17 10V8C17 5.23858 14.7614 3 12 3C9.23858 3 7 5.23858 7 8ZM14.5 10V8C14.5 6.61929 13.3807 5.5 12 5.5C10.6193 5.5 9.5 6.61929 9.5 8V10H14.5ZM13.5 18V13H10.5V18H13.5Z"
 												fill="currentColor"
 											></path>
@@ -857,15 +892,14 @@ export default function WalletSettingsPage() {
 									</div>
 									<div>
 										<p className="typography-subheader-16 text-utility-1-default font-medium   text-unset  ">
-											Lock
+											Logout
 										</p>
 										<p className="typography-body-14 text-utility-1-opacity-1 font-normal   text-unset  "></p>
 									</div>
 								</div>
-								<div></div>
 							</div>
 						</div>
-						<div className=" mt-2"></div>
+						<div className="mt-2"></div>
 					</div>
 				</div>
 			</div>

@@ -1,4 +1,4 @@
-export default function WalletAddressesPage() {
+export default function WalletSearchPage() {
 	return (
 		<div className="relative flex flex-col flex-1 w-full h-full self-center md:max-w-[438px] p-4">
 			<div className="flex items-center w-full h-full self-center pb-4 md:max-w-[438px]">

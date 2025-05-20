@@ -1,18 +1,19 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 export default function WalletSearchPage() {
+	const router = useRouter();
+
 	return (
 		<div className="relative flex flex-col flex-1 w-full h-full self-center md:max-w-[438px] p-4">
 			<div className="flex items-center w-full h-full self-center pb-4 md:max-w-[438px]">
 				<div className="flex w-8 justify-start">
-					<div
-						className="flex "
-						data-tooltip-id="default-tooltip"
-						data-tooltip-place="top-end"
-						data-tooltip-role="tooltip"
-					>
+					<div className="flex">
 						<button
-							data-testid="back-navigation-button"
+							onClick={() => router.back()}
 							type="button"
-							className="outline-none bg-transparent text-background-1 p-1.5 icon-square-button !p-0   "
+							className="outline-none bg-transparent text-background-1 icon-square-button cursor-pointer"
 						>
 							<svg
 								className="text-utility-1-opacity-1"
@@ -24,7 +25,7 @@ export default function WalletSearchPage() {
 							>
 								<path
 									fillRule="evenodd"
-									clip-rule="evenodd"
+									clipRule="evenodd"
 									d="M3.00001 12.2722L10.0711 5.20117L11.8388 6.96894L7.78434 11.0234L21.001 11.0234L21.001 13.5234L7.78554 13.5234L11.8388 17.5767L10.0711 19.3445L3.00001 12.2734L3.00061 12.2728L3.00001 12.2722Z"
 									fill="currentColor"
 								></path>
@@ -86,7 +87,7 @@ export default function WalletSearchPage() {
 							>
 								<path
 									fillRule="evenodd"
-									clip-rule="evenodd"
+									clipRule="evenodd"
 									d="M9.16667 5C11.4679 5 13.3333 6.86548 13.3333 9.16667C13.3333 11.4679 11.4679 13.3333 9.16667 13.3333C6.86548 13.3333 5 11.4679 5 9.16667C5 6.86548 6.86548 5 9.16667 5ZM9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667C15.8333 10.3256 15.5376 11.4154 15.0175 12.3649L17.5763 14.9238L16.2505 16.2496L14.9248 17.5753L12.3663 15.0167C11.4166 15.5373 10.3262 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5Z"
 									fill="currentColor"
 								></path>

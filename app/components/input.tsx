@@ -64,49 +64,53 @@ export default function Input({
 					onChange={(e) => onChange(e.target.value)}
 				/>
 
-				<div className="flex space-x-2">
-					<div className="flex items-center">
-						<div
-							className="flex w-full"
-							data-tooltip-id="default-tooltip"
-							data-tooltip-place="top-end"
-							data-tooltip-role="tooltip"
-						>
-							<button
-								onClick={() => setShowPassword((prev) => !prev)}
-								data-testid="input-action-show-password"
-								type="button"
-								className={clsx(
-									"outline-none bg-transparent text-background-1 py-4 px-4 text-subheader-16 leading-subheader-16 default-button !p-0 w-full",
-									isPassword && showPassword
-										? "opacity-100"
-										: "opacity-65"
-								)}
-								tabIndex={-1}
+				{type === "password" && (
+					<div className="flex space-x-2">
+						<div className="flex items-center">
+							<div
+								className="flex w-full"
+								data-tooltip-id="default-tooltip"
+								data-tooltip-place="top-end"
+								data-tooltip-role="tooltip"
 							>
-								<svg
-									className="text-primary-default"
-									fill="none"
-									width="16"
-									height="16"
-									viewBox="0 0 24 24"
-									xmlns="http://www.w3.org/2000/svg"
+								<button
+									onClick={() =>
+										setShowPassword((prev) => !prev)
+									}
+									data-testid="input-action-show-password"
+									type="button"
+									className={clsx(
+										"outline-none bg-transparent text-background-1 py-4 px-4 text-subheader-16 leading-subheader-16 default-button !p-0 w-full",
+										isPassword && showPassword
+											? "opacity-100"
+											: "opacity-65"
+									)}
+									tabIndex={-1}
 								>
-									<path
-										fillRule="evenodd"
-										clipRule="evenodd"
-										d="M2.93933 5.06077L18.9393 21.0608L21.0606 18.9395L18.6138 16.4926L23 12L17.4447 6.30998C14.7539 3.55392 10.5671 3.26407 7.56164 5.44044L5.06065 2.93945L2.93933 5.06077ZM9.68714 7.56594C10.3788 7.20443 11.1655 7 12 7C14.7614 7 17 9.23858 17 12C17 12.8345 16.7956 13.6212 16.4341 14.3129L9.68714 7.56594Z"
-										fill="currentColor"
-									/>
-									<path
-										d="M1 12L3.29029 9.65416L13.4882 19.8521C11.0565 20.3404 8.43922 19.6197 6.55528 17.69L1 12Z"
-										fill="currentColor"
-									/>
-								</svg>
-							</button>
+									<svg
+										className="text-primary-default"
+										fill="none"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											fillRule="evenodd"
+											clipRule="evenodd"
+											d="M2.93933 5.06077L18.9393 21.0608L21.0606 18.9395L18.6138 16.4926L23 12L17.4447 6.30998C14.7539 3.55392 10.5671 3.26407 7.56164 5.44044L5.06065 2.93945L2.93933 5.06077ZM9.68714 7.56594C10.3788 7.20443 11.1655 7 12 7C14.7614 7 17 9.23858 17 12C17 12.8345 16.7956 13.6212 16.4341 14.3129L9.68714 7.56594Z"
+											fill="currentColor"
+										/>
+										<path
+											d="M1 12L3.29029 9.65416L13.4882 19.8521C11.0565 20.3404 8.43922 19.6197 6.55528 17.69L1 12Z"
+											fill="currentColor"
+										/>
+									</svg>
+								</button>
+							</div>
 						</div>
 					</div>
-				</div>
+				)}
 			</div>
 
 			{tip && (

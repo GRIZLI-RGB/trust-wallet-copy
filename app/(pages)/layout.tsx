@@ -1,12 +1,12 @@
 "use client";
 
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import clsx from "clsx";
 import { ClipLoader } from "react-spinners";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
-import { _globalLoading_, _userLoading_ } from "../utils/store";
+import { _globalLoading_, _userAuth_, _userLoading_ } from "../utils/store";
 import { walletSettings } from "../utils/api";
 
 export default function PagesLayout({
@@ -17,6 +17,7 @@ export default function PagesLayout({
 	const pathname = usePathname();
 
 	const globalLoading = useAtomValue(_globalLoading_);
+	const setUserAuth = useSetAtom(_userAuth_);
 	const [userLoading, setUserLoading] = useAtom(_userLoading_);
 
 	useEffect(() => {
@@ -24,22 +25,16 @@ export default function PagesLayout({
 
 		if (!token) {
 			if (pathname !== "/auth") window.location.href = "/auth";
+			setUserLoading(false);
 		}
 
 		if (token) {
 			walletSettings()
-				.then(() => {
-					if (pathname === "/auth") window.location.href = "/wallet";
-
-					if (pathname !== "/auth") setUserLoading(false);
-				})
+				.then(() => setUserAuth(true))
 				.catch(() => {
-					localStorage.removeItem("token");
-
 					if (pathname !== "/auth") window.location.href = "/auth";
-
-					setUserLoading(false);
-				});
+				})
+				.finally(() => setUserLoading(false));
 		}
 	}, [pathname]);
 

@@ -1,10 +1,14 @@
 "use client";
 
 import Input from "@/app/components/input";
-import { authCreateWallet, authImportWallet } from "@/app/utils/api";
-import { _globalLoading_ } from "@/app/utils/store";
+import {
+	authCreateWallet,
+	authImportWallet,
+	walletCreateProfile,
+} from "@/app/utils/api";
+import { _globalLoading_, _userAuth_ } from "@/app/utils/store";
 import clsx from "clsx";
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
@@ -17,6 +21,7 @@ export default function AuthPage() {
 		| "default"
 		| "set-password"
 		| "enter-with-password"
+		| "confirm-password"
 		| "verify-safety"
 		| "help-improve"
 		| "import-with-secret-phrase"
@@ -27,6 +32,7 @@ export default function AuthPage() {
 		null
 	);
 
+	const [newWalletName, setNewWalletName] = useState("");
 	const [password, setPassword] = useState("");
 	const [passwordConfirmation, setPasswordConfirmation] = useState("");
 	const [isReadAndAgree, setIsReadAndAgree] = useState(false);
@@ -67,6 +73,7 @@ export default function AuthPage() {
 	}, [secretPhraseWords]);
 
 	const setGlobalLoading = useSetAtom(_globalLoading_);
+	const userAuth = useAtomValue(_userAuth_);
 
 	const handleEnterSecretPhrase = async () => {
 		setGlobalLoading(true);
@@ -80,22 +87,33 @@ export default function AuthPage() {
 		try {
 			let res;
 
-			if (account === "newAccount") {
-				res = await authCreateWallet(data);
-			}
+			if (userAuth) {
+				await walletCreateProfile({
+					name: newWalletName,
+					password,
+					method: "import",
+					seed_words: secretWords.join(" "),
+				});
 
-			if (account === "oldAccount") {
-				res = await authImportWallet(data);
-			}
-
-			if (res?.data) {
-				const token = res.data.data.access_token;
-
-				localStorage.setItem("token", token);
-
-				router.push("/wallet");
+				window.location.href = "/wallet";
 			} else {
-				alert("Unknown error");
+				if (account === "newAccount") {
+					res = await authCreateWallet(data);
+				}
+
+				if (account === "oldAccount") {
+					res = await authImportWallet(data);
+				}
+
+				if (res?.data) {
+					const token = res.data.data.access_token;
+
+					localStorage.setItem("token", token);
+
+					router.push("/wallet");
+				} else {
+					alert("Unknown error");
+				}
 			}
 		} catch {
 			alert("Unknown error");
@@ -103,6 +121,137 @@ export default function AuthPage() {
 			setGlobalLoading(false);
 		}
 	};
+
+	const handleCreateWalletProfile = () => {
+		setGlobalLoading(true);
+
+		walletCreateProfile({
+			name: newWalletName,
+			password,
+			method: "create",
+		})
+			.then(() => (window.location.href = "/wallet"))
+			.catch(() => {
+				setGlobalLoading(false);
+				alert("Bad password");
+			});
+	};
+
+	if (tab === "confirm-password") {
+		return (
+			<div className="relative flex flex-col flex-grow w-full h-full self-center pt-2 justify-center pt-0 md:max-w-[438px]">
+				<div className="bg-backgroundPrimary border border-line rounded p-6 mb-11">
+					<div className="flex justify-center my-4">
+						<svg
+							fill="none"
+							width="58"
+							height="66"
+							viewBox="0 0 58 66"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								d="M0 9.38949L28.8907 0V65.0042C8.2545 56.3369 0 39.7248 0 30.3353V9.38949Z"
+								fill="#48FF91"
+							></path>
+							<path
+								d="M57.7822 9.38949L28.8915 0V65.0042C49.5277 56.3369 57.7822 39.7248 57.7822 30.3353V9.38949Z"
+								fill="url(#paint0_linear_896_19677)"
+							></path>
+							<defs>
+								<linearGradient
+									id="paint0_linear_896_19677"
+									x1="28.8911"
+									y1="73.5101"
+									x2="52.5376"
+									y2="-12.0198"
+									gradientUnits="userSpaceOnUse"
+								>
+									<stop
+										offset="0.264213"
+										stopColor="#48FF91"
+									></stop>
+									<stop
+										offset="0.662556"
+										stopColor="#0094FF"
+									></stop>
+									<stop
+										offset="0.800473"
+										stopColor="#0038FF"
+									></stop>
+									<stop
+										offset="0.888911"
+										stopColor="#0500FF"
+									></stop>
+								</linearGradient>
+							</defs>
+						</svg>
+					</div>
+					<div className="flex flex-col items-center text-center space-y-4 mt-4">
+						<h2
+							data-testid="onboarding-step-title"
+							className="screamer-text text-utility-1-default font-semibold   text-unset  "
+						>
+							Confirm Password
+						</h2>
+						<p className="title-text text-textSecondary font-normal   text-unset  ">
+							Please confirm your password for your wallet by
+							re-entering it here.
+						</p>
+						<div className="w-full mt-6 flex flex-col space-y-6">
+							<div className="space-y-6">
+								<Input
+									label="Name"
+									value={newWalletName}
+									onChange={setNewWalletName}
+									type="text"
+								/>
+								<Input
+									label="Password"
+									value={password}
+									onChange={setPassword}
+									type="password"
+								/>
+
+								<div className="flex w-full items-center justify-between mt-6 space-x-4">
+									<div className="flex w-full">
+										<button
+											onClick={() => setTab("default")}
+											type="button"
+											className="outline-none bg-transparent text-background-1 py-4 px-4 text-subheader-16 leading-subheader-16 default-button !p-0 w-full  "
+										>
+											<p className="title-text text-primary font-medium   text-unset  ">
+												Back
+											</p>
+										</button>
+									</div>
+									<div className="flex w-full">
+										<button
+											onClick={() => {
+												if (account === "newAccount") {
+													handleCreateWalletProfile();
+												}
+
+												if (account === "oldAccount") {
+													setTab("verify-safety");
+												}
+											}}
+											disabled={
+												password.length <= 3 ||
+												newWalletName.length <= 3
+											}
+											className="outline-none bg-primary-default text-on-primary hover:bg-primary-hover active:bg-primary-pressed disabled:bg-primary-pressed py-4 px-4 text-subheader-16 leading-subheader-16 default-button  w-full  "
+										>
+											Next
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
 
 	if (
 		tab === "import-with-secret-phrase" ||
@@ -207,7 +356,7 @@ export default function AuthPage() {
 														>
 															<path
 																fillRule="evenodd"
-																clip-rule="evenodd"
+																clipRule="evenodd"
 																d="M9.99976 10.2397L6.75895 6.99885L5.28581 8.47199L9.99986 13.186L11.473 11.7129L11.4729 11.7128L14.7139 8.47183L13.2407 6.99869L9.99976 10.2397Z"
 																fill="currentColor"
 															></path>
@@ -222,9 +371,6 @@ export default function AuthPage() {
 														aria-orientation="vertical"
 														role="listbox"
 														tabIndex={0}
-														data-headlessui-state="open"
-														data-open=""
-														// style="--button-width: 356px;"
 													>
 														{[12, 18, 24].map(
 															(numberWords) => (
@@ -289,7 +435,7 @@ export default function AuthPage() {
 																				>
 																					<path
 																						fillRule="evenodd"
-																						clip-rule="evenodd"
+																						clipRule="evenodd"
 																						d="M5.86414 14.0099L5.8629 14.0111L7.63067 15.7789L7.6319 15.7776L7.63201 15.7777L9.39978 14.01L9.39967 14.0099L17.0588 6.35077L15.291 4.58301L7.6319 12.2421L4.68574 9.29593L2.91797 11.0637L5.86414 14.0099Z"
 																						fill="currentColor"
 																					></path>
@@ -375,9 +521,13 @@ export default function AuthPage() {
 										data-tooltip-role="tooltip"
 									>
 										<button
-											onClick={() =>
-												setTab("set-password")
-											}
+											onClick={() => {
+												if (userAuth) {
+													setTab("confirm-password");
+												} else {
+													setTab("set-password");
+												}
+											}}
 											type="button"
 											className="outline-none bg-transparent text-background-1 py-4 px-4 text-subheader-16 leading-subheader-16 default-button !p-0 w-full  "
 										>
@@ -465,7 +615,7 @@ export default function AuthPage() {
 									Secure and trusted multi-chain crypto wallet
 								</p>
 							</div>
-							<form className="flex flex-col w-full">
+							<div className="flex flex-col w-full">
 								<div className="flex flex-col space-y-2">
 									<div
 										data-testid="password-field-input-group"
@@ -542,15 +692,12 @@ export default function AuthPage() {
 										data-tooltip-place="top-end"
 										data-tooltip-role="tooltip"
 									>
-										<button
-											type="submit"
-											className="outline-none bg-primary-default text-on-primary hover:bg-primary-hover active:bg-primary-pressed disabled:bg-primary-pressed py-4 px-4 text-subheader-16 leading-subheader-16 default-button w-full"
-										>
+										<button className="outline-none bg-primary-default text-on-primary hover:bg-primary-hover active:bg-primary-pressed disabled:bg-primary-pressed py-4 px-4 text-subheader-16 leading-subheader-16 default-button w-full">
 											Unlock
 										</button>
 									</div>
 								</div>
-							</form>
+							</div>
 						</div>
 					</div>
 					<div className="flex flex-col items-center justify-end text-center w-full border-t-line border-t pt-4">
@@ -902,10 +1049,7 @@ export default function AuthPage() {
 									data-tooltip-place="top-end"
 									data-tooltip-role="tooltip"
 								>
-									<button
-										type="submit"
-										className="outline-none bg-primary-default text-on-primary hover:bg-primary-hover active:bg-primary-pressed disabled:bg-primary-pressed py-4 px-4 text-subheader-16 leading-subheader-16 default-button  w-full  "
-									>
+									<button className="outline-none bg-primary-default text-on-primary hover:bg-primary-hover active:bg-primary-pressed disabled:bg-primary-pressed py-4 px-4 text-subheader-16 leading-subheader-16 default-button  w-full  ">
 										Share data
 									</button>
 								</div>
@@ -1321,7 +1465,7 @@ export default function AuthPage() {
 										</defs>
 									</svg>
 								</div>
-								<form className="mt-6 flex flex-col space-y-4">
+								<div className="mt-6 flex flex-col space-y-4">
 									{[
 										{
 											label: "Only you know this secret phrase.",
@@ -1378,7 +1522,7 @@ export default function AuthPage() {
 															>
 																<path
 																	fillRule="evenodd"
-																	clip-rule="evenodd"
+																	clipRule="evenodd"
 																	d="M5.86414 14.0099L5.8629 14.0111L7.63067 15.7789L7.6319 15.7776L7.63201 15.7777L9.39978 14.01L9.39967 14.0099L17.0588 6.35077L15.291 4.58301L7.6319 12.2421L4.68574 9.29593L2.91797 11.0637L5.86414 14.0099Z"
 																	fill="currentColor"
 																></path>
@@ -1406,9 +1550,15 @@ export default function AuthPage() {
 											data-tooltip-role="tooltip"
 										>
 											<button
-												onClick={() =>
-													setTab("set-password")
-												}
+												onClick={() => {
+													if (userAuth) {
+														setTab(
+															"confirm-password"
+														);
+													} else {
+														setTab("set-password");
+													}
+												}}
 												type="button"
 												className="outline-none bg-transparent text-background-1 py-4 px-4 text-subheader-16 leading-subheader-16 default-button !p-0 w-full"
 											>
@@ -1429,7 +1579,6 @@ export default function AuthPage() {
 														"import-with-secret-phrase"
 													)
 												}
-												type="submit"
 												disabled={
 													!Object.values(
 														verifyAccepts
@@ -1441,7 +1590,7 @@ export default function AuthPage() {
 											</button>
 										</div>
 									</div>
-								</form>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -1512,7 +1661,7 @@ export default function AuthPage() {
 							be reset and is separate from your mobile wallet.
 						</p>
 						<div className="w-full mt-6 flex flex-col space-y-6">
-							<form className="space-y-6">
+							<div className="space-y-6">
 								<div className="flex flex-col space-y-2">
 									<Input
 										label="New password"
@@ -1612,7 +1761,7 @@ export default function AuthPage() {
 													>
 														<path
 															fillRule="evenodd"
-															clip-rule="evenodd"
+															clipRule="evenodd"
 															d="M5.86414 14.0099L5.8629 14.0111L7.63067 15.7789L7.6319 15.7776L7.63201 15.7777L9.39978 14.01L9.39967 14.0099L17.0588 6.35077L15.291 4.58301L7.6319 12.2421L4.68574 9.29593L2.91797 11.0637L5.86414 14.0099Z"
 															fill="currentColor"
 														></path>
@@ -1666,7 +1815,6 @@ export default function AuthPage() {
 											onClick={() =>
 												setTab("verify-safety")
 											}
-											type="submit"
 											disabled={
 												!isReadAndAgree ||
 												!passwordConditions.isAllGood
@@ -1677,7 +1825,7 @@ export default function AuthPage() {
 										</button>
 									</div>
 								</div>
-							</form>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -1750,7 +1898,11 @@ export default function AuthPage() {
 									<div
 										onClick={() => {
 											setAccount("newAccount");
-											setTab("set-password");
+											if (userAuth) {
+												setTab("confirm-password");
+											} else {
+												setTab("set-password");
+											}
 										}}
 										role="button"
 										className="outline-0  cursor-pointer"
@@ -1806,7 +1958,11 @@ export default function AuthPage() {
 									<div
 										onClick={() => {
 											setAccount("oldAccount");
-											setTab("set-password");
+											if (userAuth) {
+												setTab("confirm-password");
+											} else {
+												setTab("set-password");
+											}
 										}}
 										role="button"
 										className="outline-0  cursor-pointer"
