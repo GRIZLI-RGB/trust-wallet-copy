@@ -28,7 +28,12 @@ export default function Input({
 	const [showPassword, setShowPassword] = useState(false);
 
 	const isPassword = type === "password";
-	const inputType = isPassword && !showPassword ? "password" : type;
+	const inputType =
+		type !== "password"
+			? type
+			: isPassword && !showPassword
+			? "password"
+			: "text";
 
 	return (
 		<div className={clsx("text-start", className)}>
