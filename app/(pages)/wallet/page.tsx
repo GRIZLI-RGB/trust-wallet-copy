@@ -248,7 +248,7 @@ export default function WalletPage() {
 										<button
 											onClick={() => router.push("/auth")}
 											type="button"
-											className="outline-none bg-utility-1-opacity-6 text-utility-1-default hover:!bg-white/10 py-[9px] px-4 text-subheader-14 leading-subheader-14 default-button  w-auto "
+											className="outline-none bg-utility-1-opacity-6 text-utility-1-default hover:!bg-black/10 dark:hover:!bg-white/10 py-[9px] px-4 text-subheader-14 leading-subheader-14 default-button  w-auto "
 										>
 											<div className="-mx-0.5">
 												<p className="body-text text-utility-1-default font-medium   text-unset  ">
@@ -294,7 +294,7 @@ export default function WalletPage() {
 														className={clsx(
 															"flex items-center py-1.5 p-4 rounded-3",
 															!walletProfile.is_default &&
-																"hover:!bg-white/10 cursor-pointer"
+																"hover:!bg-black/10 dark:hover:!bg-white/10 cursor-pointer"
 														)}
 													>
 														<div>
@@ -326,12 +326,12 @@ export default function WalletPage() {
 																className={clsx(
 																	"rounded-full w-5 h-5  border-2 p-[3px]",
 																	walletProfile.is_default
-																		? "border-accent"
+																		? "border-accent-light dark:border-accent"
 																		: "border-[#535355]"
 																)}
 															>
 																{walletProfile.is_default && (
-																	<div className="w-full h-full bg-accent rounded-full" />
+																	<div className="w-full h-full dark:bg-accent bg-accent-light rounded-full" />
 																)}
 															</div>
 														</div>
@@ -536,7 +536,7 @@ export default function WalletPage() {
 								<div className="flex">
 									<button
 										type="button"
-										className="group-hover:!bg-white/10 outline-none bg-utility-1-opacity-6 text-utility-1-default p-2.5 icon-circle-button"
+										className="group-hover:!bg-black/10 dark:group-hover:!bg-white/10 outline-none bg-utility-1-opacity-6 text-utility-1-default p-2.5 icon-circle-button"
 									>
 										{icon}
 									</button>

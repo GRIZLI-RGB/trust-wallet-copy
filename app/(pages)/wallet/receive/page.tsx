@@ -403,18 +403,18 @@ export default function WalletReceivePage() {
 													});
 											}}
 											type="button"
-											className="outline-none bg-accent/10 !text-accent hover:bg-accent/20 disabled:bg-primary-opacity-1 py-4 px-4 text-subheader-16 leading-subheader-16 default-button  w-full  overflow-hidden"
+											className="outline-none !text-accent-light bg-accent-light/10 dark:bg-accent/10 dark:!text-accent dark:hover:bg-accent/20 hover:bg-accent-light/20 disabled:bg-primary-opacity-1 py-4 px-4 text-subheader-16 leading-subheader-16 default-button  w-full  overflow-hidden"
 										>
 											<div className="flex items-center space-x-1 overflow-hidden">
 												<div className="overflow-hidden break-words">
-													<p className="typography-subheader-14 text-accent font-medium   text-unset  ">
+													<p className="typography-subheader-14 text-accent-light dark:text-accent font-medium  text-unset">
 														{
 															selectedCrypto?.address
 														}
 													</p>
 												</div>
 												<svg
-													className="shrink-0 "
+													className="shrink-0"
 													fill="none"
 													width="16"
 													height="16"

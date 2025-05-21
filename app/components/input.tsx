@@ -45,7 +45,7 @@ export default function Input({
 			<div
 				className={clsx(
 					"input-field space-x-1 h-14 relative",
-					focused && "!border-accent"
+					focused && "!border-accent-light dark:!border-accent"
 				)}
 			>
 				<input

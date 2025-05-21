@@ -90,7 +90,7 @@ export default function WalletLayout({
 		<>
 			<Toaster />
 
-			<Tooltip id="default-tooltip" />
+			<Tooltip id="default-tooltip" className="!z-[99999] !bg-primary-light !text-black dark:!bg-[#1b1b1c] !shadow-sm dark:!text-white !opacity-100"/>
 
 			{children}
 
@@ -99,7 +99,7 @@ export default function WalletLayout({
 				!isSendPage &&
 				!isReceivePage &&
 				!isBuyAndSalePage && (
-					<div className="flex flex-col bg-[#1b1b1c] z-[10]">
+					<div className="flex flex-col dark:bg-[#1b1b1c] z-[10] bg-white">
 						<div className="flex items-center z-10 flex-shrink-0 self-center w-full justify-between h-[72px] px-6 border-t border-utility-1-opacity-5 md:max-w-[438px]">
 							<NavButton
 								label="Home"

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import "./styles/globals.css";
+import ClientWrapper from "./components/client-wrapper";
 
 export const metadata: Metadata = {
 	title: "Trust Wallet",
@@ -12,10 +13,10 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" data-theme="dark">
+		<html lang="en">
 			<body className={`antialiased`}>
 				<div id="root" data-id="root">
-					{children}
+					<ClientWrapper>{children}</ClientWrapper>
 				</div>
 			</body>
 		</html>
