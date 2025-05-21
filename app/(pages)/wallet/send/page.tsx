@@ -515,6 +515,7 @@ export default function WalletSendPage() {
 
 							<div className="flex w-full">
 								<button
+									onClick={() => setTab("confirm")}
 									type="button"
 									disabled={!amount || !recipientAddress}
 									className="outline-none bg-primary-default text-on-primary hover:bg-primary-hover active:bg-primary-pressed disabled:bg-primary-pressed py-4 px-4 text-subheader-16 leading-subheader-16 default-button  w-full  "
