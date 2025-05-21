@@ -221,99 +221,114 @@ export default function WalletReceivePage() {
 						<div>
 							<div className="infinite-scroll-component overflow-y-auto scrollbar-hidden">
 								<div className="flex flex-col space-y-5">
-									{(receiveList || []).map((item) => (
-										<div
-											onClick={() => {
-												setSelectedCrypto(item);
-												setIsOpenQr(true);
-											}}
-											key={item.crypto_id}
-											role="button"
-											className="outline-0 cursor-pointer"
-											tabIndex={0}
-										>
-											<div className="flex justify-between space-x-2 items-center">
-												<div className="opacity-100">
-													<div className="relative min-w-min">
-														<div className="flex items-center justify-center w-full h-full flex-1 flex-row">
-															<div className="rounded-full overflow-hidden  ">
-																<div className="w-9 h-9 flex items-center">
-																	<img
-																		alt=""
-																		className="w-full h-full rounded-full"
-																		width="100%"
-																		height="100%"
-																		src={`${process.env.NEXT_PUBLIC_SITE_URL}/${item.crypto.icon}`}
-																	/>
+									{(receiveList || [])
+										.filter(
+											(item) =>
+												item.crypto.full_name.includes(
+													search
+												) ||
+												item.crypto.name.includes(
+													search
+												) ||
+												item.crypto.network_name.includes(
+													search
+												)
+										)
+										.map((item) => (
+											<div
+												onClick={() => {
+													setSelectedCrypto(item);
+													setIsOpenQr(true);
+												}}
+												key={item.crypto_id}
+												role="button"
+												className="outline-0 cursor-pointer"
+												tabIndex={0}
+											>
+												<div className="flex justify-between space-x-2 items-center">
+													<div className="opacity-100">
+														<div className="relative min-w-min">
+															<div className="flex items-center justify-center w-full h-full flex-1 flex-row">
+																<div className="rounded-full overflow-hidden  ">
+																	<div className="w-9 h-9 flex items-center">
+																		<img
+																			alt=""
+																			className="w-full h-full rounded-full"
+																			width="100%"
+																			height="100%"
+																			src={`${process.env.NEXT_PUBLIC_SITE_URL}/${item.crypto.icon}`}
+																		/>
+																	</div>
 																</div>
 															</div>
 														</div>
 													</div>
-												</div>
-												<div className="flex-grow opacity-100">
-													<div className="flex flex-row space-x-1 items-center ">
-														<div>
+													<div className="flex-grow opacity-100">
+														<div className="flex flex-row space-x-1 items-center ">
+															<div>
+																<p
+																	data-testid="asset-symbol"
+																	className="typography-subheader-16 text-utility-1-default font-medium   text-unset  "
+																>
+																	{
+																		item
+																			.crypto
+																			.name
+																	}
+																</p>
+															</div>
+															<div>
+																<div
+																	data-testid="asset-type"
+																	className="flex items-center justify-center typography-caption-12 font-medium rounded-6 bg-utility-1-opacity-4 text-utility-1-default px-2 py-0.5 min-h-5 space-x-1"
+																>
+																	{
+																		item
+																			.crypto
+																			.network_name
+																	}
+																</div>
+															</div>
+														</div>
+														<div className="flex flex-row space-x-1">
 															<p
-																data-testid="asset-symbol"
-																className="typography-subheader-16 text-utility-1-default font-medium   text-unset  "
+																data-testid="asset-blockchain"
+																className="typography-body-14 text-utility-1-default font-normal   text-unset  "
 															>
 																{
 																	item.crypto
-																		.name
+																		.full_name
 																}
 															</p>
 														</div>
-														<div>
-															<div
-																data-testid="asset-type"
-																className="flex items-center justify-center typography-caption-12 font-medium rounded-6 bg-utility-1-opacity-4 text-utility-1-default px-2 py-0.5 min-h-5 space-x-1"
-															>
+													</div>
+													<div className="opacity-100">
+														<button
+															data-testid="toggle-asset-switch"
+															className="switch"
+															id="headlessui-switch-«r1s»"
+															role="switch"
+															type="button"
+															tabIndex={0}
+															aria-checked="true"
+															data-headlessui-state="checked"
+															data-checked=""
+														>
+															<span className="sr-only">
 																{
 																	item.crypto
-																		.network_name
+																		.full_name
 																}
-															</div>
-														</div>
+															</span>
+															<span
+																aria-hidden="true"
+																className="switch__toggle"
+															></span>
+														</button>
 													</div>
-													<div className="flex flex-row space-x-1">
-														<p
-															data-testid="asset-blockchain"
-															className="typography-body-14 text-utility-1-default font-normal   text-unset  "
-														>
-															{
-																item.crypto
-																	.full_name
-															}
-														</p>
-													</div>
-												</div>
-												<div className="opacity-100">
-													<button
-														data-testid="toggle-asset-switch"
-														className="switch"
-														id="headlessui-switch-«r1s»"
-														role="switch"
-														type="button"
-														tabIndex={0}
-														aria-checked="true"
-														data-headlessui-state="checked"
-														data-checked=""
-													>
-														<span className="sr-only">
-															{
-																item.crypto
-																	.full_name
-															}
-														</span>
-														<span
-															aria-hidden="true"
-															className="switch__toggle"
-														></span>
-													</button>
 												</div>
 											</div>
-										</div>
-									))}
+										))}
 								</div>
 							</div>
 						</div>
