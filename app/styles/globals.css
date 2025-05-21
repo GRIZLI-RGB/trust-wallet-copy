@@ -287,6 +287,26 @@ body {
 			var(--twc-on-primary-opacity, var(--tw-text-opacity))
 	);
 }
+.text-warning-1-default {
+    --tw-text-opacity: 1;
+    color: hsl(var(--twc-warning-1-default) / 1);
+    color: hsl(var(--twc-warning-1-default) / var(--twc-warning-1-default-opacity, var(--tw-text-opacity)));
+}
+
+.typography-body-12 {
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.warning-alert {
+    display: flex;
+    width: 100%;
+    border-radius: 8px;
+    padding: 8px;
+    --tw-bg-opacity: 1;
+    background-color: hsl(var(--twc-warning-1-opacity-1) / 1);
+    background-color: hsl(var(--twc-warning-1-opacity-1) / var(--twc-warning-1-opacity-1-opacity, var(--tw-bg-opacity)));
+}
 
 .bg-primary-default {
 	--tw-bg-opacity: 1;

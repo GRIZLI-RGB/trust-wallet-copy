@@ -755,7 +755,7 @@ export default function WalletSwapPage() {
 									Choose network
 								</h5>
 							</div>
-							<div>
+							{/* <div>
 								<div className="flex w-full">
 									<button
 										data-testid="close-modal-button"
@@ -780,7 +780,7 @@ export default function WalletSwapPage() {
 										</svg>
 									</button>
 								</div>
-							</div>
+							</div> */}
 						</div>
 
 						{/* Content */}
@@ -945,7 +945,7 @@ export default function WalletSwapPage() {
 										: "pay"}
 								</h5>
 							</div>
-							<div>
+							{/* <div>
 								<div className="flex w-full">
 									<button
 										data-testid="close-modal-button"
@@ -970,7 +970,7 @@ export default function WalletSwapPage() {
 										</svg>
 									</button>
 								</div>
-							</div>
+							</div> */}
 						</div>
 
 						{/* Content */}

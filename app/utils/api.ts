@@ -79,3 +79,9 @@ export const makeWalletExchange = async (data: {
 	to_crypto_id: number;
 	amount: number;
 }) => await api.post("/wallet/exchange", data);
+
+export const getWalletReceiveList = async () =>
+	api.get("/wallet/crypto/receive-list");
+
+export const getWalletReceiveAddress = async (symbol: string) =>
+	api.get(`/wallet/crypto/receive/${symbol}`);
