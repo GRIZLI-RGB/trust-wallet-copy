@@ -85,3 +85,12 @@ export const getWalletReceiveList = async () =>
 
 export const getWalletReceiveAddress = async (symbol: string) =>
 	api.get(`/wallet/crypto/receive/${symbol}`);
+
+export const getWalletSendList = async () =>
+	api.get("/wallet/crypto/send-list");
+
+export const getWalletSendData = async (symbol: string) =>
+	api.get(`/wallet/crypto/send/${symbol}`);
+
+export const sendCrypto = async (symbol: string) =>
+	await api.post(`/wallet/crypto/send/${symbol}`);
