@@ -77,12 +77,12 @@ export default function WalletSettingsColorMode() {
 							className={clsx(
 								"rounded-full w-5 h-5  border-2 p-[3px]",
 								theme === maybeTheme.toLowerCase()
-									? "border-accent"
+									? "dark:border-accent border-accent-light"
 									: "border-[#535355]"
 							)}
 						>
 							{theme === maybeTheme.toLowerCase() && (
-								<div className="w-full h-full bg-accent rounded-full" />
+								<div className="w-full h-full  dark:bg-accent bg-accent-light rounded-full" />
 							)}
 						</div>
 					</div>
