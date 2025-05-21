@@ -1,6 +1,8 @@
 "use client";
 
+import { _userApproved_ } from "@/app/utils/store";
 import clsx from "clsx";
+import { useAtomValue } from "jotai";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { Toaster } from "react-hot-toast";
@@ -50,11 +52,14 @@ const NavButton = ({ icon, label, link }: NavButtonProps) => {
 		});
 	};
 
+	const userApproved = useAtomValue(_userApproved_);
+
 	return (
 		<div
 			className={clsx(
 				"flex flex-col w-16 py-2 text-center items-center",
-				!isActive && "cursor-pointer hover:opacity-65"
+				!isActive && "cursor-pointer hover:opacity-65",
+				!userApproved && "pointer-events-none opacity-70"
 			)}
 			role="button"
 			onClick={() => router.push(link)}
@@ -90,7 +95,10 @@ export default function WalletLayout({
 		<>
 			<Toaster />
 
-			<Tooltip id="default-tooltip" className="!z-[99999] !bg-primary-light !text-black dark:!bg-[#1b1b1c] !shadow-sm dark:!text-white !opacity-100"/>
+			<Tooltip
+				id="default-tooltip"
+				className="!z-[99999] !bg-primary-light !text-black dark:!bg-[#1b1b1c] !shadow-sm dark:!text-white !opacity-100"
+			/>
 
 			{children}
 

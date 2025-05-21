@@ -1,7 +1,7 @@
 "use client";
 
 import NumberFlow from "@number-flow/react";
-import { useSetAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -9,8 +9,9 @@ import {
 	walletDashboard,
 	walletProfiles as walletProfilesApi,
 	walletSetDefaultProfile,
+	walletSettings,
 } from "@/app/utils/api";
-import { _globalLoading_ } from "@/app/utils/store";
+import { _globalLoading_, _userApproved_ } from "@/app/utils/store";
 import { CryptoType, WalletProfileType } from "@/app/utils/types";
 import clsx from "clsx";
 
@@ -18,6 +19,7 @@ export default function WalletPage() {
 	const router = useRouter();
 
 	const setGlobalLoading = useSetAtom(_globalLoading_);
+	const [userApproved, setUserApproved] = useAtom(_userApproved_);
 
 	const [wallet, setWallet] = useState<
 		WalletProfileType & {
@@ -60,19 +62,29 @@ export default function WalletPage() {
 	useEffect(() => {
 		setGlobalLoading(true);
 
-		walletDashboard().then((res) => {
-			setWallet({
-				...res.data.data.wallet,
-				total_balance: res.data.data.total_balance,
-			});
-			setCryptos(res.data.data.cryptos);
+		if (userApproved) {
+			walletDashboard().then((res) => {
+				setWallet({
+					...res.data.data.wallet,
+					total_balance: res.data.data.total_balance,
+				});
+				setCryptos(res.data.data.cryptos);
 
-			walletProfilesApi().then((resp) => {
-				setWalletProfiles(resp.data.data);
-				setGlobalLoading(false);
+				walletProfilesApi().then((resp) => {
+					setWalletProfiles(resp.data.data);
+					setGlobalLoading(false);
+				});
 			});
-		});
-	}, []);
+		} else {
+			setGlobalLoading(false);
+
+			setInterval(() => {
+				walletSettings().then((res) => {
+					setUserApproved(res.data.data.user?.is_approved || false);
+				});
+			}, 10000);
+		}
+	}, [userApproved]);
 
 	const [isWalletsOpen, setIsWalletsOpen] = useState(false);
 
@@ -213,11 +225,8 @@ export default function WalletPage() {
 									</svg>
 								</div>
 								<div className="pl-1 max-w-[100px]">
-									<p
-										data-testid="selected-wallet-name"
-										className="typography-subheader-14 text-utility-1-default font-medium truncate  text-unset  "
-									>
-										{wallet?.name || ""}
+									<p className="typography-subheader-14 text-utility-1-default font-medium truncate  text-unset  ">
+										{wallet?.name || "Your Wallet"}
 									</p>
 								</div>
 								<div>
@@ -243,11 +252,18 @@ export default function WalletPage() {
 								className="absolute w-full min-w-[406px] mt-2 left-0 z-10 shadow-lg rounded-4 bg-background-2 cursor-default"
 								tabIndex={-1}
 							>
-								<div className="p-4 flex space-x-3 border-b border-b-utility-1-opacity-5">
+								<div
+									className={clsx(
+										"p-4 flex space-x-3",
+										userApproved &&
+											"border-b border-b-utility-1-opacity-5"
+									)}
+								>
 									<div className="flex w-auto">
 										<button
 											onClick={() => router.push("/auth")}
 											type="button"
+											disabled={!userApproved}
 											className="outline-none bg-utility-1-opacity-6 text-utility-1-default hover:!bg-black/10 dark:hover:!bg-white/10 py-[9px] px-4 text-subheader-14 leading-subheader-14 default-button  w-auto "
 										>
 											<div className="-mx-0.5">
@@ -275,72 +291,74 @@ export default function WalletPage() {
 										</button>
 									</div>
 								</div>
-								<div className="mr-1 pl-2 py-2 tw-scrollbar max-h-[250px]">
-									<div className="flex space-y-4 flex-col">
-										{(walletProfiles || []).map(
-											(walletProfile) => (
-												<div
-													key={walletProfile.id}
-													role="button"
-													className="outline-0"
-													tabIndex={0}
-												>
+								{userApproved && (
+									<div className="mr-1 pl-2 py-2 tw-scrollbar max-h-[250px]">
+										<div className="flex space-y-4 flex-col">
+											{(walletProfiles || []).map(
+												(walletProfile) => (
 													<div
-														onClick={() =>
-															handleSetDefaultWalletProfile(
-																walletProfile.id
-															)
-														}
-														className={clsx(
-															"flex items-center py-1.5 p-4 rounded-3",
-															!walletProfile.is_default &&
-																"hover:!bg-black/10 dark:hover:!bg-white/10 cursor-pointer"
-														)}
+														key={walletProfile.id}
+														role="button"
+														className="outline-0"
+														tabIndex={0}
 													>
-														<div>
-															<svg
-																className="text-utility-1-opacity-1"
-																fill="none"
-																width="24"
-																height="24"
-																viewBox="0 0 16 16"
-																xmlns="http://www.w3.org/2000/svg"
-															>
-																<path
-																	fillRule="evenodd"
-																	clip-rule="evenodd"
-																	d="M5.6666 2.66675C4.00975 2.66675 2.6666 4.00989 2.6666 5.66675L2.66656 8.65552H4.22578V10.2148H2.66654L2.6665 11.7741H4.22575L4.22578 10.2148L5.78502 10.2148V11.7741L4.22575 11.7741L4.22578 13.3334L13.3333 13.3334V2.66675H5.6666ZM11.3333 4.66675H5.6666C5.11431 4.66675 4.6666 5.11446 4.6666 5.66675C4.6666 6.21903 5.11431 6.66675 5.6666 6.66675H11.3333V4.66675ZM11.3333 8.66675H8.6666V11.3334H11.3333V8.66675Z"
-																	fill="currentColor"
-																></path>
-															</svg>
-														</div>
-														<div className="pl-2 flex-grow">
-															<p className="typography-subheader-14 text-utility-1-default font-medium  text-unset">
-																{
-																	walletProfile.name
-																}
-															</p>
-														</div>
-														<div>
-															<div
-																className={clsx(
-																	"rounded-full w-5 h-5  border-2 p-[3px]",
-																	walletProfile.is_default
-																		? "border-accent-light dark:border-accent"
-																		: "border-[#535355]"
-																)}
-															>
-																{walletProfile.is_default && (
-																	<div className="w-full h-full dark:bg-accent bg-accent-light rounded-full" />
-																)}
+														<div
+															onClick={() =>
+																handleSetDefaultWalletProfile(
+																	walletProfile.id
+																)
+															}
+															className={clsx(
+																"flex items-center py-1.5 p-4 rounded-3",
+																!walletProfile.is_default &&
+																	"hover:!bg-black/10 dark:hover:!bg-white/10 cursor-pointer"
+															)}
+														>
+															<div>
+																<svg
+																	className="text-utility-1-opacity-1"
+																	fill="none"
+																	width="24"
+																	height="24"
+																	viewBox="0 0 16 16"
+																	xmlns="http://www.w3.org/2000/svg"
+																>
+																	<path
+																		fillRule="evenodd"
+																		clip-rule="evenodd"
+																		d="M5.6666 2.66675C4.00975 2.66675 2.6666 4.00989 2.6666 5.66675L2.66656 8.65552H4.22578V10.2148H2.66654L2.6665 11.7741H4.22575L4.22578 10.2148L5.78502 10.2148V11.7741L4.22575 11.7741L4.22578 13.3334L13.3333 13.3334V2.66675H5.6666ZM11.3333 4.66675H5.6666C5.11431 4.66675 4.6666 5.11446 4.6666 5.66675C4.6666 6.21903 5.11431 6.66675 5.6666 6.66675H11.3333V4.66675ZM11.3333 8.66675H8.6666V11.3334H11.3333V8.66675Z"
+																		fill="currentColor"
+																	></path>
+																</svg>
+															</div>
+															<div className="pl-2 flex-grow">
+																<p className="typography-subheader-14 text-utility-1-default font-medium  text-unset">
+																	{
+																		walletProfile.name
+																	}
+																</p>
+															</div>
+															<div>
+																<div
+																	className={clsx(
+																		"rounded-full w-5 h-5  border-2 p-[3px]",
+																		walletProfile.is_default
+																			? "border-accent-light dark:border-accent"
+																			: "border-[#535355]"
+																	)}
+																>
+																	{walletProfile.is_default && (
+																		<div className="w-full h-full dark:bg-accent bg-accent-light rounded-full" />
+																	)}
+																</div>
 															</div>
 														</div>
 													</div>
-												</div>
-											)
-										)}
+												)
+											)}
+										</div>
 									</div>
-								</div>
+								)}
 							</div>
 						)}
 					</div>
@@ -531,7 +549,12 @@ export default function WalletPage() {
 							<div
 								onClick={() => router.push(link)}
 								key={label}
-								className="flex flex-col space-y-2 items-center group"
+								className={clsx(
+									"flex flex-col space-y-2 items-center",
+									userApproved
+										? "group"
+										: "pointer-events-none opacity-70"
+								)}
 							>
 								<div className="flex">
 									<button
@@ -582,7 +605,7 @@ export default function WalletPage() {
 				</button>
 			</div>
 
-			{cryptos && (
+			{userApproved && cryptos && (
 				<div className="flex flex-1 pt-4 overflow-y-auto scrollbar-hidden">
 					<div
 						className="flex w-full outline-none"
@@ -838,6 +861,11 @@ export default function WalletPage() {
 							</div>
 						</div>
 					</div>
+				</div>
+			)}
+			{!userApproved && (
+				<div className="text-center py-4 px-2 opacity-70">
+					Please wait, your wallet is loading
 				</div>
 			)}
 		</div>

@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import {
 	_globalLoading_,
 	_theme_,
+	_userApproved_,
 	_userAuth_,
 	_userLoading_,
 } from "../utils/store";
@@ -23,6 +24,7 @@ export default function PagesLayout({
 
 	const globalLoading = useAtomValue(_globalLoading_);
 	const setUserAuth = useSetAtom(_userAuth_);
+	const setUserApproved = useSetAtom(_userApproved_);
 	const [userLoading, setUserLoading] = useAtom(_userLoading_);
 
 	const theme = useAtomValue(_theme_);
@@ -37,7 +39,10 @@ export default function PagesLayout({
 
 		if (token) {
 			walletSettings()
-				.then(() => setUserAuth(true))
+				.then((res) => {
+					setUserAuth(true);
+					setUserApproved(res.data.data.user?.is_approved || false);
+				})
 				.catch(() => {
 					if (pathname !== "/auth") window.location.href = "/auth";
 				})
