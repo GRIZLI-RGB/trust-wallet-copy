@@ -140,27 +140,27 @@ export default function WalletPage() {
 			),
 			link: "/wallet/swap",
 		},
-		{
-			label: "Buy & Sell",
-			icon: (
-				<svg
-					className="text-utility-1-default"
-					fill="none"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path
-						fillRule="evenodd"
-						clipRule="evenodd"
-						d="M21 5H3V8H21V5ZM21 10.5H3V19H21V10.5ZM6 13H11V15.5H6V13ZM15.5 13H13V15.5H15.5V13Z"
-						fill="currentColor"
-					></path>
-				</svg>
-			),
-			link: "/wallet/buy-sell",
-		},
+		// {
+		// 	label: "Buy & Sell",
+		// 	icon: (
+		// 		<svg
+		// 			className="text-utility-1-default"
+		// 			fill="none"
+		// 			width="24"
+		// 			height="24"
+		// 			viewBox="0 0 24 24"
+		// 			xmlns="http://www.w3.org/2000/svg"
+		// 		>
+		// 			<path
+		// 				fillRule="evenodd"
+		// 				clipRule="evenodd"
+		// 				d="M21 5H3V8H21V5ZM21 10.5H3V19H21V10.5ZM6 13H11V15.5H6V13ZM15.5 13H13V15.5H15.5V13Z"
+		// 				fill="currentColor"
+		// 			></path>
+		// 		</svg>
+		// 	),
+		// 	link: "/wallet/buy-sell",
+		// },
 	];
 
 	const handleSetDefaultWalletProfile = (walletId: number) => {
@@ -525,7 +525,7 @@ export default function WalletPage() {
 				<div>
 					<div
 						data-testid="dashboard-wallet-board"
-						className="flex items-center justify-between"
+						className="flex items-center justify-around"
 					>
 						{cryptoManageButtons.map(({ label, icon, link }) => (
 							<div

@@ -433,6 +433,15 @@ input::-webkit-inner-spin-button {
 	font-size: 16px;
 }
 
+.bg-background-1 {
+	--tw-bg-opacity: 1;
+	background-color: hsl(var(--twc-background-1) / 1);
+	background-color: hsl(
+		var(--twc-background-1) /
+			var(--twc-background-1-opacity, var(--tw-bg-opacity))
+	);
+}
+
 .text-iconNormal {
 	--tw-text-opacity: 1;
 	color: hsl(var(--twc-iconNormal) / 1);
