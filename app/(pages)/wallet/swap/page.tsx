@@ -1010,10 +1010,7 @@ export default function WalletSwapPage() {
 								</div>
 
 								<div className="my-2 flex flex-col space-y-4 pb-2">
-									<p
-										data-testid="category-title"
-										className="body-text text-textThird font-medium   text-unset  "
-									>
+									<p className="body-text text-textThird font-medium   text-unset  ">
 										Rest of crypto
 									</p>
 									{cryptos.available_cryptos
@@ -1023,6 +1020,18 @@ export default function WalletSwapPage() {
 												(networkPosition === "first"
 													? firstSelectedNetwork
 													: secondSelectedNetwork)
+										)
+										.filter(
+											(crypto) =>
+												crypto.full_name.includes(
+													searchCrypto
+												) ||
+												crypto.name.includes(
+													searchCrypto
+												) ||
+												crypto.network_name.includes(
+													searchCrypto
+												)
 										)
 										.map((crypto) => (
 											<div

@@ -7,6 +7,7 @@ import {
 	walletCreateProfile,
 } from "@/app/utils/api";
 import { _globalLoading_, _userAuth_ } from "@/app/utils/store";
+import axios from "axios";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
@@ -115,8 +116,16 @@ export default function AuthPage() {
 					alert("Unknown error");
 				}
 			}
-		} catch {
-			alert("Unknown error");
+		} catch (err: unknown) {
+			if (axios.isAxiosError(err)) {
+				const message =
+					err?.response?.data?.message ||
+					err?.message ||
+					"Unknown error";
+				alert(message);
+			} else {
+				alert("Unknown error");
+			}
 		} finally {
 			setGlobalLoading(false);
 		}
@@ -200,7 +209,7 @@ export default function AuthPage() {
 						<div className="w-full mt-6 flex flex-col space-y-6">
 							<div className="space-y-6">
 								<Input
-									label="Name"
+									label="Enter your new wallet name"
 									value={newWalletName}
 									onChange={setNewWalletName}
 									type="text"
@@ -287,29 +296,26 @@ export default function AuthPage() {
 								>
 									<stop
 										offset="0.264213"
-										stop-color="#48FF91"
+										stopColor="#48FF91"
 									></stop>
 									<stop
 										offset="0.662556"
-										stop-color="#0094FF"
+										stopColor="#0094FF"
 									></stop>
 									<stop
 										offset="0.800473"
-										stop-color="#0038FF"
+										stopColor="#0038FF"
 									></stop>
 									<stop
 										offset="0.888911"
-										stop-color="#0500FF"
+										stopColor="#0500FF"
 									></stop>
 								</linearGradient>
 							</defs>
 						</svg>
 					</div>
 					<div className="flex flex-col items-center text-center space-y-4 mt-4">
-						<h2
-							data-testid="onboarding-step-title"
-							className="screamer-text text-utility-1-default font-semibold   text-unset  "
-						>
+						<h2 className="screamer-text text-utility-1-default font-semibold   text-unset  ">
 							{account === "oldAccount"
 								? "Import with Secret Phrase"
 								: "Create with Secret Phrase"}
@@ -759,19 +765,19 @@ export default function AuthPage() {
 								>
 									<stop
 										offset="0.264213"
-										stop-color="#48FF91"
+										stopColor="#48FF91"
 									></stop>
 									<stop
 										offset="0.662556"
-										stop-color="#0094FF"
+										stopColor="#0094FF"
 									></stop>
 									<stop
 										offset="0.800473"
-										stop-color="#0038FF"
+										stopColor="#0038FF"
 									></stop>
 									<stop
 										offset="0.888911"
-										stop-color="#0500FF"
+										stopColor="#0500FF"
 									></stop>
 								</linearGradient>
 							</defs>
@@ -801,7 +807,7 @@ export default function AuthPage() {
 										d="M45.4522 9.35742L62.2701 14.6974L82.9242 37.7008L57.3138 77.9589C57.3138 77.9589 40.3195 91.1142 25.2489 89.4621L19.293 75.45L45.4522 9.35742Z"
 										fill="#0500FF"
 										stroke="#0500FF"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
@@ -812,42 +818,42 @@ export default function AuthPage() {
 									<path
 										d="M76.8976 38.9995L62.2107 29.8457H40.2041L73.2294 45.4651"
 										stroke="#48FF91"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
 									<path
 										d="M68.4274 53.7561L55.7986 45.8848H33.792L65.2604 59.2612"
 										stroke="#48FF91"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
 									<path
 										d="M59.8123 68.423L49.3844 61.9238H28.4419L56.8945 72.4413"
 										stroke="#48FF91"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
 									<path
 										d="M48.158 81.1971L42.9721 77.9629H25.3506L44.1006 83.9385"
 										stroke="#48FF91"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
 									<path
 										d="M36.1377 87.3679C36.7033 79.5414 38.9183 67.0498 45.8991 49.8343L57.6319 20.8945"
 										stroke="#48FF91"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
 									<path
 										d="M50.3125 79.1082C51.8106 72.9115 54.0927 65.5722 57.5341 57.0849L68.816 29.2539"
 										stroke="#48FF91"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
@@ -855,7 +861,7 @@ export default function AuthPage() {
 										d="M42.2036 49.4608C44.9058 50.5837 44.9674 52.1826 43.9481 54.8539C44.9702 52.1826 46.1995 51.2221 48.854 52.289C46.1995 51.2221 45.8578 49.5504 47.0815 46.9238C45.995 49.6064 44.9086 50.5837 42.2064 49.4608H42.2036Z"
 										fill="#48FF91"
 										stroke="#48FF91"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
@@ -863,7 +869,7 @@ export default function AuthPage() {
 										d="M50.0254 69.9002C51.9771 70.6227 52.2711 71.9052 51.6887 73.8933C52.2711 71.9052 52.9012 70.9615 54.8165 71.6699C52.9012 70.9615 52.8844 69.9254 53.5368 67.9121C52.8844 69.9254 51.9799 70.6199 50.0282 69.9002H50.0254Z"
 										fill="#48FF91"
 										stroke="#48FF91"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
@@ -874,14 +880,14 @@ export default function AuthPage() {
 									<path
 										d="M58.4175 54.9116L65.8323 36.6152"
 										stroke="#0500FF"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
 									<path
 										d="M54.0562 36.3945L69.8995 43.8878"
 										stroke="#0500FF"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
@@ -889,7 +895,7 @@ export default function AuthPage() {
 										d="M60.7925 39.5807C63.4946 40.7036 63.4051 42.4397 62.3858 45.1139C63.4079 42.4425 64.7071 41.6249 67.3617 42.6889C64.7071 41.6221 64.3655 39.8355 65.5892 37.209C64.5027 39.8916 63.4974 40.7036 60.7925 39.5807Z"
 										fill="#0500FF"
 										stroke="#0500FF"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
@@ -916,14 +922,14 @@ export default function AuthPage() {
 									<path
 										d="M28.4146 90.5776C26.4741 90.5552 25.3428 90.3984 25.3428 90.3984C25.3428 90.3984 26.4741 90.6 28.4146 90.5776Z"
 										stroke="#0500FF"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
 									<path
 										d="M62.3639 10.8622H47.8982L77.6752 33.1488C79.7418 34.6973 80.3214 37.5479 79.0221 39.7796L64.1308 65.3536C51.0764 87.769 35.0286 90.4936 28.4146 90.5776C36.1934 90.6644 57.0071 88.5614 70.5208 65.3536L85.7089 39.27C86.8766 37.265 86.5378 34.7225 84.8857 33.0928L62.3611 10.8594L62.3639 10.8622Z"
 										stroke="#0500FF"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
@@ -931,14 +937,14 @@ export default function AuthPage() {
 										d="M28.4146 90.5776C26.4741 90.5552 25.3428 90.3984 25.3428 90.3984C25.3428 90.3984 26.4741 90.6 28.4146 90.5776Z"
 										fill="white"
 										stroke="#0500FF"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
 									<path
 										d="M64.1348 65.3547L79.0261 39.7807C80.3254 37.549 79.7458 34.6956 77.6792 33.1499L47.9021 10.8633L34.8869 42.9729C22.0145 74.7241 25.3467 90.4023 25.3467 90.4023C25.3467 90.4023 26.478 90.5591 28.4185 90.5815C35.0325 90.5003 51.0832 87.7757 64.1348 65.3575V65.3547Z"
 										stroke="#0500FF"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
@@ -950,7 +956,7 @@ export default function AuthPage() {
 										d="M79.0247 39.7807C80.324 37.549 79.7444 34.6956 77.6778 33.1499L47.9008 10.8633L47.0411 12.983L75.5525 34.2924C78.0643 36.1713 78.0307 37.0645 76.4458 39.8227L62.2125 64.5623C54.834 77.3899 42.1128 90.0103 25.0737 88.1845C25.1885 89.663 25.3454 90.4023 25.3454 90.4023C25.3454 90.4023 26.4766 90.5591 28.4171 90.5815C35.0312 90.5003 51.0818 87.7757 64.1334 65.3575L79.0247 39.7835V39.7807Z"
 										fill="#F4F4F7"
 										stroke="#0500FF"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
@@ -958,7 +964,7 @@ export default function AuthPage() {
 										d="M33.5269 5.42188L47.8974 10.8626H62.3631L39.9141 5.42188H33.5269Z"
 										fill="#2D9FFF"
 										stroke="#0500FF"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
@@ -973,7 +979,7 @@ export default function AuthPage() {
 									<path
 										d="M34.8834 42.9694L47.8986 10.8598L34.2954 5.68225C32.2681 4.9094 29.9943 5.90067 29.1767 7.91399L17.6287 36.403C4.75632 68.1542 25.3432 90.3988 25.3432 90.3988C25.3432 90.3988 22.011 74.7234 34.8834 42.9694Z"
 										stroke="#0500FF"
-										stroke-width="0.5"
+										strokeWidth="0.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									></path>
@@ -986,10 +992,10 @@ export default function AuthPage() {
 											y2="10.1317"
 											gradientUnits="userSpaceOnUse"
 										>
-											<stop stop-color="#48FF91"></stop>
+											<stop stopColor="#48FF91"></stop>
 											<stop
 												offset="1"
-												stop-color="#2D9FFF"
+												stopColor="#2D9FFF"
 											></stop>
 										</linearGradient>
 									</defs>
@@ -1132,7 +1138,7 @@ export default function AuthPage() {
 									>
 										<g
 											id="Frame"
-											clip-path="url(#clip0_55864_111957)"
+											clipPath="url(#clip0_55864_111957)"
 										>
 											<g id="Group">
 												<path
@@ -1140,8 +1146,8 @@ export default function AuthPage() {
 													d="M99.4004 98.047L105.682 53.5996C106.169 50.1425 104.318 45.5742 101.565 43.4495L65.1386 15.3097L57.2062 141.193L48.4238 145.186C48.4238 145.186 92.8003 144.716 99.3959 98.047H99.4004Z"
 													fill="#48FF91"
 													stroke="#0500FF"
-													stroke-width="0.454194"
-													stroke-miterlimit="10"
+													strokeWidth="0.454194"
+													strokeMiterlimit="10"
 												></path>
 												<path
 													id="Vector_2"
@@ -1171,8 +1177,8 @@ export default function AuthPage() {
 													<path
 														d="M57.2117 141.194C57.2117 141.194 68.8713 111.319 72.0054 67.3363L76.069 10.3396L21.3741 5.28005C17.1068 4.88609 13.6939 8.19717 13.6674 13.757L13.4638 57.8236C13.238 106.963 57.2073 141.194 57.2073 141.194"
 														stroke="#0500FF"
-														stroke-width="0.454194"
-														stroke-miterlimit="10"
+														strokeWidth="0.454194"
+														strokeMiterlimit="10"
 													></path>
 												</g>
 												<path
@@ -1189,8 +1195,8 @@ export default function AuthPage() {
 													id="Vector_9"
 													d="M57.2109 141.194C57.2109 141.194 103.734 139.747 110.33 93.0818L116.611 48.6344C117.098 45.1773 115.248 40.609 112.495 38.4843L76.0682 10.3445L72.0046 67.3412C68.8661 111.324 57.2109 141.199 57.2109 141.199V141.194Z"
 													stroke="#0500FF"
-													stroke-width="0.454194"
-													stroke-miterlimit="10"
+													strokeWidth="0.454194"
+													strokeMiterlimit="10"
 												></path>
 												<path
 													id="Vector_10"
@@ -1211,22 +1217,22 @@ export default function AuthPage() {
 													id="Vector_13"
 													d="M13.4682 57.8225L13.6719 13.7558C13.6896 9.73648 15.4823 6.89904 18.0852 5.77912L18.0763 5.77026L4.63278 11.5558L4.64163 11.5647C1.99011 12.7067 0.122091 15.5397 0.325714 19.5192L2.53901 62.7935C5.04445 111.845 48.4294 145.186 48.4294 145.186L57.2117 141.193C57.2117 141.193 13.2425 106.962 13.4682 57.8225Z"
 													stroke="#0500FF"
-													stroke-width="0.454194"
-													stroke-miterlimit="10"
+													strokeWidth="0.454194"
+													strokeMiterlimit="10"
 												></path>
 												<path
 													id="Vector_14"
 													d="M58.8418 136.551C58.8418 136.551 101.718 135.085 107.897 91.3817L113.855 49.2229C114.311 45.9871 113.09 42.6893 110.509 40.7018L75.8089 13.8988"
 													stroke="#0500FF"
-													stroke-width="0.454194"
-													stroke-miterlimit="10"
+													strokeWidth="0.454194"
+													strokeMiterlimit="10"
 												></path>
 												<path
 													id="Vector_15"
 													d="M75.8159 13.8988L21.7364 8.89234C17.7392 8.52051 17.4027 11.8891 17.3806 17.0948L17.1903 58.3638C16.9778 104.383 58.8488 136.546 58.8488 136.546"
 													stroke="#0500FF"
-													stroke-width="0.454194"
-													stroke-miterlimit="10"
+													strokeWidth="0.454194"
+													strokeMiterlimit="10"
 												></path>
 											</g>
 											<g id="Group_2">
@@ -1236,32 +1242,32 @@ export default function AuthPage() {
 														d="M140.901 59.7843L137.988 60.8467C138.958 60.4926 139.613 59.3903 139.604 57.8632L142.517 56.8008C142.521 58.328 141.87 59.4346 140.901 59.7843Z"
 														fill="#48FF91"
 														stroke="#0500FF"
-														stroke-width="0.454194"
-														stroke-miterlimit="10"
+														strokeWidth="0.454194"
+														strokeMiterlimit="10"
 													></path>
 													<path
 														id="Vector_17"
 														d="M63.6433 1.98953L136.337 27.0219L139.249 25.9595L66.556 0.92715C66.0027 0.736807 65.4848 0.741234 65.0377 0.905017L62.125 1.9674C62.5765 1.80361 63.0944 1.79919 63.6433 1.98953Z"
 														fill="#48FF91"
 														stroke="#0500FF"
-														stroke-width="0.454194"
-														stroke-miterlimit="10"
+														strokeWidth="0.454194"
+														strokeMiterlimit="10"
 													></path>
 													<path
 														id="Vector_18"
 														d="M139.504 32.1522L142.417 31.0898L142.518 56.795L139.606 57.8574L139.504 32.1522Z"
 														fill="#48FF91"
 														stroke="#0500FF"
-														stroke-width="0.454194"
-														stroke-miterlimit="10"
+														strokeWidth="0.454194"
+														strokeMiterlimit="10"
 													></path>
 													<path
 														id="Vector_19"
 														d="M136.338 27.0155L139.251 25.9531C140.99 26.5507 142.407 28.8481 142.416 31.0835L139.503 32.1459C139.494 29.9105 138.078 27.6131 136.338 27.0155Z"
 														fill="#48FF91"
 														stroke="#0500FF"
-														stroke-width="0.454194"
-														stroke-miterlimit="10"
+														strokeWidth="0.454194"
+														strokeMiterlimit="10"
 													></path>
 												</g>
 												<g id="Group_4">
@@ -1337,8 +1343,8 @@ export default function AuthPage() {
 													id="Vector_33"
 													d="M139.247 25.9538C140.987 26.5514 142.408 28.8532 142.417 31.0886L142.519 56.7938C142.527 59.0292 141.124 60.3528 139.38 59.7552L66.6868 34.7228C64.9471 34.1252 63.5306 31.8278 63.5218 29.5924L63.42 3.88725C63.4111 1.65182 64.8143 0.323848 66.554 0.925864L139.247 25.9582V25.9538Z"
 													stroke="#0500FF"
-													stroke-width="0.454194"
-													stroke-miterlimit="10"
+													strokeWidth="0.454194"
+													strokeMiterlimit="10"
 												></path>
 												<path
 													id="Vector_34"
@@ -1374,8 +1380,8 @@ export default function AuthPage() {
 													id="Vector_40"
 													d="M139.555 103.303L66.8612 78.2706C65.1216 77.6731 63.7051 75.3757 63.6962 73.1402L63.5944 47.4351C63.59 45.9079 64.2407 44.8012 65.2101 44.4515L62.2974 45.5139C61.328 45.868 60.6729 46.9703 60.6817 48.4974L60.7835 74.2026C60.7924 76.438 62.2089 78.7354 63.9485 79.333L136.642 104.365C137.195 104.556 137.713 104.551 138.16 104.387L141.073 103.325C140.621 103.489 140.104 103.493 139.555 103.303Z"
 													stroke="#0500FF"
-													stroke-width="0.454194"
-													stroke-miterlimit="10"
+													strokeWidth="0.454194"
+													strokeMiterlimit="10"
 												></path>
 												<g id="Group_6">
 													<path
@@ -1403,8 +1409,8 @@ export default function AuthPage() {
 													id="Vector_45"
 													d="M139.419 69.4975C141.159 70.0951 142.58 72.3969 142.589 74.6323L142.69 100.342C142.699 102.577 141.296 103.901 139.552 103.303L66.8587 78.271C65.119 77.6734 63.7025 75.376 63.6936 73.1406L63.5918 47.431C63.583 45.1955 64.9862 43.8675 66.7259 44.4696L139.419 69.5019V69.4975Z"
 													stroke="#0500FF"
-													stroke-width="0.454194"
-													stroke-miterlimit="10"
+													strokeWidth="0.454194"
+													strokeMiterlimit="10"
 												></path>
 												<path
 													id="Vector_46"
@@ -1420,8 +1426,8 @@ export default function AuthPage() {
 													id="Vector_48"
 													d="M139.383 59.7551L66.6894 34.7228C64.9497 34.1252 63.5332 31.8278 63.5244 29.5924L63.4225 3.8872C63.4181 2.36003 64.0688 1.25339 65.0382 0.903687L62.1256 1.96607C61.1561 2.32019 60.501 3.42241 60.5099 4.94958L60.6117 30.6548C60.6205 32.8902 62.037 35.1876 63.7767 35.7852L136.47 60.8175C137.023 61.0079 137.541 61.0034 137.988 60.8396L140.901 59.7773C140.45 59.941 139.932 59.9455 139.383 59.7551Z"
 													stroke="#0500FF"
-													stroke-width="0.454194"
-													stroke-miterlimit="10"
+													strokeWidth="0.454194"
+													strokeMiterlimit="10"
 												></path>
 											</g>
 										</g>
@@ -1434,10 +1440,10 @@ export default function AuthPage() {
 												y2="73.1311"
 												gradientUnits="userSpaceOnUse"
 											>
-												<stop stop-color="#48FF91"></stop>
+												<stop stopColor="#48FF91"></stop>
 												<stop
 													offset="1"
-													stop-color="#2D9FFF"
+													stopColor="#2D9FFF"
 												></stop>
 											</linearGradient>
 											<linearGradient
@@ -1448,10 +1454,10 @@ export default function AuthPage() {
 												y2="73.8842"
 												gradientUnits="userSpaceOnUse"
 											>
-												<stop stop-color="#FFAEFE"></stop>
+												<stop stopColor="#FFAEFE"></stop>
 												<stop
 													offset="1"
-													stop-color="#FFF465"
+													stopColor="#FFF465"
 												></stop>
 											</linearGradient>
 											<clipPath id="clip0_55864_111957">
@@ -1500,13 +1506,14 @@ export default function AuthPage() {
 									].map(({ label, state, setState }) => (
 										<div
 											key={label}
-											className="flex flex-col rounded-xl bg-background-2 py-2 px-4 text-left"
+											onClick={setState}
+											className="flex flex-col rounded-xl bg-background-2 py-2 px-4 text-left cursor-pointer"
 										>
 											<div className="flex items-center space-x-2">
 												<div className="relative w-5 h-5">
 													<input
+														readOnly
 														checked={state}
-														onChange={setState}
 														className="checkbox cursor-pointer"
 														type="checkbox"
 													/>
@@ -1531,10 +1538,7 @@ export default function AuthPage() {
 													</div>
 												</div>
 												<div className="flex flex-1">
-													<label
-														htmlFor="g7o9y"
-														className="text-textPrimary subtitle-text font-normal"
-													>
+													<label className="text-textPrimary subtitle-text font-normal cursor-pointer">
 														{label}
 													</label>
 												</div>
@@ -1543,12 +1547,7 @@ export default function AuthPage() {
 									))}
 
 									<div className=" flex w-full items-center justify-between mt-6 space-x-4">
-										<div
-											className="h-[52px] flex w-full"
-											data-tooltip-id="default-tooltip"
-											data-tooltip-place="top-end"
-											data-tooltip-role="tooltip"
-										>
+										<div className="h-[52px] flex w-full">
 											<button
 												onClick={() => {
 													if (userAuth) {
@@ -1567,12 +1566,7 @@ export default function AuthPage() {
 												</p>
 											</button>
 										</div>
-										<div
-											className="h-[52px] flex w-full"
-											data-tooltip-id="default-tooltip"
-											data-tooltip-place="top-end"
-											data-tooltip-role="tooltip"
-										>
+										<div className="h-[52px] flex w-full">
 											<button
 												onClick={() =>
 													setTab(
@@ -1738,7 +1732,6 @@ export default function AuthPage() {
 									<div className="flex items-center space-x-2 ">
 										<div className="relative w-5 h-5">
 											<input
-												data-testid="checkbox-terms-of-service"
 												id="mnvix"
 												checked={isReadAndAgree}
 												onClick={() =>
@@ -1748,6 +1741,7 @@ export default function AuthPage() {
 												}
 												className="checkbox cursor-pointer"
 												type="checkbox"
+												readOnly
 											/>
 											<div className=" absolute pointer-events-none flex items-center justify-center w-5 h-5">
 												{isReadAndAgree && (
@@ -1884,11 +1878,8 @@ export default function AuthPage() {
 							</svg>
 						</div>
 						<div className="flex flex-col items-center text-center space-y-4 mt-4">
-							<h2
-								data-testid="onboarding-step-title"
-								className="screamer-text text-utility-1-default font-semibold text-unset"
-							>
-								Welcome to the Trust Wallet Extension
+							<h2 className="screamer-text text-utility-1-default font-semibold text-unset">
+								Welcome
 							</h2>
 							<p className="title-text text-textSecondary font-normal  text-unset">
 								The multi-chain wallet trusted by millions
@@ -2014,7 +2005,7 @@ export default function AuthPage() {
 											</svg>
 										</div>
 									</div>
-									<div className="border-t border-utility-1-opacity-3 my-2"></div>
+									{/* <div className="border-t border-utility-1-opacity-3 my-2"></div>
 									<div
 										role="button"
 										className="outline-0 cursor-not-allowed opacity-65"
@@ -2135,7 +2126,7 @@ export default function AuthPage() {
 												></path>
 											</svg>
 										</div>
-									</div>
+									</div> */}
 								</div>
 							</div>
 						</div>

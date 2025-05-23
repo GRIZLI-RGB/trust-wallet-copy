@@ -70,7 +70,11 @@ export default function WalletSendPage() {
 									}
 
 									if (tab === "enter-data") {
-										router.push("/wallet/send");
+										setTab("choose-crypto");
+									}
+
+									if (tab === "confirm") {
+										setTab("enter-data");
 									}
 								}}
 								type="button"
@@ -275,6 +279,7 @@ export default function WalletSendPage() {
 											.map((item) => (
 												<div
 													onClick={() => {
+														console.log(item);
 														setSelectedCrypto(item);
 														setTab("enter-data");
 													}}
@@ -304,10 +309,7 @@ export default function WalletSendPage() {
 														<div className="flex-grow opacity-100">
 															<div className="flex flex-row space-x-1 items-center ">
 																<div>
-																	<p
-																		data-testid="asset-symbol"
-																		className="typography-subheader-16 text-utility-1-default font-medium   text-unset  "
-																	>
+																	<p className="typography-subheader-16 text-utility-1-default font-medium   text-unset  ">
 																		{
 																			item
 																				.crypto
@@ -329,10 +331,7 @@ export default function WalletSendPage() {
 																</div>
 															</div>
 															<div className="flex flex-row space-x-1">
-																<p
-																	data-testid="asset-blockchain"
-																	className="typography-body-14 text-utility-1-default font-normal   text-unset  "
-																>
+																<p className="typography-body-14 text-utility-1-default font-normal   text-unset  ">
 																	{
 																		item
 																			.crypto
@@ -343,15 +342,12 @@ export default function WalletSendPage() {
 														</div>
 														<div className="opacity-100">
 															<button
-																data-testid="toggle-asset-switch"
 																className="switch"
 																id="headlessui-switch-«r1s»"
 																role="switch"
 																type="button"
 																tabIndex={0}
 																aria-checked="true"
-																data-headlessui-state="checked"
-																data-checked=""
 															>
 																<span className="sr-only">
 																	{
@@ -363,7 +359,7 @@ export default function WalletSendPage() {
 																<span
 																	aria-hidden="true"
 																	className="switch__toggle"
-																></span>
+																/>
 															</button>
 														</div>
 													</div>
@@ -629,12 +625,13 @@ export default function WalletSendPage() {
 												<div className="flex items-center space-x-1">
 													<div>
 														<p className="body-text text-utility-1-default font-medium text-unset">
-															{`${selectedCrypto?.address.substring(
+															{`${selectedCrypto?.crypto.address.substring(
 																0,
 																12
-															)}...${selectedCrypto?.address.substring(
+															)}...${selectedCrypto?.crypto.address.substring(
 																selectedCrypto
-																	?.address
+																	?.crypto
+																	.address
 																	.length - 12
 															)}`}
 														</p>
@@ -642,7 +639,7 @@ export default function WalletSendPage() {
 													<div>
 														<a
 															className="text-utility-1-opacity-1"
-															href={`https://tronscan.org/address/${selectedCrypto?.address}`}
+															href={`https://tronscan.org/address/${selectedCrypto?.crypto.address}`}
 															target="_blank"
 															rel="noopener noreferrer"
 														>

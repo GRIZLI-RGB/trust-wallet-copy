@@ -41,7 +41,7 @@ export default function WalletSettingsColorMode() {
 							>
 								<path
 									fillRule="evenodd"
-									clip-rule="evenodd"
+									clipRule="evenodd"
 									d="M3.00001 12.2722L10.0711 5.20117L11.8388 6.96894L7.78434 11.0234L21.001 11.0234L21.001 13.5234L7.78554 13.5234L11.8388 17.5767L10.0711 19.3445L3.00001 12.2734L3.00061 12.2728L3.00001 12.2722Z"
 									fill="currentColor"
 								></path>

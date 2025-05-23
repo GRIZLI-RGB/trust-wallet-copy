@@ -147,11 +147,11 @@ export default function WalletSettingsPage() {
 												>
 													<stop
 														offset="0.09375"
-														stop-color="#2ECCFF"
+														stopColor="#2ECCFF"
 													></stop>
 													<stop
 														offset="1"
-														stop-color="#0500FF"
+														stopColor="#0500FF"
 													></stop>
 												</linearGradient>
 											</defs>

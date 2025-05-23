@@ -357,7 +357,7 @@ export default function WalletReceivePage() {
 								>
 									<path
 										fill-rule="evenodd"
-										clip-rule="evenodd"
+										clipRule="evenodd"
 										d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21ZM10.75 15.5V18H13.25V15.5H10.75ZM10.75 6V13H13.25V6H10.75Z"
 										fill="currentColor"
 									></path>
@@ -390,7 +390,7 @@ export default function WalletReceivePage() {
 											onClick={() => {
 												navigator.clipboard
 													.writeText(
-														selectedCrypto?.address ||
+														selectedCrypto?.crypto.address ||
 															""
 													)
 													.then(() => {
@@ -409,7 +409,7 @@ export default function WalletReceivePage() {
 												<div className="overflow-hidden break-words">
 													<p className="typography-subheader-14 text-accent-light dark:text-accent font-medium  text-unset">
 														{
-															selectedCrypto?.address
+															selectedCrypto?.crypto.address
 														}
 													</p>
 												</div>
@@ -423,7 +423,7 @@ export default function WalletReceivePage() {
 												>
 													<path
 														fill-rule="evenodd"
-														clip-rule="evenodd"
+														clipRule="evenodd"
 														d="M9.45557 3.89441H20.4556V16.8944H17.4556V6.89441H9.45557V3.89441ZM4.45557 8.89441V21.8944H15.4556V8.91477L4.45557 8.89441Z"
 														fill="currentColor"
 													></path>

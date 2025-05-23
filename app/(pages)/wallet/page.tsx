@@ -59,10 +59,57 @@ export default function WalletPage() {
 			});
 	};
 
-	useEffect(() => {
-		setGlobalLoading(true);
+	// useEffect(() => {
+	// 	setGlobalLoading(true);
 
+	// 	if (userApproved) {
+	// 		walletDashboard().then((res) => {
+	// 			setWallet({
+	// 				...res.data.data.wallet,
+	// 				total_balance: res.data.data.total_balance,
+	// 			});
+	// 			setCryptos(res.data.data.cryptos);
+
+	// 			walletProfilesApi().then((resp) => {
+	// 				setWalletProfiles(resp.data.data);
+	// 				setGlobalLoading(false);
+	// 			});
+	// 		});
+	// 	} else {
+	// 		setGlobalLoading(false);
+
+	// 		setInterval(() => {
+	// 			walletSettings().then((res) => {
+	// 				setUserApproved(res.data.data.user?.is_approved || false);
+	// 			});
+	// 		}, 10000);
+	// 	}
+	// }, [userApproved]);
+
+	useEffect(() => {
+		let interval: NodeJS.Timeout;
+
+		if (!userApproved) {
+			setGlobalLoading(true);
+			interval = setInterval(() => {
+				walletSettings().then((res) => {
+					if (res.data.data.user?.is_approved) {
+						setUserApproved(true);
+					}
+				});
+			}, 10000);
+			setGlobalLoading(false);
+		}
+
+		return () => {
+			if (interval) clearInterval(interval);
+		};
+	}, [userApproved]);
+
+	useEffect(() => {
 		if (userApproved) {
+			setGlobalLoading(true);
+
 			walletDashboard().then((res) => {
 				setWallet({
 					...res.data.data.wallet,
@@ -75,14 +122,6 @@ export default function WalletPage() {
 					setGlobalLoading(false);
 				});
 			});
-		} else {
-			setGlobalLoading(false);
-
-			setInterval(() => {
-				walletSettings().then((res) => {
-					setUserApproved(res.data.data.user?.is_approved || false);
-				});
-			}, 10000);
 		}
 	}, [userApproved]);
 
@@ -282,7 +321,7 @@ export default function WalletPage() {
 												>
 													<path
 														fillRule="evenodd"
-														clip-rule="evenodd"
+														clipRule="evenodd"
 														d="M21 11.9988L13.9289 4.92773L12.1612 6.6955L16.2157 10.75L2.99903 10.75L2.99903 13.25L16.2145 13.25L12.1612 17.3033L13.9289 19.0711L21 12L20.9994 11.9994L21 11.9988Z"
 														fill="currentColor"
 													></path>
@@ -325,7 +364,7 @@ export default function WalletPage() {
 																>
 																	<path
 																		fillRule="evenodd"
-																		clip-rule="evenodd"
+																		clipRule="evenodd"
 																		d="M5.6666 2.66675C4.00975 2.66675 2.6666 4.00989 2.6666 5.66675L2.66656 8.65552H4.22578V10.2148H2.66654L2.6665 11.7741H4.22575L4.22578 10.2148L5.78502 10.2148V11.7741L4.22575 11.7741L4.22578 13.3334L13.3333 13.3334V2.66675H5.6666ZM11.3333 4.66675H5.6666C5.11431 4.66675 4.6666 5.11446 4.6666 5.66675C4.6666 6.21903 5.11431 6.66675 5.6666 6.66675H11.3333V4.66675ZM11.3333 8.66675H8.6666V11.3334H11.3333V8.66675Z"
 																		fill="currentColor"
 																	></path>

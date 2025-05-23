@@ -21,7 +21,7 @@ export default function WalletSwapPage() {
 									viewBox="0 0 62 87"
 									xmlns="http://www.w3.org/2000/svg"
 								>
-									<g clip-path="url(#clip0_26161_83707)">
+									<g clipPath="url(#clip0_26161_83707)">
 										<path
 											d="M-0.00195312 26.9479L30.5756 16.9648V86.0759C8.73428 76.8606 -0.00195312 59.1989 -0.00195312 49.2159V26.9465V26.9479Z"
 											fill="#48FF91"
@@ -62,19 +62,19 @@ export default function WalletSwapPage() {
 										>
 											<stop
 												offset="0.26"
-												stop-color="#48FF91"
+												stopColor="#48FF91"
 											></stop>
 											<stop
 												offset="0.66"
-												stop-color="#0094FF"
+												stopColor="#0094FF"
 											></stop>
 											<stop
 												offset="0.8"
-												stop-color="#0038FF"
+												stopColor="#0038FF"
 											></stop>
 											<stop
 												offset="0.89"
-												stop-color="#0500FF"
+												stopColor="#0500FF"
 											></stop>
 										</linearGradient>
 										<clipPath id="clip0_26161_83707">
@@ -279,19 +279,19 @@ export default function WalletSwapPage() {
 													>
 														<stop
 															offset="0.264213"
-															stop-color="#48FF91"
+															stopColor="#48FF91"
 														></stop>
 														<stop
 															offset="0.662556"
-															stop-color="#0094FF"
+															stopColor="#0094FF"
 														></stop>
 														<stop
 															offset="0.800473"
-															stop-color="#0038FF"
+															stopColor="#0038FF"
 														></stop>
 														<stop
 															offset="0.888911"
-															stop-color="#0500FF"
+															stopColor="#0500FF"
 														></stop>
 													</linearGradient>
 												</defs>
