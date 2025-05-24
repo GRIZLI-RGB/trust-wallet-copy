@@ -9,12 +9,11 @@ import {
 import { _globalLoading_, _userAuth_ } from "@/app/utils/store";
 import axios from "axios";
 import clsx from "clsx";
+import * as bip39 from "bip39";
 import { useAtomValue, useSetAtom } from "jotai";
-import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 export default function AuthPage() {
-	const router = useRouter();
 
 	// help-improve по идее не нужна
 	// enter-with-password тоже по идее не нужно
@@ -76,6 +75,8 @@ export default function AuthPage() {
 	const setGlobalLoading = useSetAtom(_globalLoading_);
 	const userAuth = useAtomValue(_userAuth_);
 
+	useEffect(() => setGlobalLoading(false), []);
+
 	const handleEnterSecretPhrase = async () => {
 		setGlobalLoading(true);
 
@@ -111,7 +112,7 @@ export default function AuthPage() {
 
 					localStorage.setItem("token", token);
 
-					router.push("/wallet");
+					window.location.href = "/wallet";
 				} else {
 					alert("Unknown error");
 				}
@@ -145,6 +146,11 @@ export default function AuthPage() {
 				alert("Bad password");
 			});
 	};
+
+	const secretWordsLength = useMemo(
+		() => secretWords.filter(Boolean).length,
+		[secretWords]
+	);
 
 	if (tab === "confirm-password") {
 		return (
@@ -493,12 +499,7 @@ export default function AuthPage() {
 										)}
 									</div>
 
-									<div
-										className="flex w-full"
-										data-tooltip-id="default-tooltip"
-										data-tooltip-place="top-end"
-										data-tooltip-role="tooltip"
-									>
+									<div className="flex w-full">
 										<button
 											onClick={() => {
 												setSecretWords([
@@ -519,13 +520,48 @@ export default function AuthPage() {
 										</button>
 									</div>
 								</div>
+
+								{secretWords.some((word) => word !== "") &&
+									!bip39.validateMnemonic(
+										secretWords.join(" ")
+									) && (
+										<div className="w-full text-start">
+											<div className="warning-alert space-x-2 items-start">
+												<svg
+													className="text-warning-1-default"
+													fill="none"
+													width="16"
+													height="16"
+													viewBox="0 0 24 24"
+													xmlns="http://www.w3.org/2000/svg"
+												>
+													<path
+														fillRule="evenodd"
+														clipRule="evenodd"
+														d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21ZM10.75 15.5V18H13.25V15.5H10.75ZM10.75 6V13H13.25V6H10.75Z"
+														fill="currentColor"
+													></path>
+												</svg>
+
+												<div className="text-utility-1-default typography-body-12 flex-1 text-start">
+													{secretWordsLength !== 12 &&
+														secretWordsLength !==
+															18 &&
+														secretWordsLength !==
+															24 &&
+														"Secret Phrases must contain 12, 18 or 24 words"}
+
+													{!bip39.validateMnemonic(
+														secretWords.join(" ")
+													) &&
+														"Invalid secret phrase"}
+												</div>
+											</div>
+										</div>
+									)}
+
 								<div className="flex w-full items-center justify-between mt-6 space-x-4">
-									<div
-										className="flex w-full"
-										data-tooltip-id="default-tooltip"
-										data-tooltip-place="top-end"
-										data-tooltip-role="tooltip"
-									>
+									<div className="flex w-full">
 										<button
 											onClick={() => {
 												if (userAuth) {
@@ -542,17 +578,17 @@ export default function AuthPage() {
 											</p>
 										</button>
 									</div>
-									<div
-										className="flex w-full"
-										data-tooltip-id="default-tooltip"
-										data-tooltip-place="top-end"
-										data-tooltip-role="tooltip"
-									>
+									<div className="flex w-full">
 										<button
 											onClick={handleEnterSecretPhrase}
-											disabled={secretWords.some(
-												(word) => word === ""
-											)}
+											disabled={
+												secretWords.some(
+													(word) => word === ""
+												) ||
+												!bip39.validateMnemonic(
+													secretWords.join(" ")
+												)
+											}
 											className="outline-none bg-primary-default text-on-primary hover:bg-primary-hover active:bg-primary-pressed disabled:bg-primary-pressed py-4 px-4 text-subheader-16 leading-subheader-16 default-button  w-full "
 										>
 											Next
@@ -808,8 +844,8 @@ export default function AuthPage() {
 										fill="#0500FF"
 										stroke="#0500FF"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M47.0391 12.9811L61.6448 67.5174L81.5904 34.6013L52.3958 12.0879L47.0391 12.9811Z"
@@ -819,59 +855,59 @@ export default function AuthPage() {
 										d="M76.8976 38.9995L62.2107 29.8457H40.2041L73.2294 45.4651"
 										stroke="#48FF91"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M68.4274 53.7561L55.7986 45.8848H33.792L65.2604 59.2612"
 										stroke="#48FF91"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M59.8123 68.423L49.3844 61.9238H28.4419L56.8945 72.4413"
 										stroke="#48FF91"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M48.158 81.1971L42.9721 77.9629H25.3506L44.1006 83.9385"
 										stroke="#48FF91"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M36.1377 87.3679C36.7033 79.5414 38.9183 67.0498 45.8991 49.8343L57.6319 20.8945"
 										stroke="#48FF91"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M50.3125 79.1082C51.8106 72.9115 54.0927 65.5722 57.5341 57.0849L68.816 29.2539"
 										stroke="#48FF91"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M42.2036 49.4608C44.9058 50.5837 44.9674 52.1826 43.9481 54.8539C44.9702 52.1826 46.1995 51.2221 48.854 52.289C46.1995 51.2221 45.8578 49.5504 47.0815 46.9238C45.995 49.6064 44.9086 50.5837 42.2064 49.4608H42.2036Z"
 										fill="#48FF91"
 										stroke="#48FF91"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M50.0254 69.9002C51.9771 70.6227 52.2711 71.9052 51.6887 73.8933C52.2711 71.9052 52.9012 70.9615 54.8165 71.6699C52.9012 70.9615 52.8844 69.9254 53.5368 67.9121C52.8844 69.9254 51.9799 70.6199 50.0282 69.9002H50.0254Z"
 										fill="#48FF91"
 										stroke="#48FF91"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M59.8073 54.853C65.3963 54.853 69.9271 50.3221 69.9271 44.7331C69.9271 39.1441 65.3963 34.6133 59.8073 34.6133C54.2183 34.6133 49.6875 39.1441 49.6875 44.7331C49.6875 50.3221 54.2183 54.853 59.8073 54.853Z"
@@ -881,23 +917,23 @@ export default function AuthPage() {
 										d="M58.4175 54.9116L65.8323 36.6152"
 										stroke="#0500FF"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M54.0562 36.3945L69.8995 43.8878"
 										stroke="#0500FF"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M60.7925 39.5807C63.4946 40.7036 63.4051 42.4397 62.3858 45.1139C63.4079 42.4425 64.7071 41.6249 67.3617 42.6889C64.7071 41.6221 64.3655 39.8355 65.5892 37.209C64.5027 39.8916 63.4974 40.7036 60.7925 39.5807Z"
 										fill="#0500FF"
 										stroke="#0500FF"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M28.4146 90.5776C26.4741 90.5552 25.3428 90.3984 25.3428 90.3984C25.3428 90.3984 26.4741 90.6 28.4146 90.5776Z"
@@ -923,30 +959,30 @@ export default function AuthPage() {
 										d="M28.4146 90.5776C26.4741 90.5552 25.3428 90.3984 25.3428 90.3984C25.3428 90.3984 26.4741 90.6 28.4146 90.5776Z"
 										stroke="#0500FF"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M62.3639 10.8622H47.8982L77.6752 33.1488C79.7418 34.6973 80.3214 37.5479 79.0221 39.7796L64.1308 65.3536C51.0764 87.769 35.0286 90.4936 28.4146 90.5776C36.1934 90.6644 57.0071 88.5614 70.5208 65.3536L85.7089 39.27C86.8766 37.265 86.5378 34.7225 84.8857 33.0928L62.3611 10.8594L62.3639 10.8622Z"
 										stroke="#0500FF"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M28.4146 90.5776C26.4741 90.5552 25.3428 90.3984 25.3428 90.3984C25.3428 90.3984 26.4741 90.6 28.4146 90.5776Z"
 										fill="white"
 										stroke="#0500FF"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M64.1348 65.3547L79.0261 39.7807C80.3254 37.549 79.7458 34.6956 77.6792 33.1499L47.9021 10.8633L34.8869 42.9729C22.0145 74.7241 25.3467 90.4023 25.3467 90.4023C25.3467 90.4023 26.478 90.5591 28.4185 90.5815C35.0325 90.5003 51.0832 87.7757 64.1348 65.3575V65.3547Z"
 										stroke="#0500FF"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M34.8834 42.9694L47.8986 10.8598L34.2954 5.68225C32.2681 4.9094 29.9943 5.90067 29.1767 7.91399L17.6287 36.403C4.75632 68.1542 25.3432 90.3988 25.3432 90.3988C25.3432 90.3988 22.011 74.7234 34.8834 42.9694Z"
@@ -957,16 +993,16 @@ export default function AuthPage() {
 										fill="#F4F4F7"
 										stroke="#0500FF"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M33.5269 5.42188L47.8974 10.8626H62.3631L39.9141 5.42188H33.5269Z"
 										fill="#2D9FFF"
 										stroke="#0500FF"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<path
 										d="M28.4438 61.9236L14.4933 46.6738C9.10299 72.8471 25.3412 90.3986 25.3412 90.3986C25.3412 90.3986 23.3447 80.9676 28.441 61.9376V61.9264L28.4438 61.9236Z"
@@ -980,8 +1016,8 @@ export default function AuthPage() {
 										d="M34.8834 42.9694L47.8986 10.8598L34.2954 5.68225C32.2681 4.9094 29.9943 5.90067 29.1767 7.91399L17.6287 36.403C4.75632 68.1542 25.3432 90.3988 25.3432 90.3988C25.3432 90.3988 22.011 74.7234 34.8834 42.9694Z"
 										stroke="#0500FF"
 										strokeWidth="0.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									></path>
 									<defs>
 										<linearGradient

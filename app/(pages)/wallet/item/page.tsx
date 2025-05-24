@@ -386,8 +386,8 @@ export default function WalletItemPage() {
 											fill="#1B1B1C"
 											stroke="#48FF91"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<mask
 											id="mask0_278_20219"
@@ -405,8 +405,8 @@ export default function WalletItemPage() {
 												fill="#1B1B1C"
 												stroke="#48FF91"
 												strokeWidth="0.4"
-												stroke-linecap="round"
-												stroke-linejoin="round"
+												strokeLinecap="round"
+												strokeLinejoin="round"
 											></path>
 										</mask>
 										<g mask="url(#mask0_278_20219)">
@@ -466,16 +466,16 @@ export default function WalletItemPage() {
 											fill="#48FF91"
 											stroke="#48FF91"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<path
 											d="M141.642 141.609L108.867 80.0459C107.011 76.559 102.26 73.7166 98.3143 73.7273L46.5835 73.868C44.7966 73.8728 43.0419 73.4086 41.4946 72.5193L37.9338 70.474C36.3864 69.5848 34.6317 69.1205 32.8448 69.1253L26.0472 69.1438L20.7772 73.7818L59.3855 146.233C60.1444 147.415 61.6057 148.144 63.5788 148.139L136.968 147.962L140.16 149.904L142.078 145.796L142.07 145.796C142.592 144.67 142.502 143.207 141.649 141.605L141.642 141.609Z"
 											fill="#2D9FFF"
 											stroke="#0500FF"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<path
 											d="M93.5209 77.8407L95.4382 73.733"
@@ -488,30 +488,30 @@ export default function WalletItemPage() {
 											fill="url(#paint0_linear_278_20219)"
 											stroke="#0500FF"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<path
 											d="M111.354 100.692L103.152 85.2795C101.988 83.09 99.3286 81.1093 96.8902 81.1159L22.6367 81.2285"
 											stroke="#0500FF"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<path
 											d="M58.5854 149.048L132.999 148.854C135.474 148.847 136.144 147.274 135.171 145.441L127.919 131.817"
 											stroke="#0500FF"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<path
 											d="M27.9064 69.9854C28.4863 71.0745 27.3593 72.8124 25.3891 73.8601C23.4189 74.9079 21.3527 74.8763 20.769 73.7834C20.1853 72.6905 21.316 70.9563 23.2862 69.9086C24.2416 69.3997 25.22 69.1476 26.0427 69.1454C26.9138 69.143 27.607 69.424 27.9064 69.9854Z"
 											fill="#48FF91"
 											stroke="#0500FF"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<path
 											d="M25.8183 71.1014L25.8201 71.1009C25.9036 71.2601 25.8809 71.5044 25.6878 71.8017C25.4982 72.0937 25.1668 72.3953 24.7337 72.6257C24.3007 72.8561 23.8652 72.9625 23.5169 72.9567C23.1606 72.9509 22.9446 72.8323 22.8598 72.6731C22.775 72.5139 22.797 72.2688 22.9909 71.9701C23.1805 71.6782 23.5119 71.3765 23.945 71.1462L23.9451 71.1461C24.3634 70.9232 24.7854 70.8171 25.1313 70.8162C25.5065 70.8152 25.731 70.9349 25.8183 71.1014Z"
@@ -524,8 +524,8 @@ export default function WalletItemPage() {
 											fill="#48FF91"
 											stroke="#0500FF"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<path
 											d="M125.896 125.726L128.817 125.234L136.579 132.108L129.66 119.112L123.338 120.365L125.896 125.726Z"
@@ -546,32 +546,32 @@ export default function WalletItemPage() {
 											fill="#1B1B1C"
 											stroke="#0500FF"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<path
 											d="M141.8 108.979C142.807 105.801 141.912 102.684 139.801 102.015C137.69 101.346 135.163 103.379 134.156 106.556C133.149 109.733 134.044 112.851 136.155 113.52C138.266 114.189 140.793 112.156 141.8 108.979Z"
 											fill="#48FF91"
 											stroke="#0500FF"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<path
 											d="M78.0385 120.939C76.434 120.944 74.5099 119.791 73.7541 118.375L58.7268 90.149C57.9746 88.7326 58.6677 87.573 60.2721 87.5686L92.2577 87.4705C93.8622 87.4661 95.7862 88.6186 96.5421 90.035L111.569 118.261C112.321 119.677 111.628 120.837 110.024 120.841L78.0385 120.939Z"
 											fill="#1B1B1C"
 											stroke="#0500FF"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<path
 											d="M78.8893 119.457C77.2848 119.462 75.3608 118.309 74.6049 116.893L59.5776 88.6669C59.4092 88.3472 59.3153 88.0422 59.2848 87.7594C58.4222 88.1452 58.1566 89.0728 58.7291 90.1472L73.7564 118.373C74.5086 119.789 76.4364 120.942 78.0408 120.938L110.026 120.839C111.266 120.836 111.96 120.138 111.861 119.167C111.589 119.29 111.258 119.358 110.871 119.359L78.8856 119.457L78.8893 119.457Z"
 											fill="url(#paint2_linear_278_20219)"
 											stroke="#0500FF"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<mask
 											id="mask1_278_20219"
@@ -589,8 +589,8 @@ export default function WalletItemPage() {
 												fill="url(#paint3_linear_278_20219)"
 												stroke="#0500FF"
 												strokeWidth="0.4"
-												stroke-linecap="round"
-												stroke-linejoin="round"
+												strokeLinecap="round"
+												strokeLinejoin="round"
 											></path>
 										</mask>
 										<g mask="url(#mask1_278_20219)">
@@ -608,32 +608,32 @@ export default function WalletItemPage() {
 											fill="#1B1B1C"
 											stroke="#0500FF"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<path
 											d="M73.3442 105.471C72.9056 105.472 72.3799 105.156 72.1735 104.769L71.3142 103.262C71.1088 102.874 71.2984 102.558 71.737 102.557L77.5017 102.542C77.9402 102.541 78.4659 102.856 78.6723 103.243L79.5316 104.751C79.737 105.138 79.5474 105.455 79.1088 105.456L73.3442 105.471Z"
 											fill="#0500FF"
 											stroke="#1B1B1C"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<path
 											d="M82.9535 105.451C82.515 105.452 81.9892 105.137 81.7829 104.75L80.9235 103.242C80.7182 102.855 80.9078 102.538 81.3464 102.537L87.111 102.522C87.5496 102.521 88.0753 102.836 88.2817 103.224L89.141 104.731C89.3464 105.118 89.1567 105.435 88.7182 105.436L82.9535 105.451Z"
 											fill="#0500FF"
 											stroke="#1B1B1C"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<path
 											d="M92.5668 105.43C92.1283 105.431 91.6025 105.115 91.3962 104.728L90.5368 103.221C90.3315 102.833 90.5211 102.517 90.9597 102.516L96.7243 102.501C97.1629 102.5 97.6886 102.815 97.895 103.202L98.7543 104.71C98.9596 105.097 98.77 105.414 98.3315 105.415L92.5668 105.43Z"
 											fill="#0500FF"
 											stroke="#1B1B1C"
 											strokeWidth="0.4"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 										></path>
 										<path
 											d="M96.9616 43.437C97.0151 43.6629 96.939 43.9172 96.7331 44.1507C96.5277 44.3838 96.2036 44.5812 95.8067 44.6753C95.4097 44.7693 95.0315 44.7384 94.7433 44.6223C94.4546 44.506 94.2724 44.313 94.2189 44.0871C94.1653 43.8612 94.2415 43.607 94.4473 43.3734C94.6528 43.1403 94.9768 42.9429 95.3738 42.8489C95.7707 42.7548 96.1489 42.7857 96.4371 42.9018C96.7259 43.0181 96.908 43.2111 96.9616 43.437Z"

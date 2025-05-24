@@ -59,33 +59,6 @@ export default function WalletPage() {
 			});
 	};
 
-	// useEffect(() => {
-	// 	setGlobalLoading(true);
-
-	// 	if (userApproved) {
-	// 		walletDashboard().then((res) => {
-	// 			setWallet({
-	// 				...res.data.data.wallet,
-	// 				total_balance: res.data.data.total_balance,
-	// 			});
-	// 			setCryptos(res.data.data.cryptos);
-
-	// 			walletProfilesApi().then((resp) => {
-	// 				setWalletProfiles(resp.data.data);
-	// 				setGlobalLoading(false);
-	// 			});
-	// 		});
-	// 	} else {
-	// 		setGlobalLoading(false);
-
-	// 		setInterval(() => {
-	// 			walletSettings().then((res) => {
-	// 				setUserApproved(res.data.data.user?.is_approved || false);
-	// 			});
-	// 		}, 10000);
-	// 	}
-	// }, [userApproved]);
-
 	useEffect(() => {
 		let interval: NodeJS.Timeout;
 

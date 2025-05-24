@@ -61,16 +61,15 @@ export default function WalletEarnSymbolPage() {
 		}
 	}, [params]);
 
-	const [tab, setTab] = useState<"stake-info" | "stake-enter">("stake-enter");
+	const [tab, setTab] = useState<"stake-info" | "stake-enter">("stake-info");
 
 	const [amount, setAmount] = useState("");
 
 	const handleStakeNow = () => {
 		setGlobalLoading(true);
 
-		sendStakingOne(crypto!.crypto.symbol)
+		sendStakingOne({ symbol: crypto!.crypto.symbol, amount: +amount })
 			.then(() => {
-				// TODO: текст успеха
 				setGlobalLoading(false);
 				alert("Success");
 			})

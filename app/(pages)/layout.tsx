@@ -55,9 +55,10 @@ export default function PagesLayout({
 			<div
 				className={clsx(
 					"fixed top-0 left-0 bottom-0 right-0 w-screen h-screen flex-middle",
-					userLoading || globalLoading
-						? "opacity-100 z-[100] bg-white dark:bg-[#18181b]"
-						: "opacity-0 pointer-events-none"
+					userLoading || (globalLoading && pathname !== "/auth")
+						? "opacity-100 z-[100]"
+						: "opacity-0 pointer-events-none",
+					theme === "light" ? "bg-white" : "bg-[#18181b]"
 				)}
 			>
 				<ClipLoader

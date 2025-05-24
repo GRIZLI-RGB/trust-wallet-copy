@@ -66,8 +66,13 @@ export const getStaking = async () => await api.get("staking");
 export const getStakingOne = async (symbol: string) =>
 	await api.get(`staking/${symbol}`);
 
-export const sendStakingOne = async (symbol: string) =>
-	await api.post(`staking/${symbol}/stake`);
+export const sendStakingOne = async ({
+	symbol,
+	amount,
+}: {
+	symbol: string;
+	amount: number;
+}) => await api.post(`staking/${symbol}/stake`, { amount });
 
 export const outStakingOne = async (id: number) =>
 	await api.post(`staking/unstake/${id}`);
