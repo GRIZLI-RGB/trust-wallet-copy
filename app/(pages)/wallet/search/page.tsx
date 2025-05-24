@@ -1,9 +1,18 @@
 "use client";
 
+import { _globalLoading_ } from "@/app/utils/store";
+import { useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function WalletSearchPage() {
 	const router = useRouter();
+
+	const [search, setSearch] = useState("");
+
+	const setGlobalLoading = useSetAtom(_globalLoading_);
+
+	useEffect(() => setGlobalLoading(false), []);
 
 	return (
 		<div className="relative flex flex-col flex-1 w-full h-full self-center md:max-w-[438px] p-4">
@@ -38,17 +47,12 @@ export default function WalletSearchPage() {
 						Search
 					</h5>
 				</div>
-				<div className="flex w-8 justify-end">
+				<div className="flex w-8 justify-end opacity-0">
 					<div
 						data-tooltip-id="default-tooltip"
 						data-tooltip-content="Import your crypto"
 					>
-						<div
-							className="flex "
-							data-tooltip-id="default-tooltip"
-							data-tooltip-place="top-end"
-							data-tooltip-role="tooltip"
-						>
+						<div className="flex ">
 							<button
 								data-testid="import-asset-info-action"
 								type="button"
@@ -75,7 +79,7 @@ export default function WalletSearchPage() {
 
 			<div className="relative flex flex-col flex-grow w-full h-full self-center pt-2 undefined md:max-w-[438px]">
 				<div>
-					<div className="search-field ">
+					<div className="search-field">
 						<div className="mr-2">
 							<svg
 								className="text-utility-1-opacity-1"
@@ -94,95 +98,13 @@ export default function WalletSearchPage() {
 							</svg>
 						</div>
 						<input
-							data-testid="search-asset-input"
 							className="block flex-1 outline-none bg-transparent typography-subheader-14 font-medium text-left"
 							placeholder="Token name or contract address"
 							spellCheck={false}
 							type="text"
-							value=""
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
 						/>
-					</div>
-				</div>
-
-				<div className="mt-4">
-					<div data-headlessui-state="">
-						<button
-							data-testid="network-select-button"
-							className="outline-none rounded-full bg-background-2 p-2"
-							type="button"
-							aria-expanded="false"
-							data-headlessui-state=""
-							id="headlessui-popover-button-«r1q»"
-						>
-							<div
-								className="flex items-center"
-								data-tooltip-id="default-tooltip"
-								data-tooltip-content="Filter networks"
-							>
-								<div className="pr-2">
-									<svg
-										fill="none"
-										width="20"
-										height="20"
-										viewBox="0 0 24 24"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<circle
-											cx="12"
-											cy="12"
-											r="12"
-											fill="#EAECEF"
-										></circle>
-										<circle
-											cx="7.95"
-											cy="7.95012"
-											r="2.7"
-											fill="#242426"
-										></circle>
-										<circle
-											cx="7.95"
-											cy="16.0501"
-											r="2.7"
-											fill="#242426"
-										></circle>
-										<circle
-											cx="16.0501"
-											cy="7.95"
-											r="2.7"
-											fill="#242426"
-										></circle>
-										<circle
-											cx="16.0501"
-											cy="16.0501"
-											r="2.7"
-											fill="#242426"
-										></circle>
-									</svg>
-								</div>
-								<div className="flex items-center">
-									<div>
-										<p className="typography-subheader-14 text-utility-1-default font-medium   text-unset  ">
-											All Networks
-										</p>
-									</div>
-									<div className="pl-1">
-										<svg
-											className="text-utility-1-opacity-1 transition-transform rotate-0"
-											fill="none"
-											width="18"
-											height="18"
-											viewBox="0 0 24 24"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<path
-												d="M16.5 8.49023V10.7402L12 15.5102L7.5 10.7402V8.49023H16.5Z"
-												fill="currentColor"
-											></path>
-										</svg>
-									</div>
-								</div>
-							</div>
-						</button>
 					</div>
 				</div>
 
@@ -271,25 +193,6 @@ export default function WalletSearchPage() {
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-
-					<div className="mt-4">
-						<div
-							className="flex w-full"
-							data-tooltip-id="default-tooltip"
-							data-tooltip-place="top-end"
-							data-tooltip-role="tooltip"
-						>
-							<button
-								data-testid="import-asset-btn"
-								type="button"
-								className="outline-none bg-transparent text-background-1 py-[9px] px-4 text-subheader-14 leading-subheader-14 default-button  w-full  "
-							>
-								<p className="typography-subheader-14 text-primary font-medium   text-unset  ">
-									Didn{"'"}t see your crypto? Import
-								</p>
-							</button>
 						</div>
 					</div>
 				</div>

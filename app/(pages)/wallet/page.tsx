@@ -14,6 +14,7 @@ import {
 import { _globalLoading_, _userApproved_ } from "@/app/utils/store";
 import { CryptoType, WalletProfileType } from "@/app/utils/types";
 import clsx from "clsx";
+import { formatDollars } from "@/app/utils/functions";
 
 export default function WalletPage() {
 	const router = useRouter();
@@ -356,13 +357,15 @@ export default function WalletPage() {
 
 			<div className="flex flex-col space-y-4 pb-3">
 				<div className="flex items-center space-x-2">
-					<div className="">
+					<div>
 						<h2 className="typography-header-32 text-utility-1 text-[32px] font-bold">
-							$
 							<NumberFlow
-								value={wallet?.total_balance || 0}
+								value={formatDollars(wallet?.total_balance, {
+									asNumber: true,
+								})}
 								className="text-[32px]"
-							/>
+							/>{" "}
+							$
 						</h2>
 					</div>
 
@@ -373,7 +376,6 @@ export default function WalletPage() {
 						<div className="flex">
 							<button
 								onClick={handleClick}
-								data-testid="refresh-wallet-button"
 								type="button"
 								className="outline-none bg-transparent text-background-1 p-1.5 icon-circle-button !p-0"
 							>
@@ -461,7 +463,7 @@ export default function WalletPage() {
 					</div>
 					<div
 						data-selected="true"
-						className="w-full h-1 rounded-full data-[selected='true']:bg-primary"
+						className="w-[30%] h-1 rounded-full data-[selected='true']:bg-primary"
 					></div>
 				</button>
 			</div>

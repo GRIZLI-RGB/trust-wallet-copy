@@ -2,6 +2,7 @@
 
 import Modal from "@/app/components/modal";
 import { getWalletExchange, makeWalletExchange } from "@/app/utils/api";
+import { formatDollars } from "@/app/utils/functions";
 import { _globalLoading_ } from "@/app/utils/store";
 import { CryptoType } from "@/app/utils/types";
 import { AxiosError } from "axios";
@@ -17,7 +18,7 @@ export default function WalletSwapPage() {
 		amount: string;
 	}>({
 		crypto: null,
-		amount: "0",
+		amount: "",
 	});
 	const [secondCrypto, setSecondCrypto] = useState<{
 		crypto: CryptoType | null;
@@ -27,18 +28,22 @@ export default function WalletSwapPage() {
 		amount: "0",
 	});
 	const [cryptos, setCryptos] = useState<{
-		wallet_cryptos: CryptoType[];
+		wallet_cryptos: {
+			balance: string;
+			crypto_id: number;
+			crypto: CryptoType[];
+		}[];
 		available_cryptos: CryptoType[];
 	}>();
 
 	const setGlobalLoading = useSetAtom(_globalLoading_);
 
-	const handleSwap = () => {
-		if (secondCrypto) {
-			setFirstCrypto(secondCrypto);
-			setSecondCrypto(firstCrypto);
-		}
-	};
+	// const handleSwap = () => {
+	// 	if (secondCrypto) {
+	// 		setFirstCrypto(secondCrypto);
+	// 		setSecondCrypto(firstCrypto);
+	// 	}
+	// };
 
 	const [isCryptoModalOpen, setIsCryptoModalOpen] = useState(false);
 	const [cryptoPosition, setCryptoPosition] = useState<"first" | "second">(
@@ -238,71 +243,9 @@ export default function WalletSwapPage() {
 
 								{/* Swap Container */}
 								<div className="flex flex-1 flex-col flex-grow-0 self-center bg-backgroundPrimary border border-line rounded p-0 container">
-									{/* Tabs */}
-									{/* <div className="flex h-15 border-b border-line space-x-8 px-6">
-								<div
-									data-testid="swap-option"
-									role="button"
-									className="outline-0 cursor-pointer"
-									tabIndex={0}
-								>
-									<div className="flex flex-col h-15 space-y-2 justify-end">
-										<p className="title-text text-utility-1-default font-medium text-unset">
-											Swap
-										</p>
-										<div className="flex self-center w-6 h-0.75 bg-primary" />
-									</div>
-								</div>
-								<div
-									data-testid="hot-tokens-option"
-									role="button"
-									className="outline-0 cursor-pointer"
-									tabIndex={0}
-								>
-									<div className="flex flex-col h-15 space-y-2 justify-end">
-										<p className="title-text text-textSecondary font-medium text-unset">
-											Hot tokens
-										</p>
-										<div className="flex self-center w-6 h-0.75 bg-transparent" />
-									</div>
-								</div>
-							</div> */}
-
 									{/* Swap Content */}
 									<div className="p-6">
 										<div className="bg-backgroundPrimary">
-											{/* Settings Button */}
-											{/* <div className="flex justify-end mb-6">
-										<div
-											className="flex w-auto"
-											data-tooltip-id="button-tooltip-31"
-											data-tooltip-place="top-end"
-											data-tooltip-role="tooltip"
-										>
-											<button
-												data-testid="settings-button"
-												type="button"
-												className="outline-none bg-transparent text-background-1 circle-button !p-0 w-auto"
-											>
-												<svg
-													className="text-iconNormal"
-													fill="none"
-													width="24"
-													height="24"
-													viewBox="0 0 24 24"
-													xmlns="http://www.w3.org/2000/svg"
-												>
-													<path
-														fillRule="evenodd"
-														clipRule="evenodd"
-														d="M13.8 3H10.2V5.02683C9.53935 5.19687 8.91539 5.45832 8.34242 5.7969L6.90877 4.36324L4.36318 6.90883L5.79685 8.34249C5.4583 8.91545 5.19686 9.53938 5.02683 10.2H3V13.8H5.02683C5.19687 14.4607 5.45832 15.0846 5.7969 15.6576L4.36335 17.0911L6.90894 19.6367L8.34249 18.2031C8.91545 18.5417 9.53938 18.8031 10.2 18.9732V21H13.8V18.9732C14.4607 18.8031 15.0847 18.5417 15.6576 18.2031L17.0913 19.6368L19.6369 17.0912L18.2032 15.6574C18.5417 15.0845 18.8031 14.4606 18.9732 13.8H21V10.2H18.9732C18.8031 9.53935 18.5417 8.9154 18.2031 8.34243L19.6366 6.90888L17.0911 4.3633L15.6575 5.79685C15.0846 5.4583 14.4606 5.19686 13.8 5.02683V3ZM9.3 12C9.3 10.5088 10.5088 9.3 12 9.3C13.4912 9.3 14.7 10.5088 14.7 12C14.7 13.4912 13.4912 14.7 12 14.7C10.5088 14.7 9.3 13.4912 9.3 12Z"
-														fill="currentColor"
-													/>
-												</svg>
-											</button>
-										</div>
-									</div> */}
-
 											{/* Swap Form */}
 											<div className="max-w-[400px] m-auto">
 												{/* From Section */}
@@ -396,12 +339,28 @@ export default function WalletSwapPage() {
 																		fill="currentColor"
 																	/>
 																</svg>
+
 																<div className="flex ml-1.25">
-																	<small
-																		data-testid="swap-from-wallet-balance"
-																		className="caption-text text-textSecondary font-normal text-unset"
-																	>
-																		0
+																	<small className="caption-text text-textSecondary font-normal text-unset">
+																		{
+																			+(
+																				(
+																					cryptos?.wallet_cryptos ||
+																					[]
+																				).find(
+																					(
+																						crypto
+																					) =>
+																						crypto.crypto_id ===
+																						(firstCrypto
+																							?.crypto
+																							?.id ||
+																							-1)
+																				)
+																					?.balance ||
+																				0
+																			)
+																		}
 																	</small>
 																</div>
 															</div>
@@ -476,46 +435,49 @@ export default function WalletSwapPage() {
 																	onChange={(
 																		e
 																	) => {
+																		const raw =
+																			e
+																				.target
+																				.value;
+
+																		// Оставляем только цифры, точки и запятые
+																		const filtered =
+																			raw.replace(
+																				/[^0-9.,]/g,
+																				""
+																			);
+
+																		// Заменяем все запятые на точки
+																		const valueWithDots =
+																			filtered.replace(
+																				/,/g,
+																				"."
+																			);
+
 																		setFirstCrypto(
 																			(
 																				prev
 																			) => ({
 																				...prev,
-																				amount: e
-																					.target
-																					.value,
+																				amount: valueWithDots,
 																			})
 																		);
-																		// if (
-																		// 	secondCrypto?.crypto
-																		// ) {
-																		// 	setSecondCrypto(
-																		// 		(
-																		// 			prev
-																		// 		) => ({
-																		// 			...prev,
-
-																		// 		})
-																		// 	);
-																		// }
 																	}}
 																/>
 																<div className="flex items-center space-x-1">
-																	<small
-																		data-testid="swap-from-amount-fiat"
-																		className="caption-text text-textSecondary font-normal text-unset"
-																	>
-																		${" "}
-																		{+(
-																			firstCrypto?.amount ||
-																			0
-																		) *
+																	<small className="caption-text text-textSecondary font-normal text-unset">
+																		{formatDollars(
 																			+(
-																				firstCrypto
-																					?.crypto
-																					?.price ||
+																				firstCrypto?.amount ||
 																				0
-																			)}
+																			) *
+																				+(
+																					firstCrypto
+																						?.crypto
+																						?.price ||
+																					0
+																				)
+																		)}
 																	</small>
 																</div>
 															</div>
@@ -524,7 +486,7 @@ export default function WalletSwapPage() {
 												</div>
 
 												{/* Swap Arrow */}
-												<div className="relative z0 flex w-10 h-10 -my-3 mx-auto rounded-curvy bg-backgroundPrimary">
+												{/* <div className="relative z0 flex w-10 h-10 -my-3 mx-auto rounded-curvy bg-backgroundPrimary">
 													<div className="flex w-full">
 														<button
 															onClick={handleSwap}
@@ -550,10 +512,10 @@ export default function WalletSwapPage() {
 															</svg>
 														</button>
 													</div>
-												</div>
+												</div> */}
 
 												{/* To Section */}
-												<div className="rounded-4 bg-background-2 p-0 border-solid transition w-full">
+												<div className="rounded-4 bg-background-2 p-0 border-solid transition w-full mt-2">
 													<div className="flex flex-col space-y-3 p-4">
 														<div className="flex items-center justify-between">
 															<div className="flex items-center space-x-1">
@@ -673,13 +635,14 @@ export default function WalletSwapPage() {
 																		)}
 																	</button>
 																</div>
+
 																<div
 																	role="button"
 																	className="outline-0 cursor-pointer"
 																	tabIndex={0}
 																>
 																	<div className="flex items-center space-x-1">
-																		<p className="title-text text-utility-1-default font-semibold text-unset">
+																		<p className="whitespace-nowrap title-text text-utility-1-default font-semibold text-unset">
 																			{secondCrypto?.crypto
 																				? secondCrypto
 																						.crypto
@@ -704,12 +667,30 @@ export default function WalletSwapPage() {
 																	</div>
 																</div>
 															</div>
-															<div className="flex text-end">
-																<h3 className="headline-text text-utility-1-default font-semibold text-unset">
+															<div className="flex flex-col w-full items-end space-y-1 overflow-hidden">
+																<h3 className="headline-text text-utility-1-default font-semibold   text-unset text-headline6 leading-headline6 ">
 																	{
 																		secondCrypto?.amount
 																	}
 																</h3>
+																{secondCrypto?.crypto && (
+																	<div className="flex items-center space-x-1">
+																		<small className="caption-text text-textSecondary font-normal   text-unset  ">
+																			{formatDollars(
+																				+(
+																					secondCrypto?.amount ||
+																					0
+																				) *
+																					+(
+																						secondCrypto
+																							?.crypto
+																							?.price ||
+																						0
+																					)
+																			)}
+																		</small>
+																	</div>
+																)}
 															</div>
 														</div>
 													</div>
