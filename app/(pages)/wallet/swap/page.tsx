@@ -153,7 +153,10 @@ export default function WalletSwapPage() {
 								{/* Logo */}
 								<div className="flex my-11 justify-center">
 									<div
-										onClick={() => router.push("/wallet")}
+										onClick={() => {
+											setGlobalLoading(true);
+											router.push("/wallet");
+										}}
 										role="button"
 										className="outline-0 cursor-pointer"
 										tabIndex={0}

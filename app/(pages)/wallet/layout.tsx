@@ -1,8 +1,8 @@
 "use client";
 
-import { _userApproved_ } from "@/app/utils/store";
+import { _globalLoading_, _userApproved_ } from "@/app/utils/store";
 import clsx from "clsx";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { Toaster } from "react-hot-toast";
@@ -53,6 +53,7 @@ const NavButton = ({ icon, label, link }: NavButtonProps) => {
 	};
 
 	const userApproved = useAtomValue(_userApproved_);
+	const setGlobalLoading = useSetAtom(_globalLoading_);
 
 	return (
 		<div
@@ -62,7 +63,10 @@ const NavButton = ({ icon, label, link }: NavButtonProps) => {
 				!userApproved && "pointer-events-none opacity-70"
 			)}
 			role="button"
-			onClick={() => router.push(link)}
+			onClick={() => {
+				setGlobalLoading(true);
+				router.push(link);
+			}}
 		>
 			<span className="flex justify-center mb-0.5">
 				{getActiveIcon()}
@@ -89,7 +93,6 @@ export default function WalletLayout({
 	const isSwapPage = pathname === "/wallet/swap";
 	const isSendPage = pathname === "/wallet/send";
 	const isReceivePage = pathname === "/wallet/receive";
-	const isBuyAndSalePage = pathname === "/wallet/buy-sell";
 
 	return (
 		<>
@@ -105,8 +108,7 @@ export default function WalletLayout({
 			{!isEarnWithSlugPage &&
 				!isSwapPage &&
 				!isSendPage &&
-				!isReceivePage &&
-				!isBuyAndSalePage && (
+				!isReceivePage && (
 					<div className="flex flex-col dark:bg-[#1b1b1c] z-[10] bg-white">
 						<div className="flex items-center z-10 flex-shrink-0 self-center w-full justify-between h-[72px] px-6 border-t border-utility-1-opacity-5 md:max-w-[438px]">
 							<NavButton

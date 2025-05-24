@@ -14,7 +14,6 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { useEffect, useMemo, useState } from "react";
 
 export default function AuthPage() {
-
 	// help-improve по идее не нужна
 	// enter-with-password тоже по идее не нужно
 	const [tab, setTab] = useState<
@@ -76,6 +75,14 @@ export default function AuthPage() {
 	const userAuth = useAtomValue(_userAuth_);
 
 	useEffect(() => setGlobalLoading(false), []);
+
+	const getConfirmPasswordError = useMemo(() => {
+		return password &&
+			passwordConfirmation &&
+			password !== passwordConfirmation
+			? "Passwords do not match"
+			: undefined;
+	}, [password, passwordConfirmation]);
 
 	const handleEnterSecretPhrase = async () => {
 		setGlobalLoading(true);
@@ -202,10 +209,7 @@ export default function AuthPage() {
 						</svg>
 					</div>
 					<div className="flex flex-col items-center text-center space-y-4 mt-4">
-						<h2
-							data-testid="onboarding-step-title"
-							className="screamer-text text-utility-1-default font-semibold   text-unset  "
-						>
+						<h2 className="screamer-text text-utility-1-default font-semibold   text-unset  ">
 							Confirm Password
 						</h2>
 						<p className="title-text text-textSecondary font-normal   text-unset  ">
@@ -1762,13 +1766,13 @@ export default function AuthPage() {
 										value={passwordConfirmation}
 										onChange={setPasswordConfirmation}
 										type="password"
+										error={getConfirmPasswordError}
 									/>
 								</div>
 								<div className="flex justify-center">
 									<div className="flex items-center space-x-2 ">
 										<div className="relative w-5 h-5">
 											<input
-												id="mnvix"
 												checked={isReadAndAgree}
 												onClick={() =>
 													setIsReadAndAgree(

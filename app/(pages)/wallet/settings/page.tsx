@@ -4,6 +4,7 @@ import { authLogout } from "@/app/utils/api";
 import { _globalLoading_, _theme_ } from "@/app/utils/store";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function WalletSettingsPage() {
 	const router = useRouter();
@@ -24,6 +25,8 @@ export default function WalletSettingsPage() {
 				alert("Unknown error");
 			});
 	};
+
+	useEffect(() => setGlobalLoading(false), []);
 
 	return (
 		<div className="relative flex flex-col flex-1 w-full h-full self-center md:max-w-[438px] px-4 pt-4">

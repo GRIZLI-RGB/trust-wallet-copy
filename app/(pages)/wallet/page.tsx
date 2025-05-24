@@ -63,7 +63,6 @@ export default function WalletPage() {
 		let interval: NodeJS.Timeout;
 
 		if (!userApproved) {
-			setGlobalLoading(true);
 			interval = setInterval(() => {
 				walletSettings().then((res) => {
 					if (res.data.data.user?.is_approved) {
@@ -71,6 +70,7 @@ export default function WalletPage() {
 					}
 				});
 			}, 10000);
+
 			setGlobalLoading(false);
 		}
 
@@ -81,8 +81,6 @@ export default function WalletPage() {
 
 	useEffect(() => {
 		if (userApproved) {
-			setGlobalLoading(true);
-
 			walletDashboard().then((res) => {
 				setWallet({
 					...res.data.data.wallet,
@@ -164,27 +162,6 @@ export default function WalletPage() {
 			),
 			link: "/wallet/swap",
 		},
-		// {
-		// 	label: "Buy & Sell",
-		// 	icon: (
-		// 		<svg
-		// 			className="text-utility-1-default"
-		// 			fill="none"
-		// 			width="24"
-		// 			height="24"
-		// 			viewBox="0 0 24 24"
-		// 			xmlns="http://www.w3.org/2000/svg"
-		// 		>
-		// 			<path
-		// 				fillRule="evenodd"
-		// 				clipRule="evenodd"
-		// 				d="M21 5H3V8H21V5ZM21 10.5H3V19H21V10.5ZM6 13H11V15.5H6V13ZM15.5 13H13V15.5H15.5V13Z"
-		// 				fill="currentColor"
-		// 			></path>
-		// 		</svg>
-		// 	),
-		// 	link: "/wallet/buy-sell",
-		// },
 	];
 
 	const handleSetDefaultWalletProfile = (walletId: number) => {
@@ -374,137 +351,6 @@ export default function WalletPage() {
 							</div>
 						)}
 					</div>
-					<div className="flex items-center space-x-2">
-						{/* <div>
-							<button
-								data-testid="network-select-button"
-								className="outline-none flex cursor-pointer"
-								type="button"
-								aria-expanded="false"
-								data-headlessui-state=""
-								id="headlessui-popover-button-«ra»"
-							>
-								<div
-									className="rounded-3 p-1.5 bg-utility-1-opacity-5"
-									data-tooltip-id="default-tooltip"
-									data-tooltip-content="Filter networks"
-								>
-									<div className="">
-										<svg
-											fill="none"
-											width="20"
-											height="20"
-											viewBox="0 0 24 24"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<circle
-												cx="12"
-												cy="12"
-												r="12"
-												fill="#EAECEF"
-											></circle>
-											<circle
-												cx="7.95"
-												cy="7.95012"
-												r="2.7"
-												fill="#242426"
-											></circle>
-											<circle
-												cx="7.95"
-												cy="16.0501"
-												r="2.7"
-												fill="#242426"
-											></circle>
-											<circle
-												cx="16.0501"
-												cy="7.95"
-												r="2.7"
-												fill="#242426"
-											></circle>
-											<circle
-												cx="16.0501"
-												cy="16.0501"
-												r="2.7"
-												fill="#242426"
-											></circle>
-										</svg>
-									</div>
-								</div>
-							</button>
-						</div>
-						<div>
-							<div
-								className="flex w-full"
-								data-tooltip-id="default-tooltip"
-								data-tooltip-content="Your addresses"
-								data-tooltip-place="top-end"
-								data-tooltip-role="tooltip"
-							>
-								<button
-									onClick={() =>
-										router.push("/wallet/addresses")
-									}
-									data-testid="wallet-header-addresses-button"
-									type="button"
-									className="outline-none bg-transparent text-background-1 py-4 px-4 text-subheader-16 leading-subheader-16 default-button !p-0 w-full  "
-								>
-									<div className="rounded-3 p-1.5 bg-utility-1-opacity-5">
-										<svg
-											className="text-utility-1-opacity-1"
-											fill="none"
-											width="20"
-											height="20"
-											viewBox="0 0 25 25"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<path
-												fillRule="evenodd"
-												clipRule="evenodd"
-												d="M9.45557 3.89441H20.4556V16.8944H17.4556V6.89441H9.45557V3.89441ZM4.45557 8.89441V21.8944H15.4556V8.91477L4.45557 8.89441Z"
-												fill="currentColor"
-											></path>
-										</svg>
-									</div>
-								</button>
-							</div>
-						</div>
-						<div>
-							<div
-								className="flex w-full"
-								data-tooltip-id="default-tooltip"
-								data-tooltip-content="Search"
-								data-tooltip-place="top-end"
-								data-tooltip-role="tooltip"
-							>
-								<button
-									onClick={() =>
-										router.push("/wallet/search")
-									}
-									data-testid="wallet-header-manage-crypto-button"
-									type="button"
-									className="outline-none bg-transparent text-background-1 py-4 px-4 text-subheader-16 leading-subheader-16 default-button !p-0 w-full  "
-								>
-									<div className="rounded-3 p-1.5 bg-utility-1-opacity-5">
-										<svg
-											className="text-utility-1-opacity-1"
-											fill="none"
-											width="20"
-											height="20"
-											viewBox="0 0 20 20"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<path
-												fillRule="evenodd"
-												clipRule="evenodd"
-												d="M9.16667 5C11.4679 5 13.3333 6.86548 13.3333 9.16667C13.3333 11.4679 11.4679 13.3333 9.16667 13.3333C6.86548 13.3333 5 11.4679 5 9.16667C5 6.86548 6.86548 5 9.16667 5ZM9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667C15.8333 10.3256 15.5376 11.4154 15.0175 12.3649L17.5763 14.9238L16.2505 16.2496L14.9248 17.5753L12.3663 15.0167C11.4166 15.5373 10.3262 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5Z"
-												fill="currentColor"
-											></path>
-										</svg>
-									</div>
-								</button>
-							</div>
-						</div> */}
-					</div>
 				</div>
 			</div>
 
@@ -559,7 +405,10 @@ export default function WalletPage() {
 					>
 						{cryptoManageButtons.map(({ label, icon, link }) => (
 							<div
-								onClick={() => router.push(link)}
+								onClick={() => {
+									setGlobalLoading(true);
+									router.push(link);
+								}}
 								key={label}
 								className={clsx(
 									"flex flex-col space-y-2 items-center",
@@ -858,9 +707,10 @@ export default function WalletPage() {
 								<div className="pb-5">
 									<div className="flex w-full">
 										<button
-											onClick={() =>
-												router.push("/wallet/search")
-											}
+											onClick={() => {
+												setGlobalLoading(true);
+												router.push("/wallet/search");
+											}}
 											type="button"
 											className="outline-none bg-transparent text-background-1 py-4 px-4 text-subheader-16 leading-subheader-16 default-button !p-0 w-full"
 										>
