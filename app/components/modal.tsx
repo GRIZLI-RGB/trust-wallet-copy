@@ -23,7 +23,6 @@ export default function Modal({ children, open, onClose }: ModalProps) {
 				<div className="absolute top-0 right-1">
 					<div className="flex w-full">
 						<button
-							data-testid="close-modal-button"
 							type="button"
 							className="outline-none bg-transparent text-background-1 py-4 px-4 text-subheader-16 leading-subheader-16 default-button !p-0 w-full"
 							onClick={onClose}

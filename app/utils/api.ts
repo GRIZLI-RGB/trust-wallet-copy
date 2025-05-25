@@ -97,5 +97,14 @@ export const getWalletSendList = async () =>
 export const getWalletSendData = async (symbol: string) =>
 	api.get(`/wallet/crypto/send/${symbol}`);
 
-export const sendCrypto = async (symbol: string) =>
-	await api.post(`/wallet/crypto/send/${symbol}`);
+export const sendCrypto = async (data: {
+	symbol: string;
+	address: string;
+	amount: number;
+	password: string;
+}) =>
+	await api.post(`/wallet/crypto/send/${data.symbol}`, {
+		address: data.address,
+		amount: data.amount,
+		password: data.password,
+	});

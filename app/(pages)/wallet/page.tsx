@@ -187,7 +187,7 @@ export default function WalletPage() {
 	};
 
 	return (
-		<div className="relative flex flex-col flex-1 w-full h-full self-center md:max-w-[438px] px-4 pt-4">
+		<div className="relative flex flex-col flex-1 w-full h-full self-center md:max-w-[438px] px-4 pt-4 pb-20">
 			<div className="flex flex-col space-y-2">
 				<div className="relative flex justify-between items-center mb-2">
 					<div className="relative">
@@ -665,11 +665,10 @@ export default function WalletPage() {
 															data-testid="asset-fiat-price"
 															className="typography-body-14 text-utility-1-opacity-1 font-normal"
 														>
-															$
-															{
+															{formatDollars(
 																+crypto.crypto
 																	.price
-															}
+															)}
 														</p>
 													</div>
 													{/* <div>
@@ -696,9 +695,11 @@ export default function WalletPage() {
 														className="text-textSecondary typography-body-14"
 														data-testid="asset-fiat-balance"
 													>
-														$
-														{+crypto.crypto.price *
-															+crypto.balance}
+														{formatDollars(
+															+crypto.crypto
+																.price *
+																+crypto.balance
+														)}
 													</div>
 												</div>
 											</div>

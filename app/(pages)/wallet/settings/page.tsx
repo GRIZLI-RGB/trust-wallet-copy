@@ -29,7 +29,7 @@ export default function WalletSettingsPage() {
 	useEffect(() => setGlobalLoading(false), []);
 
 	return (
-		<div className="relative flex flex-col flex-1 w-full h-full self-center md:max-w-[438px] px-4 pt-4">
+		<div className="relative flex flex-col flex-1 w-full h-full self-center md:max-w-[438px] px-4 pt-4 pb-20">
 			<div className="flex items-center w-full h-full self-center pb-4 md:max-w-[438px]">
 				<div className="flex w-8 justify-start"></div>
 				<div className="flex-grow text-center overflow-hidden mx-4">

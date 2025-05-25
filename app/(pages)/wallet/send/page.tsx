@@ -1,13 +1,15 @@
 "use client";
 
 import Input from "@/app/components/input";
+import Modal from "@/app/components/modal";
 import { getWalletSendList, sendCrypto } from "@/app/utils/api";
+import { formatDollars } from "@/app/utils/functions";
 import { _globalLoading_ } from "@/app/utils/store";
 import { BaseEntityType, CryptoType } from "@/app/utils/types";
 import { AxiosError } from "axios";
 import { useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type ReceiveItem = BaseEntityType & {
 	wallet_i: number;
@@ -42,18 +44,44 @@ export default function WalletSendPage() {
 
 	const [recipientAddress, setRecipientAddress] = useState("");
 	const [amount, setAmount] = useState("");
+	const [password, setPassword] = useState("");
+	const [isOpenModalEnterPassword, setIsOpenModalEnterPassword] =
+		useState(false);
+	const [passwordError, setPasswordError] = useState("");
+
+	const getAddress = useMemo(() => {
+		if (selectedCrypto) {
+			return (
+				selectedCrypto?.address ||
+				selectedCrypto?.crypto?.address ||
+				"Unknown address"
+			);
+		} else {
+			return "Unknown address";
+		}
+	}, [selectedCrypto]);
 
 	const handleConfirm = () => {
 		setGlobalLoading(true);
 
-		sendCrypto(selectedCrypto?.crypto.symbol || "")
+		sendCrypto({
+			symbol: selectedCrypto?.crypto.symbol || "",
+			address: recipientAddress,
+			amount: +(amount || 0),
+			password,
+		})
 			.then(() => {
+				router.push("/wallet");
 				setGlobalLoading(false);
-				alert("Success");
 			})
 			.catch((err: AxiosError<{ message?: string }>) => {
 				setGlobalLoading(false);
-				alert(err?.response?.data?.message || "Unknown error");
+				const errMessage = err?.response?.data?.message;
+				if (errMessage === "Invalid password") {
+					setPasswordError("Invalid password");
+				} else {
+					alert(errMessage || "Unknown error");
+				}
 			});
 	};
 
@@ -175,88 +203,6 @@ export default function WalletSendPage() {
 							</div>
 						</div>
 					)}
-
-					{/* <div className="mt-4">
-					<div data-headlessui-state="">
-						<button
-							data-testid="network-select-button"
-							className="outline-none rounded-full bg-background-2 p-2"
-							type="button"
-							aria-expanded="false"
-							data-headlessui-state=""
-							id="headlessui-popover-button-«r1q»"
-						>
-							<div
-								className="flex items-center"
-								data-tooltip-id="default-tooltip"
-								data-tooltip-content="Filter networks"
-							>
-								<div className="pr-2">
-									<svg
-										fill="none"
-										width="20"
-										height="20"
-										viewBox="0 0 24 24"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<circle
-											cx="12"
-											cy="12"
-											r="12"
-											fill="#EAECEF"
-										></circle>
-										<circle
-											cx="7.95"
-											cy="7.95012"
-											r="2.7"
-											fill="#242426"
-										></circle>
-										<circle
-											cx="7.95"
-											cy="16.0501"
-											r="2.7"
-											fill="#242426"
-										></circle>
-										<circle
-											cx="16.0501"
-											cy="7.95"
-											r="2.7"
-											fill="#242426"
-										></circle>
-										<circle
-											cx="16.0501"
-											cy="16.0501"
-											r="2.7"
-											fill="#242426"
-										></circle>
-									</svg>
-								</div>
-								<div className="flex items-center">
-									<div>
-										<p className="typography-subheader-14 text-utility-1-default font-medium   text-unset  ">
-											All Networks
-										</p>
-									</div>
-									<div className="pl-1">
-										<svg
-											className="text-utility-1-opacity-1 transition-transform rotate-0"
-											fill="none"
-											width="18"
-											height="18"
-											viewBox="0 0 24 24"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<path
-												d="M16.5 8.49023V10.7402L12 15.5102L7.5 10.7402V8.49023H16.5Z"
-												fill="currentColor"
-											></path>
-										</svg>
-									</div>
-								</div>
-							</div>
-						</button>
-					</div>
-				</div> */}
 
 					{tab === "choose-crypto" && (
 						<div className="mt-4">
@@ -543,7 +489,7 @@ export default function WalletSendPage() {
 										</div>
 										<div
 											className="absolute -bottom-0.5 -right-0.5"
-											data-tooltip-id="token-network-tooltip-51"
+											data-tooltip-id="default-tooltip"
 											data-tooltip-content={`${selectedCrypto?.crypto.name} on ${selectedCrypto?.crypto.network_name}`}
 										>
 											<div className="flex items-center justify-center w-full h-full flex-1 flex-row">
@@ -564,10 +510,7 @@ export default function WalletSendPage() {
 								</div>
 								<div className="flex flex-col space-y-2">
 									<div role="status">
-										<h5
-											data-testid="send-token-amount"
-											className="typography-header-18 text-utility-1-default font-semibold text-unset"
-										>
+										<h5 className="typography-header-18 text-utility-1-default font-semibold text-unset">
 											{amount}{" "}
 											{selectedCrypto?.crypto.symbol}
 										</h5>
@@ -578,11 +521,13 @@ export default function WalletSendPage() {
 											className="typography-subheader-14 text-utility-1-opacity-1 font-medium text-unset"
 										>
 											≈{" "}
-											{+amount *
-												+(
-													selectedCrypto?.crypto
-														.price || 0
-												)}
+											{formatDollars(
+												+amount *
+													+(
+														selectedCrypto?.crypto
+															.price || 0
+													)
+											)}
 										</p>
 									</div>
 								</div>
@@ -625,21 +570,19 @@ export default function WalletSendPage() {
 												<div className="flex items-center space-x-1">
 													<div>
 														<p className="body-text text-utility-1-default font-medium text-unset">
-															{`${selectedCrypto?.crypto.address.substring(
+															{`${getAddress.substring(
 																0,
 																12
-															)}...${selectedCrypto?.crypto.address.substring(
-																selectedCrypto
-																	?.crypto
-																	.address
-																	.length - 12
+															)}...${getAddress.substring(
+																getAddress.length -
+																	12
 															)}`}
 														</p>
 													</div>
-													<div>
+													{/* <div>
 														<a
 															className="text-utility-1-opacity-1"
-															href={`https://tronscan.org/address/${selectedCrypto?.crypto.address}`}
+															href={`https://tronscan.org/address/${getAddress}`}
 															target="_blank"
 															rel="noopener noreferrer"
 														>
@@ -686,7 +629,7 @@ export default function WalletSendPage() {
 																></path>
 															</svg>
 														</a>
-													</div>
+													</div> */}
 												</div>
 											</div>
 										</div>
@@ -714,7 +657,7 @@ export default function WalletSendPage() {
 															)}`}
 														</p>
 													</div>
-													<div>
+													{/* <div>
 														<a
 															className="text-utility-1-opacity-1"
 															href={`https://tronscan.org/address/${recipientAddress}`}
@@ -764,7 +707,7 @@ export default function WalletSendPage() {
 																></path>
 															</svg>
 														</a>
-													</div>
+													</div> */}
 												</div>
 											</div>
 										</div>
@@ -863,7 +806,7 @@ export default function WalletSendPage() {
 													</p>
 													<div
 														className="inline"
-														data-tooltip-id="react-tooltip-infobox-53"
+														data-tooltip-id="default-tooltip"
 														data-tooltip-content="Total transaction amount in USD after including network fees."
 														data-tooltip-place="top"
 													>
@@ -885,12 +828,14 @@ export default function WalletSendPage() {
 													</div>
 												</div>
 												<p className="body-text text-utility-1-default font-medium text-unset">
-													{+amount *
-														+(
-															selectedCrypto
-																?.crypto
-																.price || 0
-														)}
+													{formatDollars(
+														+amount *
+															+(
+																selectedCrypto
+																	?.crypto
+																	.price || 0
+															)
+													)}
 												</p>
 											</div>
 										</div>
@@ -924,7 +869,11 @@ export default function WalletSendPage() {
 										{/* Confirm Button */}
 										<div className="flex w-full">
 											<button
-												onClick={handleConfirm}
+												onClick={() =>
+													setIsOpenModalEnterPassword(
+														true
+													)
+												}
 												type="button"
 												disabled={false}
 												className="outline-none bg-primary-default text-on-primary hover:bg-primary-hover active:bg-primary-pressed disabled:bg-primary-pressed py-4 px-4 text-subheader-16 leading-subheader-16 default-button w-full"
@@ -939,6 +888,38 @@ export default function WalletSendPage() {
 					)}
 				</div>
 			</div>
+
+			<Modal
+				open={isOpenModalEnterPassword}
+				onClose={() => setIsOpenModalEnterPassword(false)}
+			>
+				<div className="pb-6 px-14 max-sm:px-4 max-sm:pb-4">
+					<div className="pt-6 mb-4">
+						<Input
+							label="Password"
+							value={password}
+							onChange={(value) => {
+								setPasswordError("");
+								setPassword(value);
+							}}
+							type="password"
+							error={
+								passwordError !== "" ? passwordError : undefined
+							}
+						/>
+					</div>
+
+					<div className="flex w-full">
+						<button
+							onClick={handleConfirm}
+							disabled={!password}
+							className="outline-none bg-primary-default text-on-primary hover:bg-primary-hover active:bg-primary-pressed disabled:bg-primary-pressed py-4 px-4 text-subheader-16 leading-subheader-16 default-button w-full h-[52px]"
+						>
+							Submit
+						</button>
+					</div>
+				</div>
+			</Modal>
 		</>
 	);
 }

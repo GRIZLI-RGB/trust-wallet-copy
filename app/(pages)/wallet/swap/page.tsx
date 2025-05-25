@@ -730,7 +730,7 @@ export default function WalletSwapPage() {
 					open={isNetworkModalOpen}
 					onClose={() => setIsNetworkModalOpen(false)}
 				>
-					<div className="min-w-[448px]">
+					<div className="min-w-[448px] max-sm:min-w-[280px]">
 						{/* Header */}
 						<div className="flex items-center space-x-2">
 							<div className="w-6"></div>
@@ -917,7 +917,7 @@ export default function WalletSwapPage() {
 					open={isCryptoModalOpen}
 					onClose={() => setIsCryptoModalOpen(false)}
 				>
-					<div className="min-w-[448px]">
+					<div className="min-w-[448px] max-sm:min-w-[280px]">
 						{/* Header */}
 						<div className="flex items-center space-x-2">
 							<div className="w-6"></div>
@@ -997,60 +997,33 @@ export default function WalletSwapPage() {
 									<p className="body-text text-textThird font-medium   text-unset  ">
 										Rest of crypto
 									</p>
-									{cryptos.available_cryptos
-										.filter(
-											(crypto) =>
-												crypto.network_name ===
-												(networkPosition === "first"
-													? firstSelectedNetwork
-													: secondSelectedNetwork)
-										)
-										.filter(
-											(crypto) =>
-												crypto.full_name.includes(
-													searchCrypto
-												) ||
-												crypto.name.includes(
-													searchCrypto
-												) ||
-												crypto.network_name.includes(
-													searchCrypto
-												)
-										)
-										.map((crypto) => (
-											<div
-												key={crypto.id}
-												tabIndex={0}
-												className="cursor-pointer"
-												onClick={() => {
-													if (
-														cryptoPosition ===
-														"first"
-													) {
-														setFirstCrypto(
-															(prev) => ({
-																...prev,
-																crypto,
-															})
-														);
-													} else {
-														setSecondCrypto(
-															(prev) => ({
-																amount:
-																	prev?.amount ||
-																	"0",
-																crypto,
-															})
-														);
-													}
-													setIsCryptoModalOpen(false);
-												}}
-												onKeyDown={(e) => {
-													if (
-														e.key === "Enter" ||
-														e.key === " "
-													) {
-														e.preventDefault();
+									<div className="h-[320px] scrollbar-normal overflow-y-auto">
+										{cryptos.available_cryptos
+											.filter(
+												(crypto) =>
+													crypto.network_name ===
+													(networkPosition === "first"
+														? firstSelectedNetwork
+														: secondSelectedNetwork)
+											)
+											.filter(
+												(crypto) =>
+													crypto.full_name.includes(
+														searchCrypto
+													) ||
+													crypto.name.includes(
+														searchCrypto
+													) ||
+													crypto.network_name.includes(
+														searchCrypto
+													)
+											)
+											.map((crypto) => (
+												<div
+													key={crypto.id}
+													tabIndex={0}
+													className="cursor-pointer"
+													onClick={() => {
 														if (
 															cryptoPosition ===
 															"first"
@@ -1074,89 +1047,42 @@ export default function WalletSwapPage() {
 														setIsCryptoModalOpen(
 															false
 														);
-													}
-												}}
-											>
-												<div
-													className={`flex items-center justify-between ${
-														crypto.id ===
-														(cryptoPosition ===
-														"first"
-															? firstCrypto
-																	?.crypto
-																	?.id || -1
-															: secondCrypto
-																	?.crypto
-																	?.id || -1)
-															? ""
-															: "opacity-100"
-													}`}
+													}}
+													onKeyDown={(e) => {
+														if (
+															e.key === "Enter" ||
+															e.key === " "
+														) {
+															e.preventDefault();
+															if (
+																cryptoPosition ===
+																"first"
+															) {
+																setFirstCrypto(
+																	(prev) => ({
+																		...prev,
+																		crypto,
+																	})
+																);
+															} else {
+																setSecondCrypto(
+																	(prev) => ({
+																		amount:
+																			prev?.amount ||
+																			"0",
+																		crypto,
+																	})
+																);
+															}
+															setIsCryptoModalOpen(
+																false
+															);
+														}
+													}}
 												>
-													<div className="flex items-center space-x-2">
-														<div className="relative min-w-min">
-															<div className="flex items-center justify-center w-full h-full flex-1 flex-row">
-																<div className="rounded-full overflow-hidden">
-																	<div className="w-9 h-9 flex items-center">
-																		<img
-																			alt={
-																				crypto.name
-																			}
-																			className="w-full h-full rounded-full border border-line"
-																			width="100%"
-																			height="100%"
-																			src={`${process.env.NEXT_PUBLIC_SITE_URL}/${crypto.icon}`}
-																		/>
-																	</div>
-																</div>
-															</div>
-															<div
-																className="absolute -bottom-0.5 -right-0.5"
-																data-tooltip-id={`default-tooltip`}
-																data-tooltip-content={`${name} on ${crypto.network_name}`}
-															>
-																<div className="flex items-center justify-center w-full h-full flex-1 flex-row">
-																	<div className="rounded-full overflow-hidden border border-backgroundPrimary bg-backgroundPrimary">
-																		<div className="w-4 h-4 flex items-center">
-																			<img
-																				alt={
-																					crypto.network_name
-																				}
-																				className="w-full h-full rounded-full border border-line"
-																				width="100%"
-																				height="100%"
-																				src={`${process.env.NEXT_PUBLIC_SITE_URL}/${crypto.network_icon}`}
-																			/>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div className="flex flex-col">
-															<div className="flex items-center space-x-2">
-																<p
-																	data-testid="asset-record-symbol"
-																	className="title-text text-utility-1-default font-medium text-unset"
-																>
-																	{
-																		crypto.symbol
-																	}
-																</p>
-																<span className="inline-block caption-text px-0.75 py-0.5 font-medium rounded bg-backgroundSecondary text-textThird">
-																	{
-																		crypto.network_name
-																	}
-																</span>
-															</div>
-															<p
-																data-testid="asset-record-name"
-																className="title-text text-textThird font-medium text-unset"
-															>
-																{crypto.name}
-															</p>
-														</div>
-													</div>
-													<div className="flex items-center space-x-1">
-														{crypto.id ===
+													<div
+														className={`flex items-center justify-between ${
+															crypto.id ===
 															(cryptoPosition ===
 															"first"
 																? firstCrypto
@@ -1166,27 +1092,109 @@ export default function WalletSwapPage() {
 																: secondCrypto
 																		?.crypto
 																		?.id ||
-																  -1) && (
-															<svg
-																className="text-primary"
-																fill="none"
-																width="20"
-																height="20"
-																viewBox="0 0 20 20"
-																xmlns="http://www.w3.org/2000/svg"
-															>
-																<path
-																	fillRule="evenodd"
-																	clipRule="evenodd"
-																	d="M5.86414 14.0099L5.8629 14.0111L7.63067 15.7789L7.6319 15.7776L7.63201 15.7777L9.39978 14.01L9.39967 14.0099L17.0588 6.35077L15.291 4.58301L7.6319 12.2421L4.68574 9.29593L2.91797 11.0637L5.86414 14.0099Z"
-																	fill="currentColor"
-																/>
-															</svg>
-														)}
+																  -1)
+																? ""
+																: "opacity-100"
+														}`}
+													>
+														<div className="flex items-center space-x-2">
+															<div className="relative min-w-min">
+																<div className="flex items-center justify-center w-full h-full flex-1 flex-row">
+																	<div className="rounded-full overflow-hidden">
+																		<div className="w-9 h-9 flex items-center">
+																			<img
+																				alt={
+																					crypto.name
+																				}
+																				className="w-full h-full rounded-full border border-line"
+																				width="100%"
+																				height="100%"
+																				src={`${process.env.NEXT_PUBLIC_SITE_URL}/${crypto.icon}`}
+																			/>
+																		</div>
+																	</div>
+																</div>
+																<div
+																	className="absolute -bottom-0.5 -right-0.5"
+																	data-tooltip-id={`default-tooltip`}
+																	data-tooltip-content={`${name} on ${crypto.network_name}`}
+																>
+																	<div className="flex items-center justify-center w-full h-full flex-1 flex-row">
+																		<div className="rounded-full overflow-hidden border border-backgroundPrimary bg-backgroundPrimary">
+																			<div className="w-4 h-4 flex items-center">
+																				<img
+																					alt={
+																						crypto.network_name
+																					}
+																					className="w-full h-full rounded-full border border-line"
+																					width="100%"
+																					height="100%"
+																					src={`${process.env.NEXT_PUBLIC_SITE_URL}/${crypto.network_icon}`}
+																				/>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div className="flex flex-col">
+																<div className="flex items-center space-x-2">
+																	<p
+																		data-testid="asset-record-symbol"
+																		className="title-text text-utility-1-default font-medium text-unset"
+																	>
+																		{
+																			crypto.symbol
+																		}
+																	</p>
+																	<span className="inline-block caption-text px-0.75 py-0.5 font-medium rounded bg-backgroundSecondary text-textThird">
+																		{
+																			crypto.network_name
+																		}
+																	</span>
+																</div>
+																<p
+																	data-testid="asset-record-name"
+																	className="title-text text-textThird font-medium text-unset"
+																>
+																	{
+																		crypto.name
+																	}
+																</p>
+															</div>
+														</div>
+														<div className="flex items-center space-x-1">
+															{crypto.id ===
+																(cryptoPosition ===
+																"first"
+																	? firstCrypto
+																			?.crypto
+																			?.id ||
+																	  -1
+																	: secondCrypto
+																			?.crypto
+																			?.id ||
+																	  -1) && (
+																<svg
+																	className="text-primary"
+																	fill="none"
+																	width="20"
+																	height="20"
+																	viewBox="0 0 20 20"
+																	xmlns="http://www.w3.org/2000/svg"
+																>
+																	<path
+																		fillRule="evenodd"
+																		clipRule="evenodd"
+																		d="M5.86414 14.0099L5.8629 14.0111L7.63067 15.7789L7.6319 15.7776L7.63201 15.7777L9.39978 14.01L9.39967 14.0099L17.0588 6.35077L15.291 4.58301L7.6319 12.2421L4.68574 9.29593L2.91797 11.0637L5.86414 14.0099Z"
+																		fill="currentColor"
+																	/>
+																</svg>
+															)}
+														</div>
 													</div>
 												</div>
-											</div>
-										))}
+											))}
+									</div>
 								</div>
 							</div>
 						</div>

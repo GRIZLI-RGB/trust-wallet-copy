@@ -100,6 +100,28 @@ html,
 	--tw-contain-style: ;
 }
 
+.scrollbar-normal {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #999999 transparent; /* Firefox */
+}
+
+/* Webkit (Chrome, Edge, Safari) */
+.scrollbar-normal::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-normal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-normal::-webkit-scrollbar-thumb {
+  background-color: #999999;
+  border-radius: 6px;
+  border: none;
+}
+
+
 .dark,
 [data-theme="dark"] {
 	--twc-primary-default: 143.89999999999998 100% 64.1%;
@@ -209,110 +231,126 @@ html,
 	--twc-finishGradient-opacity: 0.48;
 }
 
-.light, [data-theme="light"] {
-    --twc-primary-default: 241.20000000000005 100% 50%;
-    --twc-primary-hover: 241 100% 65.5%;
-    --twc-primary-pressed: 241.20000000000005 100% 69.6%;
-    --twc-primary-opacity-1: 241.20000000000005 100% 50%;
-    --twc-primary-opacity-1-opacity: 0.16;
-    --twc-primary-opacity-2: 241.20000000000005 100% 50%;
-    --twc-primary-opacity-2-opacity: 0.24;
-    --twc-primary-opacity-3: 241.20000000000005 100% 50%;
-    --twc-primary-opacity-3-opacity: 0.32;
-    --twc-on-primary: 0 0% 100%;
-    --twc-on-primary-opacity-1: 0 0% 100%;
-    --twc-on-primary-opacity-1-opacity: 0.40;
-    --twc-background-1: 0 0% 100%;
-    --twc-background-2: 240 15.8% 96.3%;
-    --twc-utility-1-default: 0 0% 14.5%;
-    --twc-utility-1-opacity-1: 0 0% 14.5%;
-    --twc-utility-1-opacity-1-opacity: 0.72;
-    --twc-utility-1-opacity-2: 0 0% 14.5%;
-    --twc-utility-1-opacity-2-opacity: 0.48;
-    --twc-utility-1-opacity-3: 0 0% 14.5%;
-    --twc-utility-1-opacity-3-opacity: 0.24;
-    --twc-utility-1-opacity-4: 0 0% 14.5%;
-    --twc-utility-1-opacity-4-opacity: 0.12;
-    --twc-utility-1-opacity-5: 0 0% 14.5%;
-    --twc-utility-1-opacity-5-opacity: 0.08;
-    --twc-utility-1-opacity-6: 0 0% 14.5%;
-    --twc-utility-1-opacity-6-opacity: 0.04;
-    --twc-success-1-default: 137.3 100% 27.8%;
-    --twc-success-1-opacity-1: 137.3 100% 27.8%;
-    --twc-success-1-opacity-1-opacity: 0.16;
-    --twc-success-1-opacity-2: 137.3 100% 27.8%;
-    --twc-success-1-opacity-2-opacity: 0.24;
-    --twc-success-1-opacity-3: 137.3 100% 27.8%;
-    --twc-success-1-opacity-3-opacity: 0.32;
-    --twc-warning-1-default: 41 85.3% 42.7%;
-    --twc-warning-1-opacity-1: 41 85.3% 42.7%;
-    --twc-warning-1-opacity-1-opacity: 0.16;
-    --twc-warning-1-opacity-2: 41 85.3% 42.7%;
-    --twc-warning-1-opacity-2-opacity: 0.24;
-    --twc-warning-1-opacity-3: 41 85.3% 42.7%;
-    --twc-warning-1-opacity-3-opacity: 0.32;
-    --twc-error-1-default: 0 81.3% 42%;
-    --twc-error-1-hover: 0 63.9% 47.8%;
-    --twc-error-1-pressed: 0 58.6% 53.5%;
-    --twc-error-1-opacity-1: 0 81.3% 42%;
-    --twc-error-1-opacity-1-opacity: 0.16;
-    --twc-error-1-opacity-2: 0 81.3% 42%;
-    --twc-error-1-opacity-2-opacity: 0.24;
-    --twc-error-1-opacity-3: 0 81.3% 42%;
-    --twc-error-1-opacity-3-opacity: 0.32;
-    --twc-accent-pink: 300.70000000000005 100% 84.1%;
-    --twc-accent-neon-green: 82.80000000000001 100% 50%;
-    --twc-accent-yellow: 46.69999999999999 100% 56.7%;
-    --twc-accent-blue: 194.60000000000002 100% 59%;
-    --twc-transparent: 0 0% 0%;
-    --twc-transparent-opacity: 0.00;
-    --twc-overlay-100: 0 0% 0%;
-    --twc-overlay-100-opacity: 0.40;
-    --twc-overlay-50: 0 0% 0%;
-    --twc-overlay-50-opacity: 0.16;
-    --twc-tooltip: 0 0% 96.1%;
-    --twc-alert-solid: 137.5 41.4% 88.6%;
-    --twc-primary: 241.20000000000005 100% 50%;
-    --twc-primaryHover: 241 100% 65.5%;
-    --twc-primaryPressed: 241.20000000000005 100% 69.6%;
-    --twc-primaryInverse: 241.20000000000005 100% 50%;
-    --twc-primaryInverse-opacity: 0.16;
-    --twc-textPrimary: 0 0% 14.5%;
-    --twc-textPrimaryStatic: 0 0% 14.5%;
-    --twc-textSecondary: 0 0% 14.5%;
-    --twc-textSecondary-opacity: 0.72;
-    --twc-textThird: 0 0% 14.5%;
-    --twc-textThird-opacity: 0.48;
-    --twc-textBuy: 137.3 100% 27.8%;
-    --twc-textSell: 0 81.3% 42%;
-    --twc-textDisabled: 0 0% 14.5%;
-    --twc-textDisabled-opacity: 0.24;
-    --twc-textBrand: 41 85.3% 42.7%;
-    --twc-bg3: 240 15.8% 96.3%;
-    --twc-backgroundPrimary: 0 0% 100%;
-    --twc-backgroundSecondary: 240 15.8% 96.3%;
-    --twc-backgroundTertiary: 0 0% 14.5%;
-    --twc-backgroundTertiary-opacity: 0.12;
-    --twc-successBg: 137.3 100% 27.8%;
-    --twc-successBg-opacity: 0.16;
-    --twc-errorBg: 0 81.3% 42%;
-    --twc-errorBg-opacity: 0.16;
-    --twc-depthBuyBg: 241.20000000000005 100% 50%;
-    --twc-depthBuyBg-opacity: 0.16;
-    --twc-iconNormal: 0 0% 14.5%;
-    --twc-iconNormal-opacity: 0.72;
-    --twc-iconSuccess: 137.3 100% 27.8%;
-    --twc-iconWarning: 41 85.3% 42.7%;
-    --twc-error: 0 81.3% 42%;
-    --twc-warning: 41 85.3% 42.7%;
-    --twc-warning-opacity: 0.16;
-    --twc-info: 241.20000000000005 100% 50%;
-    --twc-info-opacity: 0.16;
-    --twc-line: 0 0% 14.5%;
-    --twc-line-opacity: 0.08;
-    --twc-startGradient: 241.20000000000005 100% 50%;
-    --twc-finishGradient: 0 0% 14.5%;
-    --twc-finishGradient-opacity: 0.48;
+.text-utility-1-opacity-3 {
+	--tw-text-opacity: 1;
+	color: hsl(var(--twc-utility-1-opacity-3) / 1);
+	color: hsl(
+		var(--twc-utility-1-opacity-3) /
+			var(--twc-utility-1-opacity-3-opacity, var(--tw-text-opacity))
+	);
+}
+
+.text-primary-opacity-3 {
+    --tw-text-opacity: 1;
+    color: hsl(var(--twc-primary-opacity-3) / 1);
+    color: hsl(var(--twc-primary-opacity-3) / var(--twc-primary-opacity-3-opacity, var(--tw-text-opacity)));
+}
+
+.light,
+[data-theme="light"] {
+	--twc-primary-default: 241.20000000000005 100% 50%;
+	--twc-primary-hover: 241 100% 65.5%;
+	--twc-primary-pressed: 241.20000000000005 100% 69.6%;
+	--twc-primary-opacity-1: 241.20000000000005 100% 50%;
+	--twc-primary-opacity-1-opacity: 0.16;
+	--twc-primary-opacity-2: 241.20000000000005 100% 50%;
+	--twc-primary-opacity-2-opacity: 0.24;
+	--twc-primary-opacity-3: 241.20000000000005 100% 50%;
+	--twc-primary-opacity-3-opacity: 0.32;
+	--twc-on-primary: 0 0% 100%;
+	--twc-on-primary-opacity-1: 0 0% 100%;
+	--twc-on-primary-opacity-1-opacity: 0.4;
+	--twc-background-1: 0 0% 100%;
+	--twc-background-2: 240 15.8% 96.3%;
+	--twc-utility-1-default: 0 0% 14.5%;
+	--twc-utility-1-opacity-1: 0 0% 14.5%;
+	--twc-utility-1-opacity-1-opacity: 0.72;
+	--twc-utility-1-opacity-2: 0 0% 14.5%;
+	--twc-utility-1-opacity-2-opacity: 0.48;
+	--twc-utility-1-opacity-3: 0 0% 14.5%;
+	--twc-utility-1-opacity-3-opacity: 0.24;
+	--twc-utility-1-opacity-4: 0 0% 14.5%;
+	--twc-utility-1-opacity-4-opacity: 0.12;
+	--twc-utility-1-opacity-5: 0 0% 14.5%;
+	--twc-utility-1-opacity-5-opacity: 0.08;
+	--twc-utility-1-opacity-6: 0 0% 14.5%;
+	--twc-utility-1-opacity-6-opacity: 0.04;
+	--twc-success-1-default: 137.3 100% 27.8%;
+	--twc-success-1-opacity-1: 137.3 100% 27.8%;
+	--twc-success-1-opacity-1-opacity: 0.16;
+	--twc-success-1-opacity-2: 137.3 100% 27.8%;
+	--twc-success-1-opacity-2-opacity: 0.24;
+	--twc-success-1-opacity-3: 137.3 100% 27.8%;
+	--twc-success-1-opacity-3-opacity: 0.32;
+	--twc-warning-1-default: 41 85.3% 42.7%;
+	--twc-warning-1-opacity-1: 41 85.3% 42.7%;
+	--twc-warning-1-opacity-1-opacity: 0.16;
+	--twc-warning-1-opacity-2: 41 85.3% 42.7%;
+	--twc-warning-1-opacity-2-opacity: 0.24;
+	--twc-warning-1-opacity-3: 41 85.3% 42.7%;
+	--twc-warning-1-opacity-3-opacity: 0.32;
+	--twc-error-1-default: 0 81.3% 42%;
+	--twc-error-1-hover: 0 63.9% 47.8%;
+	--twc-error-1-pressed: 0 58.6% 53.5%;
+	--twc-error-1-opacity-1: 0 81.3% 42%;
+	--twc-error-1-opacity-1-opacity: 0.16;
+	--twc-error-1-opacity-2: 0 81.3% 42%;
+	--twc-error-1-opacity-2-opacity: 0.24;
+	--twc-error-1-opacity-3: 0 81.3% 42%;
+	--twc-error-1-opacity-3-opacity: 0.32;
+	--twc-accent-pink: 300.70000000000005 100% 84.1%;
+	--twc-accent-neon-green: 82.80000000000001 100% 50%;
+	--twc-accent-yellow: 46.69999999999999 100% 56.7%;
+	--twc-accent-blue: 194.60000000000002 100% 59%;
+	--twc-transparent: 0 0% 0%;
+	--twc-transparent-opacity: 0;
+	--twc-overlay-100: 0 0% 0%;
+	--twc-overlay-100-opacity: 0.4;
+	--twc-overlay-50: 0 0% 0%;
+	--twc-overlay-50-opacity: 0.16;
+	--twc-tooltip: 0 0% 96.1%;
+	--twc-alert-solid: 137.5 41.4% 88.6%;
+	--twc-primary: 241.20000000000005 100% 50%;
+	--twc-primaryHover: 241 100% 65.5%;
+	--twc-primaryPressed: 241.20000000000005 100% 69.6%;
+	--twc-primaryInverse: 241.20000000000005 100% 50%;
+	--twc-primaryInverse-opacity: 0.16;
+	--twc-textPrimary: 0 0% 14.5%;
+	--twc-textPrimaryStatic: 0 0% 14.5%;
+	--twc-textSecondary: 0 0% 14.5%;
+	--twc-textSecondary-opacity: 0.72;
+	--twc-textThird: 0 0% 14.5%;
+	--twc-textThird-opacity: 0.48;
+	--twc-textBuy: 137.3 100% 27.8%;
+	--twc-textSell: 0 81.3% 42%;
+	--twc-textDisabled: 0 0% 14.5%;
+	--twc-textDisabled-opacity: 0.24;
+	--twc-textBrand: 41 85.3% 42.7%;
+	--twc-bg3: 240 15.8% 96.3%;
+	--twc-backgroundPrimary: 0 0% 100%;
+	--twc-backgroundSecondary: 240 15.8% 96.3%;
+	--twc-backgroundTertiary: 0 0% 14.5%;
+	--twc-backgroundTertiary-opacity: 0.12;
+	--twc-successBg: 137.3 100% 27.8%;
+	--twc-successBg-opacity: 0.16;
+	--twc-errorBg: 0 81.3% 42%;
+	--twc-errorBg-opacity: 0.16;
+	--twc-depthBuyBg: 241.20000000000005 100% 50%;
+	--twc-depthBuyBg-opacity: 0.16;
+	--twc-iconNormal: 0 0% 14.5%;
+	--twc-iconNormal-opacity: 0.72;
+	--twc-iconSuccess: 137.3 100% 27.8%;
+	--twc-iconWarning: 41 85.3% 42.7%;
+	--twc-error: 0 81.3% 42%;
+	--twc-warning: 41 85.3% 42.7%;
+	--twc-warning-opacity: 0.16;
+	--twc-info: 241.20000000000005 100% 50%;
+	--twc-info-opacity: 0.16;
+	--twc-line: 0 0% 14.5%;
+	--twc-line-opacity: 0.08;
+	--twc-startGradient: 241.20000000000005 100% 50%;
+	--twc-finishGradient: 0 0% 14.5%;
+	--twc-finishGradient-opacity: 0.48;
 }
 
 body {

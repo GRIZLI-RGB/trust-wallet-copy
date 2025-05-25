@@ -7,6 +7,7 @@ import { BaseEntityType, CryptoType } from "@/app/utils/types";
 import { useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 type ReceiveItem = BaseEntityType & {
 	wallet_i: number;
@@ -35,6 +36,15 @@ export default function WalletReceivePage() {
 
 	const [isOpenQr, setIsOpenQr] = useState(false);
 	const [selectedCrypto, setSelectedCrypto] = useState<ReceiveItem>();
+
+	const { width } = useWindowSize();
+
+	function truncateAddress(address: string, maxLength = 18) {
+		if (address.length <= maxLength) return address;
+		const start = address.slice(0, 10);
+		const end = address.slice(-8);
+		return `${start}...${end}`;
+	}
 
 	return (
 		<>
@@ -387,59 +397,67 @@ export default function WalletReceivePage() {
 						</div>
 
 						<div>
-							<div>
-								<div
-									data-tooltip-id="default-tooltip"
-									data-tooltip-content="Copy"
-									data-tooltip-place="top-end"
-								>
-									<div className="flex w-full">
-										<button
-											onClick={() => {
-												navigator.clipboard
-													.writeText(
-														selectedCrypto?.crypto
-															.address || ""
-													)
-													.then(() => {
-														alert("Скопировано!");
-													})
-													.catch(() => {
-														alert(
-															"Ошибка копирования:"
-														);
-													});
-											}}
-											type="button"
-											className="outline-none !text-accent-light bg-accent-light/10 dark:bg-accent/10 dark:!text-accent dark:hover:bg-accent/20 hover:bg-accent-light/20 disabled:bg-primary-opacity-1 py-4 px-4 text-subheader-16 leading-subheader-16 default-button  w-full  overflow-hidden"
-										>
-											<div className="flex items-center space-x-1 overflow-hidden">
-												<div className="overflow-hidden break-words">
-													<p className="typography-subheader-14 text-accent-light dark:text-accent font-medium  text-unset">
-														{
-															selectedCrypto
-																?.crypto.address
-														}
-													</p>
-												</div>
-												<svg
-													className="shrink-0"
-													fill="none"
-													width="16"
-													height="16"
-													viewBox="0 0 25 25"
-													xmlns="http://www.w3.org/2000/svg"
-												>
-													<path
-														fillRule="evenodd"
-														clipRule="evenodd"
-														d="M9.45557 3.89441H20.4556V16.8944H17.4556V6.89441H9.45557V3.89441ZM4.45557 8.89441V21.8944H15.4556V8.91477L4.45557 8.89441Z"
-														fill="currentColor"
-													></path>
-												</svg>
+							<div
+								data-tooltip-id="default-tooltip"
+								data-tooltip-content="Copy"
+								data-tooltip-place="top-end"
+							>
+								<div className="flex w-full">
+									<button
+										onClick={() => {
+											navigator.clipboard
+												.writeText(
+													selectedCrypto?.crypto
+														.address ||
+														selectedCrypto?.address ||
+														""
+												)
+												.then(() => {
+													alert("Скопировано!");
+												})
+												.catch(() => {
+													alert(
+														"Ошибка копирования:"
+													);
+												});
+										}}
+										type="button"
+										className="outline-none !text-accent-light bg-accent-light/10 dark:bg-accent/10 dark:!text-accent dark:hover:bg-accent/20 hover:bg-accent-light/20 disabled:bg-primary-opacity-1 py-4 px-4 text-subheader-16 leading-subheader-16 default-button  w-full  overflow-hidden"
+									>
+										<div className="flex items-center space-x-1 overflow-hidden">
+											<div className="overflow-hidden text-ellipsis whitespace-nowrap max-w-full">
+												<p className="typography-subheader-14 text-accent-light dark:text-accent font-medium text-unset">
+													{(width || 501) <= 500
+														? truncateAddress(
+																selectedCrypto?.address ||
+																	selectedCrypto
+																		?.crypto
+																		.address ||
+																	""
+														  )
+														: selectedCrypto?.address ||
+														  selectedCrypto?.crypto
+																.address}
+												</p>
 											</div>
-										</button>
-									</div>
+
+											<svg
+												className="shrink-0"
+												fill="none"
+												width="16"
+												height="16"
+												viewBox="0 0 25 25"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fillRule="evenodd"
+													clipRule="evenodd"
+													d="M9.45557 3.89441H20.4556V16.8944H17.4556V6.89441H9.45557V3.89441ZM4.45557 8.89441V21.8944H15.4556V8.91477L4.45557 8.89441Z"
+													fill="currentColor"
+												></path>
+											</svg>
+										</div>
+									</button>
 								</div>
 							</div>
 						</div>
