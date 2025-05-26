@@ -623,11 +623,7 @@ export default function WalletPage() {
 																					.network_name
 																			}
 																			className="w-full h-full rounded-full"
-																			src={
-																				crypto
-																					.crypto
-																					.network_icon
-																			}
+																			src={`${process.env.NEXT_PUBLIC_SITE_URL}/${crypto.crypto.network_icon}`}
 																		/>
 																	</div>
 																</div>

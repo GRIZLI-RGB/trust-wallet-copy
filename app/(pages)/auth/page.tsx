@@ -931,11 +931,7 @@ export default function AuthPage() {
 								<div className="flex flex-col items-center space-y-6">
 									<div className="flex w-full max-w-[372px]">
 										<div className="w-full">
-											<div
-												className="relative w-full mt-1"
-												data-headlessui-state="open"
-												data-open=""
-											>
+											<div className="relative w-full mt-1">
 												<button
 													onClick={() =>
 														setSecretPhraseDropdown(
@@ -945,12 +941,6 @@ export default function AuthPage() {
 													className="relative w-full input-field title-text font-medium h-12 cursor-pointer"
 													id="headlessui-listbox-button-«r2»"
 													type="button"
-													aria-haspopup="listbox"
-													aria-expanded="true"
-													data-headlessui-state="open active"
-													data-open=""
-													data-active=""
-													aria-controls="headlessui-listbox-options-«rl»"
 												>
 													<span className="block truncate">
 														I have a{" "}
@@ -979,8 +969,6 @@ export default function AuthPage() {
 													<ul
 														className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded bg-bg3 py-1 shadow-lg focus:outline-none"
 														id="headlessui-listbox-options-«rl»"
-														aria-labelledby="headlessui-listbox-button-«r2»"
-														aria-orientation="vertical"
 														role="listbox"
 														tabIndex={0}
 													>
@@ -1001,7 +989,6 @@ export default function AuthPage() {
 																			false
 																		);
 																	}}
-																	data-testid="undefined-option"
 																	className="relative cursor-pointer select-none px-4 py-2 hover:bg-white/5"
 																	id="headlessui-listbox-option-«ro»"
 																	role="option"

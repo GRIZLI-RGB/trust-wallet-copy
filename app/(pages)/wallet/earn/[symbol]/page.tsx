@@ -1,12 +1,47 @@
 "use client";
 
 import Input from "@/app/components/input";
-import { getStakingOne, sendStakingOne } from "@/app/utils/api";
+import { getStakingOne, outStakingOne, sendStakingOne } from "@/app/utils/api";
 import { _globalLoading_ } from "@/app/utils/store";
 import { BaseEntityType, CryptoType } from "@/app/utils/types";
+import axios from "axios";
 import { useSetAtom } from "jotai";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+
+const Button = ({ text, onClick }: { onClick: () => void; text: string }) => {
+	return (
+		<>
+			<div className="flex w-full justify-between">
+				<button
+					onClick={onClick}
+					type="button"
+					className="w-full flex items-center outline-none bg-transparent text-primary py-4 px-4 text-subheader-16 leading-subheader-16 default-button !p-0 !justify-between"
+				>
+					<p className="body-text text-primary font-medium text-unset">
+						{text}
+					</p>
+					<svg
+						fill="none"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path
+							fillRule="evenodd"
+							clipRule="evenodd"
+							d="M12.2886 11.9993L8.3996 8.11035L10.1674 6.34258L15.8242 11.9994L14.0565 13.7672L14.0563 13.7671L10.1672 17.6562L8.39941 15.8885L12.2886 11.9993Z"
+							fill="currentColor"
+						/>
+					</svg>
+				</button>
+			</div>
+
+			<hr className="border-line w-full last-of-type:!mb-5" />
+		</>
+	);
+};
 
 export default function WalletEarnSymbolPage() {
 	const params = useParams();
@@ -42,9 +77,7 @@ export default function WalletEarnSymbolPage() {
 					profit: string;
 					is_active: boolean;
 					last_profit_calculation: string;
-					profit_snapshot: {
-						total_profit: string;
-					};
+					profit_snapshot: string;
 					crypto: CryptoType;
 			  })
 			| null;
@@ -69,14 +102,33 @@ export default function WalletEarnSymbolPage() {
 		setGlobalLoading(true);
 
 		sendStakingOne({ symbol: crypto!.crypto.symbol, amount: +amount })
-			.then(() => {
-				setGlobalLoading(false);
-				alert("Success");
-			})
+			.then(() => router.push("/wallet"))
 			.catch(() => {
 				setGlobalLoading(false);
 				alert("Unknown error");
 			});
+	};
+
+	const handleUnstake = () => {
+		if (crypto?.active_stake) {
+			setGlobalLoading(true);
+
+			outStakingOne(crypto.active_stake.id)
+				.then(() => router.push("/wallet"))
+				.catch((err: unknown) => {
+					setGlobalLoading(false);
+
+					if (axios.isAxiosError(err)) {
+						const message =
+							err?.response?.data?.message ||
+							err?.message ||
+							"Unknown error";
+						alert(message);
+					} else {
+						alert("Unknown error");
+					}
+				});
+		}
 	};
 
 	if (crypto) {
@@ -169,10 +221,14 @@ export default function WalletEarnSymbolPage() {
 													</div>
 													<div className="flex">
 														<p className="title-text text-utility-1-default font-medium text-unset">
-															{crypto
-																?.active_stake
-																?.amount ??
-																0}{" "}
+															{
+																+(
+																	crypto
+																		?.active_stake
+																		?.amount ||
+																	0
+																)
+															}{" "}
 															{
 																crypto.crypto
 																	.symbol
@@ -190,10 +246,14 @@ export default function WalletEarnSymbolPage() {
 													</div>
 													<div className="flex">
 														<p className="title-text text-utility-1-default font-medium text-unset">
-															{crypto
-																.wallet_crypto
-																.balance ??
-																0}{" "}
+															{
+																+(
+																	crypto
+																		?.wallet_crypto
+																		?.balance ||
+																	0
+																)
+															}{" "}
 															{
 																crypto.crypto
 																	.symbol
@@ -201,6 +261,62 @@ export default function WalletEarnSymbolPage() {
 														</p>
 													</div>
 												</div>
+
+												{crypto.active_stake && (
+													<>
+														{/* Frozen */}
+														<div className="flex justify-between">
+															<div className="flex">
+																<p className="title-text text-utility-1-default font-normal text-unset">
+																	Frozen
+																</p>
+															</div>
+															<div className="flex">
+																<p className="title-text text-utility-1-default font-medium text-unset">
+																	{
+																		+(
+																			crypto
+																				?.active_stake
+																				?.amount ||
+																			0
+																		)
+																	}{" "}
+																	{
+																		crypto
+																			.crypto
+																			.symbol
+																	}
+																</p>
+															</div>
+														</div>
+
+														{/* Rewards */}
+														<div className="flex justify-between">
+															<div className="flex">
+																<p className="title-text text-utility-1-default font-normal text-unset">
+																	Rewards
+																</p>
+															</div>
+															<div className="flex">
+																<p className="title-text text-utility-1-default font-medium text-unset">
+																	{
+																		+(
+																			crypto
+																				?.active_stake
+																				?.profit ||
+																			0
+																		)
+																	}{" "}
+																	{
+																		crypto
+																			.crypto
+																			.symbol
+																	}
+																</p>
+															</div>
+														</div>
+													</>
+												)}
 
 												{/* Minimum Amount */}
 												<div className="flex justify-between">
@@ -266,40 +382,68 @@ export default function WalletEarnSymbolPage() {
 										</div>
 									</div>
 
-									{/* Stake button */}
-									<div className="flex w-full justify-between">
-										<button
-											onClick={() =>
-												setTab("stake-enter")
-											}
-											type="button"
-											className="w-full flex items-center outline-none bg-transparent text-primary py-4 px-4 text-subheader-16 leading-subheader-16 default-button !p-0 !justify-between"
-										>
-											<p className="body-text text-primary font-medium text-unset">
-												Stake
+									{crypto.active_stake && (
+										<>
+											<p className="body-text text-utility-1-default font-medium   text-unset  ">
+												Active
 											</p>
-											<svg
-												fill="none"
-												width="24"
-												height="24"
-												viewBox="0 0 24 24"
-												xmlns="http://www.w3.org/2000/svg"
-											>
-												<path
-													fillRule="evenodd"
-													clipRule="evenodd"
-													d="M12.2886 11.9993L8.3996 8.11035L10.1674 6.34258L15.8242 11.9994L14.0565 13.7672L14.0563 13.7671L10.1672 17.6562L8.39941 15.8885L12.2886 11.9993Z"
-													fill="currentColor"
-												/>
-											</svg>
-										</button>
-									</div>
 
-									<hr
-										className="border-line w-full last-of-type:!mb-5"
-										id="divider"
+											<div className="rounded-4 bg-background-2 px-4 py-4  border-solid transition w-full">
+												<div className="flex items-center justify-between">
+													<div className="flex items-center space-x-2">
+														<div className="relative min-w-min">
+															<div className="flex items-center justify-center w-full h-full flex-1 flex-row">
+																<div className="rounded-full overflow-hidden  ">
+																	<div className="w-6 h-6 flex items-center">
+																		<img
+																			alt="Trust Nodes"
+																			className="w-full h-full rounded-full"
+																			width="100%"
+																			height="100%"
+																			src="https://assets-cdn.trustwallet.com/blockchains/tron/validators/assets/TFqEaQBVpJmc6y6sbvXgzu9zsXL1pTKw47/logo.png"
+																		/>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div className="flex-col">
+															<p className="body-text text-utility-1-default font-medium   text-unset  ">
+																Trust Nodes
+															</p>
+														</div>
+													</div>
+													<div className="flex-col text-right">
+														<p className="body-text text-utility-1-default font-medium   text-unset  ">
+															{
+																+crypto
+																	.active_stake
+																	.amount
+															}{" "}
+															{
+																crypto.crypto
+																	.symbol
+															}
+														</p>
+													</div>
+												</div>
+											</div>
+										</>
+									)}
+
+									<Button
+										text="Stake"
+										onClick={() => setTab("stake-enter")}
 									/>
-									<div className="mt-auto"></div>
+
+									{crypto.active_stake && (
+										<>
+											<Button
+												text="Unstake"
+												onClick={handleUnstake}
+											/>
+											{/* <Button text="Claim Rewards" /> */}
+										</>
+									)}
 								</div>
 							</div>
 						</div>
