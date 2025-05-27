@@ -41,10 +41,7 @@ export default function WalletEarnPage() {
 					<div className="absolute flex flex-1 flex-col w-full h-full top-0 left-0 overflow-y-auto scrollbar-hidden">
 						<div className="flex flex-col space-y-5">
 							<ul className="space-y-5">
-								<div
-									className="outline-0"
-									tabIndex={0}
-								>
+								<div className="outline-0" tabIndex={0}>
 									<div className="rounded-4 bg-background-2 px-4 py-2 border-solid transition w-full">
 										<div className="flex items-center space-x-2.5">
 											<svg
@@ -731,15 +728,16 @@ export default function WalletEarnPage() {
 														</div>
 													</div>
 												</div>
-												{/* <div>
-													<p className="subtitle-text text-textSecondary font-normal text-unset">
-														APR +
-														<span className="body-text text-primary font-medium">
-															{option.apr}
-														</span>
-														%
-													</p>
-												</div> */}
+												{crypto.apr && (
+													<div>
+														<p className="subtitle-text text-textSecondary font-normal text-unset">
+															<span className="body-text text-primary font-medium">
+																+{crypto.apr}%
+															</span>{" "}
+															APR
+														</p>
+													</div>
+												)}
 											</div>
 										</div>
 									</li>

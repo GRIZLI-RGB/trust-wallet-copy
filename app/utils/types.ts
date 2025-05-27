@@ -23,6 +23,7 @@ export type CryptoType = BaseEntityType & {
 	address: string;
 	qr_code: string;
 	price: number;
+	apr: number;
 };
 
 export type WalletHistoryItemType = BaseEntityType & {

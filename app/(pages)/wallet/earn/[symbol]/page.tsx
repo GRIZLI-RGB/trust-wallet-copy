@@ -73,7 +73,7 @@ export default function WalletEarnSymbolPage() {
 					apr: string;
 					lock_time_days: number;
 					start_date: Date;
-					end_date: Date;
+					end_date: string;
 					profit: string;
 					is_active: boolean;
 					last_profit_calculation: string;
@@ -129,6 +129,20 @@ export default function WalletEarnSymbolPage() {
 					}
 				});
 		}
+	};
+
+	const getTimeLeftString = (endDateString: string) => {
+		const now = new Date();
+		const endDate = new Date(endDateString);
+		const diffMs = endDate.getTime() - now.getTime();
+
+		if (diffMs <= 0) return "0d 0h";
+
+		const totalHours = Math.floor(diffMs / (1000 * 60 * 60));
+		const days = Math.floor(totalHours / 24);
+		const hours = totalHours % 24;
+
+		return `${days}d ${hours}h`;
 	};
 
 	if (crypto) {
@@ -378,6 +392,26 @@ export default function WalletEarnSymbolPage() {
 														</p>
 													</div>
 												</div>
+
+												{/* Left */}
+												{crypto.active_stake && (
+													<div className="flex justify-between">
+														<div className="flex">
+															<p className="title-text text-utility-1-default font-normal text-unset">
+																Left
+															</p>
+														</div>
+														<div className="flex">
+															<p className="title-text text-utility-1-default font-medium text-unset">
+																{getTimeLeftString(
+																	crypto
+																		.active_stake
+																		.end_date
+																)}
+															</p>
+														</div>
+													</div>
+												)}
 											</div>
 										</div>
 									</div>
@@ -435,15 +469,19 @@ export default function WalletEarnSymbolPage() {
 										onClick={() => setTab("stake-enter")}
 									/>
 
-									{crypto.active_stake && (
-										<>
-											<Button
-												text="Unstake"
-												onClick={handleUnstake}
-											/>
-											{/* <Button text="Claim Rewards" /> */}
-										</>
-									)}
+									{crypto.active_stake &&
+										new Date() >
+											new Date(
+												crypto.active_stake.end_date
+											) && (
+											<>
+												<Button
+													text="Unstake"
+													onClick={handleUnstake}
+												/>
+												{/* <Button text="Claim Rewards" /> */}
+											</>
+										)}
 								</div>
 							</div>
 						</div>
